@@ -5,7 +5,7 @@ package com.fangshuo.codefactory.enums;
  * Copyright: Copyright (c) 2018 Jun_Zhou
  * 
  * @ClassName: ProMsg.java
- * @Description: 提示信息的枚举类;
+ * @Description: 描述提示信息的枚举类;
  * 
  * @version: v1.0.0
  * @author: JunZhou
