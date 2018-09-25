@@ -1,4 +1,15 @@
 package com.fangshuo.dbinfo.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.fangshuo.dbinfo.Service.DbInfoService;
+import com.fangshuo.dbinfo.model.DBInfo;
+
 /**
  * 
 * Copyright: Copyright (c) 2018 Jun_Zhou
@@ -12,6 +23,20 @@ package com.fangshuo.dbinfo.controller;
 * @Site: CERNO
 * @date: 2018年9月21日 下午4:11:28
  */
+@RestController
+@RequestMapping("/dbinfo")
 public class DBInfoController {
-
+	@Autowired
+	private DbInfoService dbInfoService;
+	
+	/**
+	 * 获取数据库属性信息;
+	 * @return:String;
+	 */
+	@RequestMapping("/get-dbInfos")
+	@ResponseBody
+	public List<DBInfo> getDbInfos() {
+		List<DBInfo> dbInfo = dbInfoService.getDbInfos();
+		return dbInfo;
+	}
 }

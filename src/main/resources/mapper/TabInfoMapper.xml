@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fangshuo.dbinfo.dao.TabInfoMapper">
+
+	<!-- 数据库表的基础信息列; -->
+	<resultMap id="BaseResultMap"
+		type="com.fangshuo.dbinfo.model.TabInfo">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="TABLE_NAME" property="tableName"
+			jdbcType="VARCHAR" />
+		<result column="COLUMN_NAME" property="columnName"
+			jdbcType="VARCHAR" />
+		<result column="ORDINAL_POSITION" property="ordinalPosition"
+			jdbcType="VARCHAR" />
+		<result column="COLUMN_DEFAULT" property="columnDefault"
+			jdbcType="VARCHAR" />
+		<result column="IS_NULLABLE" property="isNullAble"
+			jdbcType="VARCHAR" />
+		<result column="DATA_TYPE" property="dataType"
+			jdbcType="VARCHAR" />
+		<result column="CHARACTER_MAXIMUM_LENGTH"
+			property="characterMaxiMumLength" jdbcType="VARCHAR" />
+		<result column="COLUMN_TYPE" property="columnType"
+			jdbcType="VARCHAR" />
+		<result column="COLUMN_KEY" property="columnKey"
+			jdbcType="VARCHAR" />
+		<result column="COLUMN_COMMENT" property="columnComment"
+			jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 查询结果到数据库集合TabInfoSet的映射; -->
+	<resultMap id="ResultMap4TabINFOSET"
+		type="com.fangshuo.dbinfo.model.TabInfoSet">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="TABLE_NAME" property="tableName"
+			jdbcType="VARCHAR" />
+		<result column="tabInfoItemSet" property="columnName"
+			jdbcType="VARCHAR" />
+		<collection property="tabInfoItemSet"
+			ofType="com.fangshuo.dbinfo.model.TabInfo"
+			javaType="java.util.ArrayList" select="getTabInfosByTabName"
+			column="TABLE_NAME">
+		</collection>
+	</resultMap>
+
+	<!-- 数据表基础信息列; -->
+	<sql id="Base_Column_List">
+		@rownum:=@rownum+1 as id,
+		TABLE_NAME,COLUMN_NAME,ORDINAL_POSITION,COLUMN_DEFAULT,IS_NULLABLE,
+		DATA_TYPE,CHARACTER_MAXIMUM_LENGTH,COLUMN_TYPE,COLUMN_KEY,COLUMN_COMMENT
+	</sql>
+
+	<!-- 数据表集合的查询列 -->
+	<sql id="THE_TABNAME_MATCH_CONDITION">
+		@rownum:=@rownum+1 as id,TABLE_NAME
+	</sql>
+
+	<!-- 根据数据库名称查询数据库的基础信息; -->
+	<select id="getTabInfosByTabName"
+		parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from
+		(select @rownum:=0) as R,
+		information_schema.COLUMNS where
+		TABLE_SCHEMA = (select database())
+		and
+		TABLE_NAME = #{TABLE_NAME,
+		jdbcType=VARCHAR}
+	</select>
+
+	<!-- 查询满足条件的所有数据库表名称; -->
+	<select id="getTabInfoSetByCondition"
+		parameterType="java.util.List" resultMap="ResultMap4TabINFOSET">
+		select
+		<include refid="THE_TABNAME_MATCH_CONDITION" />
+		from
+		(select @rownum:=0) as R,
+		information_schema.COLUMNS
+		<where>
+			and TABLE_SCHEMA = (select database())
+			<if test="list != null and list.size()>0">
+				and TABLE_NAME in
+				<foreach collection="list" index="index" item="tab_name"
+					open="(" separator="," close=")">
+					#{tab_name}
+				</foreach>
+			</if>
+		</where>
+		GROUP BY TABLE_NAME
+	</select>
+
+</mapper> 

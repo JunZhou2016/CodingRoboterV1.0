@@ -25,7 +25,13 @@ public class TabInfo {
 	private String columnType;// 列的数据类型，带长度描述;
 	private String columnKey;// 键的类型,PRI Or FK;
 	private String columnComment;// 列的注释;
-
+	
+	/*id,tableName,columnName,ordinalPosition,columnDefault,isNullAble,dataType,
+    * characterMaxiMumLength,columnType,columnKey,columnComment*/	
+	
+	/*private String baseColumn = "id,TABLE_NAME,COLUMN_NAME,ORDINAL_POSITION,COLUMN_DEFAULT,IS_NULLABLE,DATA_TYPE"
+			+ "CHARACTER_MAXIMUM_LENGTH,COLUMN_TYPE,COLUMN_KEY,COLUMN_COMMENT";*/
+	
 	public String getId() {
 		return id;
 	}
