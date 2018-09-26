@@ -1,5 +1,7 @@
 package com.fangshuo.codefactory.cfg;
 
+import java.io.File;
+
 /**
  * 
  * Copyright: Copyright (c) 2018 Jun_Zhou
@@ -14,6 +16,7 @@ package com.fangshuo.codefactory.cfg;
  * @date: 2018年9月25日 下午4:29:43
  */
 public class CodeGeneratorConfig {
+	protected static String SYS_SEPARATOR = File.separator;
 	// JDBC 相关配置信息
 	protected static String JDBC_URL;
 	protected static String JDBC_USERNAME;
@@ -48,7 +51,9 @@ public class CodeGeneratorConfig {
 	protected static String PACKAGE_PATH_SERVICE_IMPL;
 	// 生成的 Controller 存放路径
 	protected static String PACKAGE_PATH_CONTROLLER;
-
+	//代码存储路径的公共部分;
+	protected static String COMMON_CODE_PATH;
+	
 	// MyMapper 插件基础接口的完全限定名
 	protected static String MAPPER_INTERFACE_REFERENCE;
 	// 通用 Service 层 基础接口完全限定名
@@ -60,5 +65,4 @@ public class CodeGeneratorConfig {
 	protected static String AUTHOR;
 	// 模板注释中 @date
 	protected static String DATE;
-
 }

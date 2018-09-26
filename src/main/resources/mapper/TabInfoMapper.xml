@@ -4,7 +4,7 @@
 
 	<!-- 数据库表的基础信息列; -->
 	<resultMap id="BaseResultMap"
-		type="com.fangshuo.dbinfo.model.TabInfo">
+		type="com.fangshuo.dbinfo.model.Column">
 		<result column="id" property="id" jdbcType="INTEGER" />
 		<result column="TABLE_NAME" property="tableName"
 			jdbcType="VARCHAR" />
@@ -30,13 +30,11 @@
 
 	<!-- 查询结果到数据库集合TabInfoSet的映射; -->
 	<resultMap id="ResultMap4TabINFOSET"
-		type="com.fangshuo.dbinfo.model.TabInfoSet">
+		type="com.fangshuo.dbinfo.model.Table">
 		<result column="id" property="id" jdbcType="INTEGER" />
 		<result column="TABLE_NAME" property="tableName"
 			jdbcType="VARCHAR" />
-		<result column="tabInfoItemSet" property="columnName"
-			jdbcType="VARCHAR" />
-		<collection property="tabInfoItemSet"
+		<collection property="columnSet"
 			ofType="com.fangshuo.dbinfo.model.TabInfo"
 			javaType="java.util.ArrayList" select="getTabInfosByTabName"
 			column="TABLE_NAME">

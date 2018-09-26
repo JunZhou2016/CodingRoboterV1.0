@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fangshuo.dbinfo.Service.DbInfoService;
-import com.fangshuo.dbinfo.model.DBInfo;
+import com.fangshuo.dbinfo.model.Database;
 
 /**
  * 
@@ -35,8 +35,8 @@ public class DBInfoController {
 	 */
 	@RequestMapping("/get-dbInfos")
 	@ResponseBody
-	public List<DBInfo> getDbInfos() {
-		List<DBInfo> dbInfo = dbInfoService.getDbInfos();
+	public List<Database> getDbInfos() {
+		List<Database> dbInfo = dbInfoService.getDbInfos();
 		return dbInfo;
 	}
 }

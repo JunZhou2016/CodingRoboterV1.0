@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.fangshuo.dbinfo.Service.DbInfoService;
 import com.fangshuo.dbinfo.dao.DBInfoMapper;
-import com.fangshuo.dbinfo.model.DBInfo;
+import com.fangshuo.dbinfo.model.Database;
 
 @Service
 public class DbInfoServiceImpl implements DbInfoService{
@@ -16,7 +16,7 @@ public class DbInfoServiceImpl implements DbInfoService{
 	private DBInfoMapper dbInfoMapper;
 	
 	@Override
-	public List<DBInfo> getDbInfos() {
+	public List<Database> getDbInfos() {
 		// TODO Auto-generated method stub
 		return dbInfoMapper.getDbInfos();
 	}

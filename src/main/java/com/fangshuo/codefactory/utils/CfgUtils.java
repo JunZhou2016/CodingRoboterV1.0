@@ -107,9 +107,20 @@ public class CfgUtils extends CodeGeneratorConfig{
 		PACKAGE_PATH_SERVICE_IMPL = "".equals(serviceImplPackage) ? packageConvertPath(SERVICE_IMPL_PACKAGE) : serviceImplPackage;
 		PACKAGE_PATH_CONTROLLER = "".equals(controllerPackage) ? packageConvertPath(CONTROLLER_PACKAGE) : controllerPackage;
 		
+		COMMON_CODE_PATH = packageConvertPath(BASE_PACKAGE);
+		
 		AUTHOR = prop.getProperty("author");
 		String dateFormat = "".equals(prop.getProperty("date-format")) ? "yyyy/MM/dd" : prop.getProperty("date-format");
 		DATE = new SimpleDateFormat(dateFormat).format(new Date());
+		
+		/*MODEL = CodeType.MODEL_TYPE.getTypeName();// model类型;
+		CONTROLLER = CodeType.CONTROLLER_TYPE.getTypeName();// controller类型;
+		SERVICE = CodeType.SERVICE_TYPE.getTypeName();// service类型;
+		SERVICE_IMPL = CodeType.SERVICE_IMPL_TYPE.getTypeName();// serviceImpl类型;
+		MAPPER = CodeType.MAPPER_TYPE.getTypeName();// mapper类型;
+		PARAMETER = CodeType.PARAMETER_TYPE.getTypeName();// parameter类型;
+		X_MAPPER = CodeType.X_MAPPER_TYPE.getTypeName();// xml-mapper类型;
+		*/
 	}
 	
 	/**

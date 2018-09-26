@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.fangshuo.dbinfo.model.DBInfo;
+import com.fangshuo.dbinfo.model.Database;
 
 @Mapper
 public interface DBInfoMapper {
 
-	List<DBInfo> getDbInfos();
+	List<Database> getDbInfos();
 
 }

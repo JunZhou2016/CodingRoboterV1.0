@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.fangshuo.dbinfo.model.TabInfoSet;
+import com.fangshuo.dbinfo.model.Table;
 
 @Mapper
 public interface TabInfoMapper {
@@ -13,6 +13,6 @@ public interface TabInfoMapper {
 	 * @param tabNames:数据库名称;
 	 * @return:数据库信息集合;
 	 */
-	List<TabInfoSet> getTabInfoSetByCondition(List<String> tabNames);
+	List<Table> getTabInfoSetByCondition(List<String> tabNames);
 
 }

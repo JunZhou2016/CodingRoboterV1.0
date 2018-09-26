@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fangshuo.dbinfo.Service.TabInfoService;
-import com.fangshuo.dbinfo.model.TabInfoSet;
+import com.fangshuo.dbinfo.model.Table;
 
 /**
  * 
@@ -37,12 +37,12 @@ public class TabInfoController {
 	 */
 	@RequestMapping("/get_TabInfosByCondition")
 	@ResponseBody
-	public List<TabInfoSet> getTabInfoSetByCondition() {
+	public List<Table> getTabInfoSetByCondition() {
 		List<String> tabNames = new ArrayList<String>();
 		tabNames.add("role");
 		tabNames.add("stu");
 		//获取数据库表中的属性信息;
-		List<TabInfoSet> tabInfoSetList = tabInfoService.getTabInfoSetByCondition(tabNames);
+		List<Table> tabInfoSetList = tabInfoService.getTabInfoSetByCondition(tabNames);
 		return tabInfoSetList;
 	}
 }
