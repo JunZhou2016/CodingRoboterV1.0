@@ -83,6 +83,7 @@ public class CfgUtils extends CodeGeneratorConfig{
 		JDBC_USERNAME = prop.getProperty("jdbc.username");
 		JDBC_PASSWORD = prop.getProperty("jdbc.password");
 		JDBC_DRIVER_CLASS_NAME = prop.getProperty("jdbc.driver.class.name");
+		JDBC_DB_NAME = prop.getProperty("jdbc.dbname");
 		
 		JAVA_PATH = prop.getProperty("java.path");
 		RESOURCES_PATH = prop.getProperty("resources.path");

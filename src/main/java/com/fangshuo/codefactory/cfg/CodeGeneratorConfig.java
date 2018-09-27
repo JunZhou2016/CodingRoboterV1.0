@@ -22,6 +22,7 @@ public class CodeGeneratorConfig {
 	protected static String JDBC_USERNAME;
 	protected static String JDBC_PASSWORD;
 	protected static String JDBC_DRIVER_CLASS_NAME;
+	public static String JDBC_DB_NAME;
 	
 	//文件相关的信息;
 	protected static String XML_FILE_SUFFIX = ".xml";//xml文件的后缀;

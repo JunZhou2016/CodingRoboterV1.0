@@ -20,6 +20,7 @@ import com.fangshuo.dbinfo.utils.DBUtils;
 public class Table {
 	private String id;// 数据表中列的id;
 	private String tableName;// 数据表的名称;
+	private String tableComment;// 数据表的注释;
 	private List<Column> columnSet;// 数据表的列集合;
 	private String tableString;//数据表的字符串形式;
 	
@@ -55,6 +56,14 @@ public class Table {
 
 	public void setTableString(String tableString) {
 		this.tableString = tableString;
+	}
+
+	public String getTableComment() {
+		return tableComment;
+	}
+
+	public void setTableComment(String tableComment) {
+		this.tableComment = tableComment;
 	}
 
 

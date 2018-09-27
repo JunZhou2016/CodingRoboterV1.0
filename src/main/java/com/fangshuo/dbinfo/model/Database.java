@@ -1,5 +1,9 @@
 package com.fangshuo.dbinfo.model;
 
+import java.util.List;
+
+import com.fangshuo.codefactory.cfg.CodeGeneratorConfig;
+
 /**
  * 
  * Copyright: Copyright (c) 2018 Jun_Zhou
@@ -15,10 +19,11 @@ package com.fangshuo.dbinfo.model;
  */
 public class Database {
 	private String id;// 数据表的id;
-	private String tableName;// 数据表的名称;
-	private String tableComment;// 数据表的注释;
-	//数据表的集合@TODO;
-	
+	private List<Table> tableSet;// 数据库中的数据表的集合;
+	private String tableName;// 数据表的名称;//
+	private String tableComment;// 数据表的注释;//
+	private String dbName = CodeGeneratorConfig.JDBC_DB_NAME;// 数据库名称;
+
 	public String getId() {
 		return id;
 	}
@@ -43,6 +48,24 @@ public class Database {
 		this.tableComment = tableComment;
 	}
 
+	
+
+	public List<Table> getTableSet() {
+		return tableSet;
+	}
+
+	public void setTableSet(List<Table> tableSet) {
+		this.tableSet = tableSet;
+	}
+
+	public String getDbName() {
+		return dbName;
+	}
+
+	public void setDbName(String dbName) {
+		this.dbName = dbName;
+	}
+	
 	@Override
 	public String toString() {
 		return "DBInfo [id=" + id + ", tableName=" + tableName + ", tableComment=" + tableComment + "]";
