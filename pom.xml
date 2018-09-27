@@ -78,6 +78,19 @@
 			<artifactId>freemarker</artifactId>
 			<version>2.3.23</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
+		
+		<!-- Swagger2.0的相关依赖 -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.6.1</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>

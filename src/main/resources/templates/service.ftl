@@ -1,13 +1,13 @@
-package com.fangshuo.output.Service.${modelNameUpperCamel};
+package ${templateInfo.projectStruct}.Service.${templateInfo.entity.entityName};
 
 import java.util.List;
 
-import com.fangshuo.output.Model.${modelNameUpperCamel}.${modelNameUpperCamel};
+import com.fangshuo.output.Model.${templateInfo.entity.entityName}.${templateInfo.entity.entityName};
 /**
 * 
 * Copyright: Copyright (c) 2018 Jun_Zhou
 * 
-* @ClassName: CodeGeneratorController.java
+* @ClassName: ${templateInfo.entity.entityName}Service.java
 * @Description: ${codeDes}
 * 
 * @version: ${codeVersion}
@@ -16,16 +16,16 @@ import com.fangshuo.output.Model.${modelNameUpperCamel}.${modelNameUpperCamel};
 * @Company: ${company}
 * @date: ${date}
 */
-public interface ${modelNameUpperCamel}Service {
+public interface ${templateInfo.entity.entityName}Service {
 
-	void save(${modelNameUpperCamel} ${modelNameLowerCamel});
+	void save(${templateInfo.entity.entityName} ${templateInfo.entity.localVariableName});
 
 	void deleteById(Integer id);
 
-	void update(${modelNameUpperCamel} ${modelNameLowerCamel});
+	void update(${templateInfo.entity.entityName} ${templateInfo.entity.localVariableName});
 
-	${modelNameUpperCamel} findById(Integer id);
+	${templateInfo.entity.entityName} findById(Integer id);
 
-	List<${modelNameUpperCamel}> findAll();
+	List<${templateInfo.entity.entityName}> findAll();
 
 }

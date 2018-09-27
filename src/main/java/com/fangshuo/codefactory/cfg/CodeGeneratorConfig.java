@@ -22,7 +22,14 @@ public class CodeGeneratorConfig {
 	protected static String JDBC_USERNAME;
 	protected static String JDBC_PASSWORD;
 	protected static String JDBC_DRIVER_CLASS_NAME;
-
+	
+	//文件相关的信息;
+	protected static String XML_FILE_SUFFIX = ".xml";//xml文件的后缀;
+	protected static String JAVA_FILE_SUFFIX = ".java";//java文件的后缀；
+	protected static String FTL_FILE_SUFFIX = ".ftl";//ftl文件的后缀;
+	protected static String DAO_LEVEL_NAME = "Dao";//Dao层级的名称;
+	protected static String FILTER_CODE_TYPE_UPPERCAMEL = "Filter";//Parameter类型文件的部分后缀;
+	
 	// 项目在硬盘上的基础路径
 	protected static final String PROJECT_PATH = System.getProperty("user.dir");
 	// java文件路径

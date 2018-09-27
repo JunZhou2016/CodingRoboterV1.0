@@ -1,19 +1,19 @@
-package com.fangshuo.output.Dao.${modelNameUpperCamel};
+package ${templateInfo.projectStruct}.Dao.${templateInfo.entity.entityName};
 
 import java.util.List;
 
-import com.fangshuo.output.Model.${modelNameUpperCamel}.${modelNameUpperCamel};
+import com.fangshuo.output.Model.${templateInfo.entity.entityName}.${templateInfo.entity.entityName};
 
-public interface ${modelNameUpperCamel}Mapper {
+public interface ${templateInfo.entity.entityName}Mapper {
 
-	void save(${modelNameUpperCamel} ${modelNameLowerCamel});
+	void save(${templateInfo.entity.entityName} ${templateInfo.entity.localVariableName});
 
 	void deleteById(Integer id);
 
-	void update(${modelNameUpperCamel} ${modelNameLowerCamel});
+	void update(${templateInfo.entity.entityName} ${templateInfo.entity.localVariableName});
 
-	${modelNameUpperCamel} findById(Integer id);
+	${templateInfo.entity.entityName} findById(Integer id);
 
-	List<${modelNameUpperCamel}> findAll();
+	List<${templateInfo.entity.entityName}> findAll();
 
 }

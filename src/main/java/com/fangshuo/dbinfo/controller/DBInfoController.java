@@ -4,11 +4,16 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fangshuo.dbinfo.Service.DbInfoService;
 import com.fangshuo.dbinfo.model.Database;
+import com.fangshuo.lib4fangshuo.model.ResObject;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * 
@@ -23,8 +28,9 @@ import com.fangshuo.dbinfo.model.Database;
 * @Site: CERNO
 * @date: 2018年9月21日 下午4:11:28
  */
-@RestController
 @RequestMapping("/dbinfo")
+@Api(value="数据库信息控制器",tags = {"数据库信息管理API"})
+@RestController
 public class DBInfoController {
 	@Autowired
 	private DbInfoService dbInfoService;
@@ -33,10 +39,13 @@ public class DBInfoController {
 	 * 获取数据库属性信息;
 	 * @return:String;
 	 */
-	@RequestMapping("/get-dbInfos")
+	@ApiOperation("查询数据库基础信息")
+	@RequestMapping(value="/get-dbInfos",method = RequestMethod.POST)
 	@ResponseBody
-	public List<Database> getDbInfos() {
+	public ResObject<List<Database>> getDbInfos() {
 		List<Database> dbInfo = dbInfoService.getDbInfos();
-		return dbInfo;
+		ResObject<List<Database>> reqObject = new ResObject<List<Database>>();
+		reqObject.setObject(dbInfo);
+		return reqObject;
 	}
 }

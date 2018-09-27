@@ -1,9 +1,9 @@
-package com.fangshuo.output.Model.${modelNameUpperCamel};
+package ${templateInfo.projectStruct}.Model.${templateInfo.entity.entityName};
 /**
 * 
 * Copyright: Copyright (c) 2018 Jun_Zhou
 * 
-* @ClassName: CodeGeneratorController.java
+* @ClassName: ${templateInfo.entity.entityName}.java
 * @Description: ${codeDes}
 * 
 * @version: ${codeVersion}
@@ -12,34 +12,31 @@ package com.fangshuo.output.Model.${modelNameUpperCamel};
 * @Company: ${company}
 * @date: ${date}
 */
-public class ${modelNameUpperCamel} {
+public class ${templateInfo.entity.entityName} {
 	
-	<#list columnSet as column>
+	<#list templateInfo.entity.propertySet as property>
 	  /**
-	  * @FieldNote(desc="${column.columnComment}", lengthAndType=${column.columnType}, notNull=${column.isNullAble})
+	  * @FieldNote(desc="${property.propertyComment}", lengthAndType=${property.propertyLengthAndType}, notNull=${property.isNullAble})
 	  */
-	  protected String ${column.columnName};
+	  protected String ${property.propertyName};
 	</#list> 
 	
 	
-	<#list columnSet as column>
+	<#list templateInfo.entity.propertySet as property>
 	  /**
-	  * @FieldNote(desc="get${column.columnNameUpperCamel}")
+	  * @FieldNote(desc="get${property.propertyNameUpperCamel}")
 	  */
-	 public String get${column.columnNameUpperCamel}() {
-		return name;
+	 public String get${property.propertyNameUpperCamel}() {
+		return ${property.propertyName};
 	}
 	
-	public void set${column.columnNameUpperCamel}(String ${column.columnName}) {
-		this.${column.columnName} = ${column.columnName};
+	public void set${property.propertyNameUpperCamel}(String ${property.propertyName}) {
+		this.${property.propertyName} = ${property.propertyName};
 	}
 	</#list> 
 
 	@Override
 	public String toString() {
-		return 
-		<#list columnSet as column>
-		"Role [id=" + id + ", name=" + name + "]";
-		</#list> 
+		return ${templateInfo.entity.entityStrirng};
 	}
 }

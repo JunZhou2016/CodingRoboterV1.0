@@ -5,12 +5,16 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fangshuo.codefactory.utils.CodeGeneratorUtils;
 import com.fangshuo.dbinfo.Service.TabInfoService;
 import com.fangshuo.dbinfo.model.Table;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * 
@@ -25,8 +29,9 @@ import com.fangshuo.dbinfo.model.Table;
  * @Site: CERNO
  * @date: 2018年9月25日 下午5:31:56
  */
-@RestController
 @RequestMapping("/codePrinter")
+@Api(value="代码生成控制器",tags = {"代码生成控制器的API"})
+@RestController
 public class RoboterBooter {
 	
 	@Autowired
@@ -36,9 +41,10 @@ public class RoboterBooter {
 	 * [一次查询多个数据库表的信息]
 	 * @return:数据库基础信息的集合;
 	 */
-	@RequestMapping("/printCodeByTables")
+	@RequestMapping(value="/printCodeByTables",method=RequestMethod.POST)
+	@ApiOperation("根据数据表名称生成代码")
 	@ResponseBody
-	public List<Table> getTabInfoSetByCondition() {
+	public List<Table> printCodeByTables() {
 		CodeGeneratorUtils codeGeneratorUtils = new CodeGeneratorUtils();
 		//获取数据库表的实例;
 		List<String> tabNames = new ArrayList<String>();

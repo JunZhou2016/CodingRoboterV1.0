@@ -1,59 +1,42 @@
-package ${basePackage}.Controller.${modelNameUpperCamel};
-import ${basePackage}.Model.${modelNameUpperCamel}.${modelNameUpperCamel};
-import ${basePackage}.Service.${modelNameUpperCamel}.${modelNameUpperCamel}Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.List;
-
+package ${templateInfo.projectStruct}.Parameter.${templateInfo.entity.entityName};
 /**
- *
- * Created by ${author} on ${date}.
- */
-@Controller
-@RequestMapping("/${baseRequestMapping}/")
-public class ${modelNameUpperCamel}Controller {
+* 
+* Copyright: Copyright (c) 2018 Jun_Zhou
+* 
+* @ClassName: ${templateInfo.entity.entityName}Filter.java
+* @Description: ${codeDes}
+* 
+* @version: ${codeVersion}
+* @author: ${author}
+* @Email: 1769676159@qq.com
+* @Company: ${company}
+* @date: ${date}
+*/
+public class ${templateInfo.entity.entityName}Filter {
 
-    @Autowired
-    ${modelNameUpperCamel}Service ${modelNameLowerCamel}Service;
+	<#list templateInfo.entity.propertySet as property>
+	  /**
+	  * @FieldNote(desc="${property.propertyComment}", lengthAndType=${property.propertyLengthAndType}, notNull=${property.isNullAble})
+	  */
+	  protected String ${property.propertyName};
+	</#list> 
+	
+	
+	<#list templateInfo.entity.propertySet as property>
+	  /**
+	  * @FieldNote(desc="get${property.propertyNameUpperCamel}")
+	  */
+	 public String get${property.propertyNameUpperCamel}() {
+		return ${property.propertyName};
+	}
+	
+	public void set${property.propertyNameUpperCamel}(String ${property.propertyName}) {
+		this.${property.propertyName} = ${property.propertyName};
+	}
+	</#list> 
 
-    @RequestMapping("add")
-    @ResponseBody
-    public String add(${modelNameUpperCamel} ${modelNameLowerCamel}) {
-        ${modelNameLowerCamel}Service.save(${modelNameLowerCamel});
-        return "";
-    }
-
-    @RequestMapping("delete")
-    @ResponseBody
-    public String delete(@RequestParam Integer id) {
-	    ${modelNameLowerCamel}Service.deleteById(id);
-	    return "";
-    }
-
-    @RequestMapping("update")
-    @ResponseBody
-    public String update(${modelNameUpperCamel} ${modelNameLowerCamel}) {
-	    ${modelNameLowerCamel}Service.update(${modelNameLowerCamel});
-	    return "";
-    }
-
-    @RequestMapping("detail")
-    @ResponseBody
-    public String detail(@RequestParam Integer id) {
-        ${modelNameUpperCamel} ${modelNameLowerCamel} = ${modelNameLowerCamel}Service.findById(id);
-        return ${modelNameLowerCamel}.toString();
-    }
-
-    @RequestMapping("list")
-    @ResponseBody
-    public String list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
-        PageHelper.startPage(page, size);
-        List<${modelNameUpperCamel}> list = ${modelNameLowerCamel}Service.findAll();
-        PageInfo pageInfo = new PageInfo(list);
-        return list.toString();
-    }
+	@Override
+	public String toString() {
+		return ${templateInfo.entity.entityStrirng};
+	}
 }

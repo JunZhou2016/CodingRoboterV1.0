@@ -1,6 +1,6 @@
-package ${basePackage}.Controller.${modelNameUpperCamel};
-import ${basePackage}.Model.${modelNameUpperCamel}.${modelNameUpperCamel};
-import ${basePackage}.Service.${modelNameUpperCamel}.${modelNameUpperCamel}Service;
+package ${templateInfo.projectStruct}.Controller.${templateInfo.entity.entityName};
+import ${templateInfo.projectStruct}.Model.${templateInfo.entity.entityName}.${templateInfo.entity.entityName};
+import ${templateInfo.projectStruct}.Service.${templateInfo.entity.entityName}.${templateInfo.entity.entityName}Service;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,46 +26,46 @@ import com.github.pagehelper.PageInfo;
 * @date: ${date}
 */
 @Controller
-@RequestMapping("/${baseRequestMapping}")
-public class ${modelNameUpperCamel}Controller {
+@RequestMapping("/${templateInfo.table.tableName}/")
+public class ${templateInfo.entity.entityName}Controller {
 
     @Autowired
-    ${modelNameUpperCamel}Service ${modelNameLowerCamel}Service;
+    ${templateInfo.entity.entityName}Service ${templateInfo.entity.localVariableName}Service;
 
     @RequestMapping("add")
     @ResponseBody
-    public String add(${modelNameUpperCamel} ${modelNameLowerCamel}) {
-        ${modelNameLowerCamel}Service.save(${modelNameLowerCamel});
+    public String add(${templateInfo.entity.entityName} ${templateInfo.entity.localVariableName}) {
+        ${templateInfo.entity.localVariableName}Service.save(${templateInfo.entity.localVariableName});
         return "";
     }
 
     @RequestMapping("delete")
     @ResponseBody
     public String delete(@RequestParam Integer id) {
-	    ${modelNameLowerCamel}Service.deleteById(id);
+	    ${templateInfo.entity.localVariableName}Service.deleteById(id);
 	    return "";
     }
 
     @RequestMapping("update")
     @ResponseBody
-    public String update(${modelNameUpperCamel} ${modelNameLowerCamel}) {
-	    ${modelNameLowerCamel}Service.update(${modelNameLowerCamel});
+    public String update(${templateInfo.entity.entityName} ${templateInfo.entity.localVariableName}) {
+	    ${templateInfo.entity.localVariableName}Service.update(${templateInfo.entity.localVariableName});
 	    return "";
     }
 
     @RequestMapping("detail")
     @ResponseBody
     public String detail(@RequestParam Integer id) {
-        ${modelNameUpperCamel} ${modelNameLowerCamel} = ${modelNameLowerCamel}Service.findById(id);
-        return ${modelNameLowerCamel}.toString();
+        ${templateInfo.entity.entityName} ${templateInfo.entity.localVariableName} = ${templateInfo.entity.localVariableName}Service.findById(id);
+        return ${templateInfo.entity.localVariableName}.toString();
     }
 
     @RequestMapping("list")
     @ResponseBody
     public String list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
         PageHelper.startPage(page, size);
-        List<${modelNameUpperCamel}> list = ${modelNameLowerCamel}Service.findAll();
-        PageInfo<${modelNameUpperCamel}> pageInfo = new PageInfo<${modelNameUpperCamel}>(list);
+        List<${templateInfo.entity.entityName}> list = ${templateInfo.entity.localVariableName}Service.findAll();
+        PageInfo<${templateInfo.entity.entityName}> pageInfo = new PageInfo<${templateInfo.entity.entityName}>(list);
         System.out.println("#########"+pageInfo+"########");//为了去除黄色警告;
         return list.toString();
     }

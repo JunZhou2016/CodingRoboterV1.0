@@ -15,14 +15,14 @@ package com.fangshuo.dbinfo.model;
 
 import java.util.List;
 
-import com.fangshuo.codefactory.utils.StringUtils;
+import com.fangshuo.dbinfo.utils.DBUtils;
 
 public class Table {
 	private String id;// 数据表中列的id;
 	private String tableName;// 数据表的名称;
-	private String modelNameUpperCamel;//首字母大写的实体名称;
-	List<Column> columnSet;// 数据表的列集合;
-
+	private List<Column> columnSet;// 数据表的列集合;
+	private String tableString;//数据表的字符串形式;
+	
 	public String getId() {
 		return id;
 	}
@@ -37,7 +37,6 @@ public class Table {
 
 	public void setTableName(String tableName) {
 		this.tableName = tableName;
-		this.setModelNameUpperCamel(this.tableName);
 	}
 
 	public List<Column> getColumnSet() {
@@ -46,15 +45,19 @@ public class Table {
 
 	public void setColumnSet(List<Column> columnSet) {
 		this.columnSet = columnSet;
+		String tableStringTemp = DBUtils.tableToString(this);
+		this.setTableString(tableStringTemp);
 	}
 
-	public String getModelNameUpperCamel() {
-		return modelNameUpperCamel;
+	public String getTableString() {
+		return tableString;
 	}
 
-	public void setModelNameUpperCamel(String modelNameUpperCamel) {
-		this.modelNameUpperCamel = StringUtils.toUpperCaseFirstOne(tableName);// 首字母大写的实体名称;
+	public void setTableString(String tableString) {
+		this.tableString = tableString;
 	}
+
 
 	
+
 }

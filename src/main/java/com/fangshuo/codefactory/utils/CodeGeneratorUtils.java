@@ -8,8 +8,10 @@ import java.util.Map;
 
 import com.fangshuo.codefactory.cfg.CodeGeneratorConfig;
 import com.fangshuo.codefactory.enums.CodeType;
+import com.fangshuo.dbinfo.model.Entity;
+import com.fangshuo.dbinfo.model.TemplateInfo;
 import com.fangshuo.dbinfo.model.Table;
-import com.google.common.base.CaseFormat;
+import com.fangshuo.dbinfo.utils.DBUtils;
 
 import freemarker.template.Configuration;
 
@@ -36,10 +38,12 @@ public class CodeGeneratorUtils extends CodeGeneratorConfig {
 	public void generateCodeByTable(List<Table> tables) {
 		for (Table tableEle : tables) {
 			generateCodeByTabAndType(tableEle, CodeType.MODEL_TYPE.getTypeName());
+			generateCodeByTabAndType(tableEle, CodeType.PARAMETER_TYPE.getTypeName());
 			generateCodeByTabAndType(tableEle, CodeType.CONTROLLER_TYPE.getTypeName());
 			generateCodeByTabAndType(tableEle, CodeType.SERVICE_TYPE.getTypeName());
 			generateCodeByTabAndType(tableEle, CodeType.SERVICE_IMPL_TYPE.getTypeName());
 			generateCodeByTabAndType(tableEle, CodeType.MAPPER_TYPE.getTypeName());
+			generateCodeByTabAndType(tableEle, CodeType.X_MAPPER_TYPE.getTypeName());
 		}
 	}
 
@@ -52,6 +56,8 @@ public class CodeGeneratorUtils extends CodeGeneratorConfig {
 	public void generateCodeByTabAndType(Table tableEle, String codeType) {
 		if (codeType.equals(CodeType.MODEL_TYPE.getTypeName())) {
 			codeProducing(tableEle, codeType);
+		}else if (codeType.equals(CodeType.PARAMETER_TYPE.getTypeName())) {
+			codeProducing(tableEle, codeType);
 		} else if (codeType.equals(CodeType.CONTROLLER_TYPE.getTypeName())) {
 			codeProducing(tableEle, codeType);
 		} else if (codeType.equals(CodeType.SERVICE_TYPE.getTypeName())) {
@@ -59,6 +65,8 @@ public class CodeGeneratorUtils extends CodeGeneratorConfig {
 		} else if (codeType.equals(CodeType.SERVICE_IMPL_TYPE.getTypeName())) {
 			codeProducing(tableEle, codeType);
 		} else if (codeType.equals(CodeType.MAPPER_TYPE.getTypeName())) {
+			codeProducing(tableEle, codeType);
+		}else if (codeType.equals(CodeType.X_MAPPER_TYPE.getTypeName())) {
 			codeProducing(tableEle, codeType);
 		}
 	}
@@ -70,44 +78,54 @@ public class CodeGeneratorUtils extends CodeGeneratorConfig {
 	 * @param codeType:将要生成的代码类型的归属;
 	 */
 	public void codeProducing(Table tableEle, String codeType) {
+		TemplateInfo templateInfo = new TemplateInfo();
+		Table source = tableEle;
+		Entity target = new Entity();
+		DBUtils.copyTabToEntity(source, target);
+		templateInfo.setEntity(target);
+		templateInfo.setTable(source);
+		
 		Configuration cfg = CfgUtils.getFreemarkerConfiguration();
 
-		String modelName = tableEle.getTableName();
-
 		// 页面相关;
-		String modelNameUpperCamel = StringUtils.toUpperCaseFirstOne(modelName);// 首字母大写的实体名称;
-		String modulePackName = SYS_SEPARATOR + StringUtils.toUpperCaseFirstOne(modelName) + SYS_SEPARATOR;// 模块代码分属的包名;
+		String entityName = target.getEntityName();//实体名称;
+		String modulePackName = SYS_SEPARATOR + entityName + SYS_SEPARATOR;// 模块代码分属的包名;
 		String serviceImplExPath = SYS_SEPARATOR + "Impl" + SYS_SEPARATOR;// ServiceImpl类型代码的扩展路径;
-		Map<String, Object> data = initCommonInfos(tableEle); // 生成代码中的公用信息;
+		Map<String, Object> data = initCommonInfos(templateInfo); // 生成代码中的公用信息;
 
 		// 生成文件相关;
 		String codeTypeUpperCamel = StringUtils.toUpperCaseFirstOne(codeType);// 首字母大写的codeType;
 		String codeTypeLowerCamel = StringUtils.toLowerCaseFirstOne(codeType);// 首字母小写的codeType;
 		String codeCategory = codeTypeUpperCamel;// 代码归属类别;
-
+		
 		// 针对codeType的特例进行调整;
-		codeCategory = "Mapper".equals(codeCategory) ? "Dao" : codeCategory;// 将Mapper更正为Dao;
-		codeCategory = "ServiceImpl".equals(codeCategory) ? codeCategory.substring(0, codeCategory.length() - 4)
+		codeCategory = CodeType.MAPPER_TYPE.getTypeName().equals(codeCategory) ? DAO_LEVEL_NAME: codeCategory;// 将Mapper更正为Dao;
+		codeCategory = CodeType.SERVICE_IMPL_TYPE.getTypeName().equals(codeCategory) ? codeCategory.substring(0, codeCategory.length() - 4)
 				: codeCategory;// 更新代类别;
 		String codeCategoryWithSeparator = SYS_SEPARATOR + codeCategory + SYS_SEPARATOR;// 带系统分隔符的代码归属类别;
 		String filePathPrefix = PROJECT_PATH + JAVA_PATH + COMMON_CODE_PATH + codeCategoryWithSeparator
 				+ modulePackName;
 		String serviceImplFilePathPrefix = PROJECT_PATH + JAVA_PATH + COMMON_CODE_PATH + codeCategoryWithSeparator
 				+ modulePackName + serviceImplExPath;
-		filePathPrefix = "ServiceImpl".equals(codeType) ? serviceImplFilePathPrefix : filePathPrefix;// 适配生成文件的存储路径;
-		String fileName = modelNameUpperCamel + codeTypeUpperCamel + ".java";// 生成代码的名称;
-		String modelFileName = modelNameUpperCamel + ".java";// 生成的实体类的代码名称;
-		fileName = "Model".equals(codeCategory) ? modelFileName : fileName;// 调整Model类的名称;
+		filePathPrefix = CodeType.SERVICE_IMPL_TYPE.getTypeName().equals(codeType) ? serviceImplFilePathPrefix : filePathPrefix;// 适配生成文件的存储路径;
+		String fileSuffix = JAVA_FILE_SUFFIX;//文件后缀;
+		fileSuffix = CodeType.X_MAPPER_TYPE.getTypeName().equals(codeType) ? XML_FILE_SUFFIX : fileSuffix;//调增文件类型为xml;
+		
+		codeTypeUpperCamel = CodeType.PARAMETER_TYPE.getTypeName().equals(codeType) ? FILTER_CODE_TYPE_UPPERCAMEL : codeTypeUpperCamel;// 适配Filter生成文件格式;
+		
+		String fileName = entityName + codeTypeUpperCamel + fileSuffix;// 生成代码的名称;
+		String modelFileName = entityName + fileSuffix;// 生成的实体类的代码名称;
+		fileName = CodeType.MODEL_TYPE.getTypeName().equals(codeCategory) ? modelFileName : fileName;// 调整Model类的名称;
 
-		String templateFileName = StringUtils.toLowerCaseFirstOne(codeTypeLowerCamel) + ".ftl";// 对应的模板文件的名称;
+		String templateFileName = codeTypeLowerCamel + FTL_FILE_SUFFIX;// 对应的模板文件的名称;
 
 		String filePath = filePathPrefix + fileName;// 生成文件的存储路径;
 		try {
-			File controllerFile = new File(filePath);
-			if (!controllerFile.getParentFile().exists()) {
-				controllerFile.getParentFile().mkdirs();
+			File codeFile = new File(filePath);
+			if (!codeFile.getParentFile().exists()) {
+				codeFile.getParentFile().mkdirs();
 			}
-			cfg.getTemplate(templateFileName).process(data, new FileWriter(controllerFile));
+			cfg.getTemplate(templateFileName).process(data, new FileWriter(codeFile));
 			Logger.info(fileName + "生成成功!");
 		} catch (Exception e) {
 			throw new RuntimeException(fileName + "生成失败!", e);
@@ -120,8 +138,7 @@ public class CodeGeneratorUtils extends CodeGeneratorConfig {
 	 * 
 	 * @param tableEle:将要进行代码生成的目标数据表格； @return：页面展示需要的信息;
 	 */
-	private Map<String, Object> initCommonInfos(Table tableEle) {
-		String modelNameUpperCamel = tableEle.getModelNameUpperCamel();// 首字为大写的模块名称名，如模块名称为“User”==>“User”
+	private Map<String, Object> initCommonInfos(TemplateInfo templateInfo) {
 		String codeDes = "A Java file created by CodingRoboter!";// 代码描述的默认值;
 		String defaultVersion = "v1.0.0";// 代码的默认版本号;
 		String company = "FangShuo";
@@ -129,16 +146,14 @@ public class CodeGeneratorUtils extends CodeGeneratorConfig {
 		Map<String, Object> data = new HashMap<>();
 		data.put("date", DATE);
 		data.put("author", AUTHOR);
-		data.put("baseRequestMapping", StringUtils.toLowerCaseFirstOne(modelNameUpperCamel));
-		data.put("modelNameUpperCamel", modelNameUpperCamel);
-		data.put("modelNameLowerCamel", CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, modelNameUpperCamel));
 		data.put("basePackage", BASE_PACKAGE);
 		data.put("codeDes", codeDes);
 		data.put("codeVersion", defaultVersion);
 		data.put("company", company);
-		//生成实体类所需的必要信息;
-		data.put("columnSet", tableEle.getColumnSet());
+		
+		//页面所需的数据表和实体的动态信息;
+		data.put("templateInfo", templateInfo);
 		return data;
 	}
-
+	
 }

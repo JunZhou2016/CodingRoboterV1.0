@@ -1,7 +1,16 @@
 package com.fangshuo.codefactory.utils;
 /**
- * 字符串操作常用方法集
- * Created by zhh on 2017/08/16.
+ * 
+* Copyright: Copyright (c) 2018 Jun_Zhou
+* 
+* @ClassName: StringUtils.java
+* @Description: 字符串操作常用方法集
+* 
+* @version: v1.0.0
+* @author: JunZhou
+* @Email: 1769676159@qq.com
+* @Site: CERNO
+* @date: 2018年9月27日 上午10:00:03
  */
 public class StringUtils {
 	
