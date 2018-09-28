@@ -12,7 +12,7 @@ import com.fangshuo.output.${entityInfo.entityName}.Service.${entityInfo.entityN
 * 
 * Copyright: Copyright (c) 2018 Jun_Zhou
 * 
-* @ClassName: ${entityInfo.entityName}Service.java
+* @ClassName: ${entityInfo.entityName}ServiceImpl.java
 * @Description: ${codeDes}
 * 
 * @version: ${codeVersion}
