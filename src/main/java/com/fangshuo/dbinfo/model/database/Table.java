@@ -1,4 +1,4 @@
-package com.fangshuo.dbinfo.model;
+package com.fangshuo.dbinfo.model.database;
 /**
  * 
 * Copyright: Copyright (c) 2018 Jun_Zhou
@@ -21,8 +21,8 @@ public class Table {
 	private String id;// 数据表中列的id;
 	private String tableName;// 数据表的名称;
 	private String tableComment;// 数据表的注释;
-	private List<Column> columnSet;// 数据表的列集合;
 	private String tableString;//数据表的字符串形式;
+	private List<Column> columnSet;// 数据表的列集合;
 	
 	public String getId() {
 		return id;

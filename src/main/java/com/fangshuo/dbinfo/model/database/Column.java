@@ -1,4 +1,4 @@
-package com.fangshuo.dbinfo.model;
+package com.fangshuo.dbinfo.model.database;
 
 import com.fangshuo.codefactory.utils.StringUtils;
 import com.fangshuo.dbinfo.utils.DBUtils;
@@ -18,7 +18,7 @@ import com.fangshuo.dbinfo.utils.DBUtils;
  */
 public class Column {
 	private String id;// 数据表中列的id;
-	private String tableName;// 数据表的名称;
+	//private String tableName;// 数据表的名称;
 	private String columnName;// 列名;
 	private String ordinalPosition;// 数据列在表中的序号;
 	private String columnDefault;// 数据列的默认值;
@@ -45,7 +45,7 @@ public class Column {
 	
 	public Column(String tableName, String columnName) {
 		super();
-		this.tableName = tableName;
+		//this.tableName = tableName;
 		this.columnName = columnName;
 	}
 	
@@ -57,13 +57,13 @@ public class Column {
 		this.id = id;
 	}
 
-	public String getTableName() {
+	/*public String getTableName() {
 		return tableName;
 	}
 
 	public void setTableName(String tableName) {
 		this.tableName = tableName;
-	}
+	}*/
 
 	public String getColumnName() {
 		return columnName;
@@ -158,7 +158,7 @@ public class Column {
 
 	@Override
 	public String toString() {
-		return "TabInfo [id=" + id + ", tableName=" + tableName + ", columnName=" + columnName + ", ordinalPosition="
+		return "TabInfo [id=" + id + ",columnName=" + columnName + ", ordinalPosition="
 				+ ordinalPosition + ", columnDefault=" + columnDefault + ", isNullAble=" + isNullAble + ", dataType="
 				+ dataType + ", characterMaxiMumLength=" + characterMaxiMumLength + ", columnType=" + columnType
 				+ ", columnKey=" + columnKey + ", columnComment=" + columnComment + "]";

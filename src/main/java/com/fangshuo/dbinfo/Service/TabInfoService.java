@@ -2,10 +2,10 @@ package com.fangshuo.dbinfo.Service;
 
 import java.util.List;
 
-import com.fangshuo.dbinfo.model.Table;
+import com.fangshuo.dbinfo.model.database.Table;
 
 public interface TabInfoService {
 	
-	List<Table> getTabInfoSetByCondition(List<String> tabNames);
+	List<Table> getTabInfoByTableName(List<String> tabNames);
 
 }

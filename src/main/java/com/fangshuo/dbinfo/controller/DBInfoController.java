@@ -1,15 +1,14 @@
 package com.fangshuo.dbinfo.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fangshuo.dbinfo.Service.DbInfoService;
-import com.fangshuo.dbinfo.model.Database;
+import com.fangshuo.dbinfo.model.database.Database;
 import com.fangshuo.lib4fangshuo.model.ResObject;
 
 import io.swagger.annotations.Api;
@@ -36,15 +35,16 @@ public class DBInfoController {
 	private DbInfoService dbInfoService;
 	
 	/**
-	 * 获取数据库属性信息;
-	 * @return:String;
+	 * 根据条件获取数据库属性信息;
+	 * @param dbFilter
+	 * @return
 	 */
 	@ApiOperation("查询数据库基础信息")
-	@RequestMapping(value="/get-dbInfos",method = RequestMethod.POST)
+	@RequestMapping(value="/get-dbInfosByCondition",method = RequestMethod.POST)
 	@ResponseBody
-	public ResObject<List<Database>> getDbInfos() {
-		List<Database> dbInfo = dbInfoService.getDbInfos();
-		ResObject<List<Database>> reqObject = new ResObject<List<Database>>();
+	public ResObject<Database> getDBInfosByCondition(@RequestBody Database dbFilter) {
+		Database dbInfo = dbInfoService.getDBInfosByCondition(dbFilter);
+		ResObject<Database> reqObject = new ResObject<Database>();
 		reqObject.setObject(dbInfo);
 		return reqObject;
 	}

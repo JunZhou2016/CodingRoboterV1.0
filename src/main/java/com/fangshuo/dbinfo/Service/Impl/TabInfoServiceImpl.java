@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.fangshuo.dbinfo.Service.TabInfoService;
 import com.fangshuo.dbinfo.dao.TabInfoMapper;
-import com.fangshuo.dbinfo.model.Table;
+import com.fangshuo.dbinfo.model.database.Table;
 
 @Service
 public class TabInfoServiceImpl implements TabInfoService{
@@ -21,9 +21,9 @@ public class TabInfoServiceImpl implements TabInfoService{
 	 * @return:数据库信息集合;
 	 */
 	@Override
-	public List<Table> getTabInfoSetByCondition(List<String> tabNames) {
+	public List<Table> getTabInfoByTableName(List<String> tabNames) {
 		// TODO Auto-generated method stub
-		return tabInfoMapper.getTabInfoSetByCondition(tabNames);
+		return tabInfoMapper.getTabInfoByTableName(tabNames);
 	}
 	
 }

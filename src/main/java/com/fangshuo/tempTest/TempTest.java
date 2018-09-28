@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.fangshuo.codefactory.utils.StringUtils;
-import com.fangshuo.dbinfo.model.Column;
+import com.fangshuo.dbinfo.model.database.Column;
 
 public class TempTest {
 	public static void main(String[] args) {
@@ -44,7 +44,7 @@ public class TempTest {
 	
 	}
 	
-	public static String listToString(List<Column> columnList) {
+	/*public static String listToString(List<Column> columnList) {
 		Iterator<Column> it = columnList.iterator();
 		String modelFormatStr = null;
 		if (columnList.isEmpty()) {
@@ -63,5 +63,5 @@ public class TempTest {
 			    modelFormatStr = modelFormatStr + "]\"";
 		   }
 		return modelFormatStr;
-	}
+	}*/
 }

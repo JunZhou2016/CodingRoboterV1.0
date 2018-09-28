@@ -1,4 +1,4 @@
-package com.fangshuo.dbinfo.model;
+package com.fangshuo.dbinfo.model.project;
 
 /**
  * 

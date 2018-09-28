@@ -1,11 +1,9 @@
 package com.fangshuo.dbinfo.Service;
 
-import java.util.List;
-
-import com.fangshuo.dbinfo.model.Database;
+import com.fangshuo.dbinfo.model.database.Database;
 
 public interface DbInfoService {
 
-	List<Database> getDbInfos();
+	Database getDBInfosByCondition(Database dbFilter);
 
 }

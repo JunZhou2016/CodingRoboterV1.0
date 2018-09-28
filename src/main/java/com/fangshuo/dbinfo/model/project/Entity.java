@@ -1,4 +1,4 @@
-package com.fangshuo.dbinfo.model;
+package com.fangshuo.dbinfo.model.project;
 
 import java.util.List;
 
@@ -20,8 +20,9 @@ import com.fangshuo.dbinfo.utils.DBUtils;
 public class Entity {
 	private String entityName;// 实体名称;
 	private String localVariableName;//实体内的局部变量的名称,实体名称的首字母小写；
-	private List<Property> propertySet;//实体的属性集合;
 	private String entityStrirng;//实体的格式化字符串信息;
+	private String entityDes;//实体类的描述信息;
+	private List<Property> propertySet;//实体的属性集合;
 	
 	public String getEntityName() {
 		return entityName;
@@ -54,5 +55,13 @@ public class Entity {
 
 	public void setLocalVariableName(String localVariableName) {
 		this.localVariableName = DBUtils.toLowerCaseFirstOne(localVariableName);
+	}
+
+	public String getEntityDes() {
+		return entityDes;
+	}
+
+	public void setEntityDes(String entityDes) {
+		this.entityDes = entityDes;
 	};
 }

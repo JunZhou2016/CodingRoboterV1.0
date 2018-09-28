@@ -5,10 +5,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.fangshuo.codefactory.utils.StringUtils;
-import com.fangshuo.dbinfo.model.Column;
-import com.fangshuo.dbinfo.model.Entity;
-import com.fangshuo.dbinfo.model.Property;
-import com.fangshuo.dbinfo.model.Table;
+import com.fangshuo.dbinfo.model.database.Column;
+import com.fangshuo.dbinfo.model.database.Database;
+import com.fangshuo.dbinfo.model.database.Table;
+import com.fangshuo.dbinfo.model.project.Entity;
+import com.fangshuo.dbinfo.model.project.Project;
+import com.fangshuo.dbinfo.model.project.Property;
 
 /**
  * 
@@ -26,25 +28,61 @@ import com.fangshuo.dbinfo.model.Table;
 public class DBUtils extends StringUtils {
 
 	/**
-	 * 复制表格属性到实体的的方法;
+	 * 复制数据库信息到项目实体中；
 	 * 
-	 * @param source:源表格数据;
-	 * @param target:目标实体对象;
+	 * @param source:源数据库的数据;
+	 * @param target:目标项目实体对象;
 	 */
-	public static void copyTabToEntity(Table source, Entity target) {
+	public static void copyDBToProject(Database source, Project target) {
 		try {
-			String tableName = source.getTableName();// 数据库表名称;
-			String entityName = getEntityNameByTabName(tableName);// 实体名称,首字母大写;
-			target.setEntityName(entityName);
+			
+			String dataBaseName = source.getDbName();
+			String	proJectName = DBUtils.underScoreCase2CamelCase(dataBaseName);
+			target.setProJectName(proJectName);//项目名称;
+			
+			List<Table>  sourceTableList = source.getTableSet();//数据库中数据表的集合;
+			List<Entity> targetEntityList = new ArrayList<Entity>();//项目中实体的集合;
+			
+			//复制表格信息道实体中;
+			copyTabToEntity(sourceTableList,targetEntityList);
+			
+			//挂载数据到集合;
+			target.setEntitySet(targetEntityList);
+		} catch (Exception e) {
+			throw new RuntimeException("########表数据迁移失败!########", e);
+		}
+	}
+	
+	/**
+	 * 复制表格信息道实体中;
+	 * @param sourceTable:源表格集合;
+	 * @param targetEntity:目标实体对象的集合;
+	 */
+	public static void copyTabToEntity(List<Table> sourceTableList, List<Entity> targetEntityList) {
+		try {
+			for (Table source : sourceTableList) {
+				Entity target = new Entity();
+				
+				String tableName = source.getTableName();// 数据库表名称;
+				String entityName = getEntityNameByTabName(tableName);// 实体名称,首字母大写;
+				target.setEntityName(entityName);
+				
+				String tableComment = source.getTableComment();//数据库中表的注释;
+				String entityDes = tableComment;//实体描述;
+				target.setEntityDes(entityDes);
 
-			List<Column> columnSet = new ArrayList<Column>();// 数据表的列集合;
-			columnSet.addAll(source.getColumnSet());
-			List<Property> propertySet = castColumnSet2PropertySet(columnSet);// 实体的属性集合;
-			target.setPropertySet(propertySet);
+				List<Column> columnSet = new ArrayList<Column>();// 数据表的列集合;
+				columnSet.addAll(source.getColumnSet());
+				List<Property> propertySet = castColumnSet2PropertySet(columnSet);// 实体的属性集合;
+				target.setPropertySet(propertySet);
 
-			//获取实体的toString()字符串;
-			String entityStrirng = DBUtils.entityToString(target);
-			target.setEntityStrirng(entityStrirng);
+				//获取实体的toString()字符串;
+				String entityStrirng = DBUtils.entityToString(target);
+				target.setEntityStrirng(entityStrirng);
+				
+				//挂载数据到集合中;
+				targetEntityList.add(target);
+			}
 		} catch (Exception e) {
 			throw new RuntimeException("########表数据迁移失败!########", e);
 		}

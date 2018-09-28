@@ -1,5 +1,8 @@
 package com.fangshuo.dbinfo.model;
 
+import com.fangshuo.dbinfo.model.database.Database;
+import com.fangshuo.dbinfo.model.project.Project;
+
 /**
  * 
  * Copyright: Copyright (c) 2018 Jun_Zhou
@@ -13,25 +16,27 @@ package com.fangshuo.dbinfo.model;
  * @Site: CERNO
  * @date: 2018年9月27日 下午12:48:18
  */
-public class TemplateInfo {
-	private Entity entity;// 实体;
-	private Table table;// 数据表;
+public class ProjectPageInfo {
+	// private Entity entity;// 实体;
+	// private Table table;// 数据表;
+	private Database database;// 数据库实体;
+	private Project project;// 项目实体;
 	private String projectStruct = "com.fangshuo.output";// 项目结构【项目的路径,用于匹配实际项目的结构】<==>basePackage;
 
-	public Entity getEntity() {
-		return entity;
+	public Database getDatabase() {
+		return database;
 	}
 
-	public void setEntity(Entity entity) {
-		this.entity = entity;
+	public void setDatabase(Database database) {
+		this.database = database;
 	}
 
-	public Table getTable() {
-		return table;
+	public Project getProject() {
+		return project;
 	}
 
-	public void setTable(Table table) {
-		this.table = table;
+	public void setProject(Project project) {
+		this.project = project;
 	}
 
 	public String getProjectStruct() {
@@ -41,4 +46,5 @@ public class TemplateInfo {
 	public void setProjectStruct(String projectStruct) {
 		this.projectStruct = projectStruct;
 	}
+
 }

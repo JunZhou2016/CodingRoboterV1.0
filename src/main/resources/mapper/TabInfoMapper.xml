@@ -2,12 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fangshuo.dbinfo.dao.TabInfoMapper">
 
-	<!-- 数据库表的基础信息列; -->
-	<resultMap id="BaseResultMap"
-		type="com.fangshuo.dbinfo.model.Column">
+	<!-- 查询结果到Table实体的映射; -->
+	<resultMap id="ResultMap4Tab"
+		type="com.fangshuo.dbinfo.model.database.Table">
 		<result column="id" property="id" jdbcType="INTEGER" />
 		<result column="TABLE_NAME" property="tableName"
 			jdbcType="VARCHAR" />
+		<result column="TABLE_COMMENT" property="tableComment"
+		jdbcType="VARCHAR" />
+		<collection property="columnSet"
+			ofType="com.fangshuo.dbinfo.model.Column"
+			javaType="java.util.ArrayList" select="getTabColumnsByTabName"
+			column="TABLE_NAME">
+		</collection>
+	</resultMap>
+	
+	<!-- 查询结果到Column实体的映射 -->
+	<resultMap id="ResultMap4Col"
+		type="com.fangshuo.dbinfo.model.database.Column">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<!-- <result column="TABLE_NAME" property="tableName"
+			jdbcType="VARCHAR" /> -->
 		<result column="COLUMN_NAME" property="columnName"
 			jdbcType="VARCHAR" />
 		<result column="ORDINAL_POSITION" property="ordinalPosition"
@@ -28,36 +43,23 @@
 			jdbcType="VARCHAR" />
 	</resultMap>
 
-	<!-- 查询结果到数据库集合TabInfoSet的映射; -->
-	<resultMap id="ResultMap4TabINFOSET"
-		type="com.fangshuo.dbinfo.model.Table">
-		<result column="id" property="id" jdbcType="INTEGER" />
-		<result column="TABLE_NAME" property="tableName"
-			jdbcType="VARCHAR" />
-		<collection property="columnSet"
-			ofType="com.fangshuo.dbinfo.model.TabInfo"
-			javaType="java.util.ArrayList" select="getTabInfosByTabName"
-			column="TABLE_NAME">
-		</collection>
-	</resultMap>
+	<!-- 数据表集合的查询列 -->
+	<sql id="Base_Column_List_4_Tab">
+		@rownum:=@rownum+1 as id,TABLE_NAME,TABLE_COMMENT
+	</sql>
 
 	<!-- 数据表基础信息列; -->
-	<sql id="Base_Column_List">
+	<sql id="Base_Column_List_4_Col">
 		@rownum:=@rownum+1 as id,
-		TABLE_NAME,COLUMN_NAME,ORDINAL_POSITION,COLUMN_DEFAULT,IS_NULLABLE,
+		COLUMN_NAME,ORDINAL_POSITION,COLUMN_DEFAULT,IS_NULLABLE,
 		DATA_TYPE,CHARACTER_MAXIMUM_LENGTH,COLUMN_TYPE,COLUMN_KEY,COLUMN_COMMENT
 	</sql>
 
-	<!-- 数据表集合的查询列 -->
-	<sql id="THE_TABNAME_MATCH_CONDITION">
-		@rownum:=@rownum+1 as id,TABLE_NAME
-	</sql>
-
 	<!-- 根据数据库名称查询数据库的基础信息; -->
-	<select id="getTabInfosByTabName"
-		parameterType="java.lang.String" resultMap="BaseResultMap">
+	<select id="getTabColumnsByTabName"
+		parameterType="java.lang.String" resultMap="ResultMap4Col">
 		select
-		<include refid="Base_Column_List" />
+		<include refid="Base_Column_List_4_Col" />
 		from
 		(select @rownum:=0) as R,
 		information_schema.COLUMNS where
@@ -67,25 +69,39 @@
 		jdbcType=VARCHAR}
 	</select>
 
-	<!-- 查询满足条件的所有数据库表名称; -->
-	<select id="getTabInfoSetByCondition"
-		parameterType="java.util.List" resultMap="ResultMap4TabINFOSET">
+	<!-- 根据数据库表名称询数据库表的基础信息 -->
+	<select id="getTabInfoByTableName"
+		    parameterType="java.lang.String" resultMap="ResultMap4Tab">
 		select
-		<include refid="THE_TABNAME_MATCH_CONDITION" />
+		<include refid="Base_Column_List_4_Tab" />
 		from
 		(select @rownum:=0) as R,
-		information_schema.COLUMNS
+		information_schema.TABLES
 		<where>
-			and TABLE_SCHEMA = (select database())
-			<if test="list != null and list.size()>0">
-				and TABLE_NAME in
-				<foreach collection="list" index="index" item="tab_name"
-					open="(" separator="," close=")">
-					#{tab_name}
-				</foreach>
-			</if>
+			and 
+			TABLE_SCHEMA = (select database())
+	    	and 
+	    	TABLE_NAME in
+	    	<foreach collection="list" index="index" item="tab_name_ele"
+				open="(" separator="," close=")">
+				#{tab_name_ele}
+			</foreach>
 		</where>
-		GROUP BY TABLE_NAME
+	</select>
+	
+	<!-- 根据数据库表名称的集合查询数据库表的基础信息 -->
+	<select id="getTabInfoByTabNameSet"
+		    parameterType="java.lang.String" resultMap="ResultMap4Tab">
+		select
+		<include refid="Base_Column_List_4_Tab" />
+		from
+		(select @rownum:=0) as R,
+		information_schema.TABLES
+		<where>
+			TABLE_SCHEMA = (select database())
+				and 
+			FIND_IN_SET(TABLE_NAME,#{TAB_NAME_SET,jdbcType=VARCHAR})
+		</where>
 	</select>
 
 </mapper> 

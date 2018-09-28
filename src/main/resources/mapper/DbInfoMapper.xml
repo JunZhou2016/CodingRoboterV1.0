@@ -2,26 +2,38 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fangshuo.dbinfo.dao.DBInfoMapper">
 	<resultMap id="BaseResultMap"
-		type="com.fangshuo.dbinfo.model.Database">
+		type="com.fangshuo.dbinfo.model.database.Database">
 		<result column="id" property="id" jdbcType="INTEGER" />
-		<result column="TABLE_NAME" property="tableName"
+		<result column="DB_NAME" property="dbName"
 			jdbcType="VARCHAR" />
-		<result column="TABLE_COMMENT" property="tableComment"
-			jdbcType="VARCHAR" />
+		<result column="TAB_NAME_SET" property="tableNameSet"
+		jdbcType="VARCHAR" />
+		<collection property="tableSet"
+			ofType="com.fangshuo.dbinfo.model.database.Table"
+			javaType="java.util.ArrayList" select="com.fangshuo.dbinfo.dao.TabInfoMapper.getTabInfoByTabNameSet"
+			column="TAB_NAME_SET">
+		</collection>
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		@rownum:=@rownum+1 as id, InSc.TABLE_NAME,InSc.TABLE_COMMENT
+		@rownum:=@rownum+1 as id,TABLE_SCHEMA as DB_NAME,GROUP_CONCAT(TABLE_NAME) as TAB_NAME_SET
 	</sql>
 
 	<!-- 查询数据库的基础信息; -->
-	<select id="getDbInfos" resultMap="BaseResultMap">
+	<select id="getDBInfosByCondition" parameterType="com.fangshuo.dbinfo.model.database.Database" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
-		from
-		(select @rownum:=0) as R,
-		information_schema.TABLES as InSc
-		where
-		TABLE_SCHEMA=(select database());
+		from (select @rownum:=0) as R,information_schema.TABLES 
+		<where>
+		    TABLE_SCHEMA=(select database())
+		    <if test="tableSet != null and tableSet.size()>0"> 
+		    	and TABLE_NAME in
+		    	<foreach collection="tableSet" index="index" item="tab_ele"
+					open="(" separator="," close=")">
+					#{tab_ele.tableName}
+				</foreach>
+		    </if>
+		</where> 
+		GROUP BY(TABLE_SCHEMA)
 	</select>
 </mapper> 
