@@ -1,9 +1,9 @@
-package ${templateInfo.projectStruct}.Parameter.${templateInfo.entity.entityName};
+package ${projectInfo.projectStruct}.${entityInfo.entityName}.Parameter;
 /**
 * 
 * Copyright: Copyright (c) 2018 Jun_Zhou
 * 
-* @ClassName: ${templateInfo.entity.entityName}Filter.java
+* @ClassName: ${entityInfo.entityName}Filter.java
 * @Description: ${codeDes}
 * 
 * @version: ${codeVersion}
@@ -12,9 +12,9 @@ package ${templateInfo.projectStruct}.Parameter.${templateInfo.entity.entityName
 * @Company: ${company}
 * @date: ${date}
 */
-public class ${templateInfo.entity.entityName}Filter {
+public class ${entityInfo.entityName}Filter {
 
-	<#list templateInfo.entity.propertySet as property>
+	<#list entityInfo.propertySet as property>
 	  /**
 	  * @FieldNote(desc="${property.propertyComment}", lengthAndType=${property.propertyLengthAndType}, notNull=${property.isNullAble})
 	  */
@@ -22,7 +22,7 @@ public class ${templateInfo.entity.entityName}Filter {
 	</#list> 
 	
 	
-	<#list templateInfo.entity.propertySet as property>
+	<#list entityInfo.propertySet as property>
 	  /**
 	  * @FieldNote(desc="get${property.propertyNameUpperCamel}")
 	  */
@@ -37,6 +37,6 @@ public class ${templateInfo.entity.entityName}Filter {
 
 	@Override
 	public String toString() {
-		return ${templateInfo.entity.entityStrirng};
+		return ${entityInfo.entityStrirng};
 	}
 }

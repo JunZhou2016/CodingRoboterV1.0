@@ -1,9 +1,9 @@
-package ${templateInfo.projectStruct}.Model.${templateInfo.entity.entityName};
+package ${projectInfo.projectStruct}.${entityInfo.entityName}.Model;
 /**
 * 
 * Copyright: Copyright (c) 2018 Jun_Zhou
 * 
-* @ClassName: ${templateInfo.entity.entityName}.java
+* @ClassName: ${entityInfo.entityName}.java
 * @Description: ${codeDes}
 * 
 * @version: ${codeVersion}
@@ -12,9 +12,9 @@ package ${templateInfo.projectStruct}.Model.${templateInfo.entity.entityName};
 * @Company: ${company}
 * @date: ${date}
 */
-public class ${templateInfo.entity.entityName} {
+public class ${entityInfo.entityName} {
 	
-	<#list templateInfo.entity.propertySet as property>
+	<#list entityInfo.propertySet as property>
 	  /**
 	  * @FieldNote(desc="${property.propertyComment}", lengthAndType=${property.propertyLengthAndType}, notNull=${property.isNullAble})
 	  */
@@ -22,7 +22,7 @@ public class ${templateInfo.entity.entityName} {
 	</#list> 
 	
 	
-	<#list templateInfo.entity.propertySet as property>
+	<#list entityInfo.propertySet as property>
 	  /**
 	  * @FieldNote(desc="get${property.propertyNameUpperCamel}")
 	  */
@@ -37,6 +37,6 @@ public class ${templateInfo.entity.entityName} {
 
 	@Override
 	public String toString() {
-		return ${templateInfo.entity.entityStrirng};
+		return ${entityInfo.entityStrirng};
 	}
 }

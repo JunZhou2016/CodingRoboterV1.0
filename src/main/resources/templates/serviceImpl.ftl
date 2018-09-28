@@ -1,18 +1,18 @@
-package ${templateInfo.projectStruct}.Service.${templateInfo.entity.entityName}.Impl;
+package ${projectInfo.projectStruct}.${entityInfo.entityName}.Service.Impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import com.fangshuo.output.Dao.${templateInfo.entity.entityName}.${templateInfo.entity.entityName}Mapper;
-import com.fangshuo.output.Model.${templateInfo.entity.entityName}.${templateInfo.entity.entityName};
-import com.fangshuo.output.Service.${templateInfo.entity.entityName}.${templateInfo.entity.entityName}Service;
+import com.fangshuo.output.${entityInfo.entityName}.Dao.${entityInfo.entityName}Mapper;
+import com.fangshuo.output.${entityInfo.entityName}.Model.${entityInfo.entityName};
+import com.fangshuo.output.${entityInfo.entityName}.Service.${entityInfo.entityName}Service;
 
 /**
 * 
 * Copyright: Copyright (c) 2018 Jun_Zhou
 * 
-* @ClassName: ${templateInfo.entity.entityName}Service.java
+* @ClassName: ${entityInfo.entityName}Service.java
 * @Description: ${codeDes}
 * 
 * @version: ${codeVersion}
@@ -22,39 +22,39 @@ import com.fangshuo.output.Service.${templateInfo.entity.entityName}.${templateI
 * @date: ${date}
 */
 @Controller
-public class ${templateInfo.entity.entityName}ServiceImpl implements ${templateInfo.entity.entityName}Service{
+public class ${entityInfo.entityName}ServiceImpl implements ${entityInfo.entityName}Service{
 	
 	@Autowired
-	${templateInfo.entity.entityName}Mapper ${templateInfo.entity.localVariableName}Mapper;
+	${entityInfo.entityName}Mapper ${entityInfo.localVariableName}Mapper;
 	
 	@Override
-	public void save(${templateInfo.entity.entityName} ${templateInfo.entity.localVariableName}) {
+	public void save(${entityInfo.entityName} ${entityInfo.localVariableName}) {
 		// TODO Auto-generated method stub
-		${templateInfo.entity.localVariableName}Mapper.save(${templateInfo.entity.localVariableName});
+		${entityInfo.localVariableName}Mapper.save(${entityInfo.localVariableName});
 	}
 
 	@Override
 	public void deleteById(Integer id) {
 		// TODO Auto-generated method stub
-		${templateInfo.entity.localVariableName}Mapper.deleteById(id);
+		${entityInfo.localVariableName}Mapper.deleteById(id);
 	}
 
 	@Override
-	public void update(${templateInfo.entity.entityName} ${templateInfo.entity.localVariableName}) {
+	public void update(${entityInfo.entityName} ${entityInfo.localVariableName}) {
 		// TODO Auto-generated method stub
-		${templateInfo.entity.localVariableName}Mapper.update(${templateInfo.entity.localVariableName});
+		${entityInfo.localVariableName}Mapper.update(${entityInfo.localVariableName});
 	}
 
 	@Override
-	public ${templateInfo.entity.entityName} findById(Integer id) {
+	public ${entityInfo.entityName} findById(Integer id) {
 		// TODO Auto-generated method stub
-		return ${templateInfo.entity.localVariableName}Mapper.findById(id);
+		return ${entityInfo.localVariableName}Mapper.findById(id);
 	}
 
 	@Override
-	public List<${templateInfo.entity.entityName}> findAll() {
+	public List<${entityInfo.entityName}> findAll() {
 		// TODO Auto-generated method stub
-		return ${templateInfo.entity.localVariableName}Mapper.findAll();
+		return ${entityInfo.localVariableName}Mapper.findAll();
 	}
 	
 }

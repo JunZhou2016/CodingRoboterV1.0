@@ -1,13 +1,13 @@
-package ${templateInfo.projectStruct}.Service.${templateInfo.entity.entityName};
+package ${projectInfo.projectStruct}.${entityInfo.entityName}.Service;
 
 import java.util.List;
 
-import com.fangshuo.output.Model.${templateInfo.entity.entityName}.${templateInfo.entity.entityName};
+import com.fangshuo.output.${entityInfo.entityName}.Model.${entityInfo.entityName};
 /**
 * 
 * Copyright: Copyright (c) 2018 Jun_Zhou
 * 
-* @ClassName: ${templateInfo.entity.entityName}Service.java
+* @ClassName: ${entityInfo.entityName}Service.java
 * @Description: ${codeDes}
 * 
 * @version: ${codeVersion}
@@ -16,16 +16,16 @@ import com.fangshuo.output.Model.${templateInfo.entity.entityName}.${templateInf
 * @Company: ${company}
 * @date: ${date}
 */
-public interface ${templateInfo.entity.entityName}Service {
+public interface ${entityInfo.entityName}Service {
 
-	void save(${templateInfo.entity.entityName} ${templateInfo.entity.localVariableName});
+	void save(${entityInfo.entityName} ${entityInfo.localVariableName});
 
 	void deleteById(Integer id);
 
-	void update(${templateInfo.entity.entityName} ${templateInfo.entity.localVariableName});
+	void update(${entityInfo.entityName} ${entityInfo.localVariableName});
 
-	${templateInfo.entity.entityName} findById(Integer id);
+	${entityInfo.entityName} findById(Integer id);
 
-	List<${templateInfo.entity.entityName}> findAll();
+	List<${entityInfo.entityName}> findAll();
 
 }

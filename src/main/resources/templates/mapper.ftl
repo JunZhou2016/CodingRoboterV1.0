@@ -1,19 +1,19 @@
-package ${templateInfo.projectStruct}.Dao.${templateInfo.entity.entityName};
+package ${projectInfo.projectStruct}.${entityInfo.entityName}.Dao;
 
 import java.util.List;
 
-import com.fangshuo.output.Model.${templateInfo.entity.entityName}.${templateInfo.entity.entityName};
+import com.fangshuo.output.${entityInfo.entityName}.Model.${entityInfo.entityName};
 
-public interface ${templateInfo.entity.entityName}Mapper {
+public interface ${entityInfo.entityName}Mapper {
 
-	void save(${templateInfo.entity.entityName} ${templateInfo.entity.localVariableName});
+	void save(${entityInfo.entityName} ${entityInfo.localVariableName});
 
 	void deleteById(Integer id);
 
-	void update(${templateInfo.entity.entityName} ${templateInfo.entity.localVariableName});
+	void update(${entityInfo.entityName} ${entityInfo.localVariableName});
 
-	${templateInfo.entity.entityName} findById(Integer id);
+	${entityInfo.entityName} findById(Integer id);
 
-	List<${templateInfo.entity.entityName}> findAll();
+	List<${entityInfo.entityName}> findAll();
 
 }

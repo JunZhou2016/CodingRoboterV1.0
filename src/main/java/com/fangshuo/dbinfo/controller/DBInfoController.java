@@ -6,13 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 import com.fangshuo.dbinfo.Service.DbInfoService;
 import com.fangshuo.dbinfo.model.database.Database;
 import com.fangshuo.lib4fangshuo.model.ResObject;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 
 /**
  * 

@@ -28,6 +28,23 @@ import com.fangshuo.dbinfo.model.project.Property;
 public class DBUtils extends StringUtils {
 
 	/**
+	 * 复制数据库概要信息到项目实体中；
+	 * 
+	 * @param source:源数据库的数据;
+	 * @param target:目标项目实体对象;
+	 */
+	public static void copySimpleDBToProject(Database source, Project target) {
+		try {
+			
+			String dataBaseName = source.getDbName();
+			String	proJectName = DBUtils.underScoreCase2CamelCase(dataBaseName);
+			target.setProJectName(proJectName);//项目名称;
+		} catch (Exception e) {
+			throw new RuntimeException("########数据库概要信息迁移失败!########", e);
+		}
+	}
+	
+	/**
 	 * 复制数据库信息到项目实体中；
 	 * 
 	 * @param source:源数据库的数据;
@@ -44,24 +61,42 @@ public class DBUtils extends StringUtils {
 			List<Entity> targetEntityList = new ArrayList<Entity>();//项目中实体的集合;
 			
 			//复制表格信息道实体中;
-			copyTabToEntity(sourceTableList,targetEntityList);
+			copyTabsToEntitys(sourceTableList,targetEntityList);
 			
 			//挂载数据到集合;
 			target.setEntitySet(targetEntityList);
 		} catch (Exception e) {
-			throw new RuntimeException("########表数据迁移失败!########", e);
+			throw new RuntimeException("########数据库迁移失败!########", e);
 		}
 	}
 	
 	/**
-	 * 复制表格信息道实体中;
+	 * 复制表格信息到实体中;
 	 * @param sourceTable:源表格集合;
 	 * @param targetEntity:目标实体对象的集合;
 	 */
-	public static void copyTabToEntity(List<Table> sourceTableList, List<Entity> targetEntityList) {
+	public static void copyTabsToEntitys(List<Table> sourceTableList, List<Entity> targetEntityList) {
 		try {
 			for (Table source : sourceTableList) {
 				Entity target = new Entity();
+				//属性复制;
+				copyTabToEntity(source,target);
+				//挂载数据到集合中;
+				targetEntityList.add(target);
+			}
+		} catch (Exception e) {
+			throw new RuntimeException("########多表数据迁移失败!########", e);
+		}
+	}
+	
+	/**
+	 * 复制表格信息到实体中;
+	 * @param source:源表格;
+	 * @param target:目标实体对象的;
+	 */
+	public static void copyTabToEntity(Table source, Entity target) {
+		try {
+				//Entity target = new Entity();
 				
 				String tableName = source.getTableName();// 数据库表名称;
 				String entityName = getEntityNameByTabName(tableName);// 实体名称,首字母大写;
@@ -80,9 +115,6 @@ public class DBUtils extends StringUtils {
 				String entityStrirng = DBUtils.entityToString(target);
 				target.setEntityStrirng(entityStrirng);
 				
-				//挂载数据到集合中;
-				targetEntityList.add(target);
-			}
 		} catch (Exception e) {
 			throw new RuntimeException("########表数据迁移失败!########", e);
 		}
@@ -101,7 +133,7 @@ public class DBUtils extends StringUtils {
 			String propertyName = DBUtils.underScoreCase2CamelCase(columnName);// 实体的属性名称;
 			String propertyNameUpperCamel = DBUtils.toUpperCaseFirstOne(propertyName);// 首字母大写的实体属性名称;
 			String columnComment = columnEle.getColumnComment();// 列的注释信息;
-			String dataType = columnEle.getDataType();// 列的类型和长度;
+			String dataType = columnEle.getColumnType();// 列的类型和长度;
 			String isNullAble = columnEle.getIsNullAble();// 列值是否允许为空;
 
 			propertyEle.setPropertyName(propertyName);
