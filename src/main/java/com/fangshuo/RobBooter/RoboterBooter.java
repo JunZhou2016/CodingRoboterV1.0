@@ -1,5 +1,8 @@
 package com.fangshuo.RobBooter;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fangshuo.codefactory.utils.CodeGeneratorUtils;
+import com.fangshuo.codefactory.utils.Logger;
 import com.fangshuo.dbinfo.Service.DbInfoService;
 import com.fangshuo.dbinfo.model.database.Database;
 
@@ -42,7 +46,7 @@ public class RoboterBooter {
 	@RequestMapping(value="/printCodeByTables",method=RequestMethod.POST)
 	@ApiOperation("根据数据表名称生成代码")
 	@ResponseBody
-	public Database printCodeByTables(@RequestBody Database dbFilter) {
+	public Database printCodeByTables(@RequestBody Database dbFilter,HttpServletRequest request, HttpServletResponse response) {
 		CodeGeneratorUtils codeGeneratorUtils = new CodeGeneratorUtils();
 		//获取数据库表的实例;
 		//List<String> tabNames = new ArrayList<String>();
@@ -52,6 +56,8 @@ public class RoboterBooter {
 		Database dbInfo = dbInfoService.getDBInfosByCondition(dbFilter);
 		//代码生成;
 		codeGeneratorUtils.generateCodeAndInitPageByDB(dbInfo);
+		String requestHeader = request.getHeader("user-agent");
+		Logger.info(requestHeader);
 		
 		return dbInfo;
 	}

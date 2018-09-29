@@ -5,6 +5,19 @@ import java.util.List;
 
 import com.fangshuo.lib4fangshuo.annotation.FieldNote;
 import com.fangshuo.lib4fangshuo.annotation.PojoNote;
+/**
+ * 
+* Copyright: Copyright (c) 2018 Jun_Zhou
+* 
+* @ClassName: ResList.java
+* @Description: 封装了分页信息的list对象;
+* 
+* @version: v1.0.0
+* @author: JunZhou
+* @Email: 1769676159@qq.com
+* @Site: CERNO
+* @date: 2018年9月29日 下午5:03:49
+ */
 @PojoNote(desc="返回对象")
 public class ResList<T> implements Serializable
 {

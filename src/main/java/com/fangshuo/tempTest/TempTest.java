@@ -1,10 +1,6 @@
 package com.fangshuo.tempTest;
 
-import java.util.Iterator;
-import java.util.List;
-
-import com.fangshuo.codefactory.utils.StringUtils;
-import com.fangshuo.dbinfo.model.database.Column;
+import com.fangshuo.codefactory.utils.Logger;
 
 public class TempTest {
 	public static void main(String[] args) {
@@ -41,6 +37,9 @@ public class TempTest {
 	String lowerCaseFirstOne = DBUtils.toLowerCaseFirstOne(underScoreStr);
 	String result = DBUtils.underScoreCase2CamelCase(lowerCaseFirstOne);
 	Logger.info(result);*/
+	
+	Long msg = System.currentTimeMillis();
+	Logger.info(msg.toString());
 	
 	}
 	

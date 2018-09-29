@@ -1,17 +1,24 @@
 package com.fangshuo.dbinfo.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 
 import com.fangshuo.dbinfo.Service.DbInfoService;
 import com.fangshuo.dbinfo.model.database.Database;
+import com.fangshuo.lib4fangshuo.exception.FsException;
+import com.fangshuo.lib4fangshuo.exception.constant.ErrMsgConstant;
+import com.fangshuo.lib4fangshuo.model.ReqObject;
 import com.fangshuo.lib4fangshuo.model.ResObject;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * 
@@ -41,10 +48,36 @@ public class DBInfoController {
 	@ApiOperation("查询数据库基础信息")
 	@RequestMapping(value="/get-dbInfosByCondition",method = RequestMethod.POST)
 	@ResponseBody
-	public ResObject<Database> getDBInfosByCondition(@RequestBody Database dbFilter) {
-		Database dbInfo = dbInfoService.getDBInfosByCondition(dbFilter);
-		ResObject<Database> reqObject = new ResObject<Database>();
-		reqObject.setObject(dbInfo);
+	public ResObject<Database> getDBInfosByCondition(@RequestBody ReqObject<Database> dbFilter,
+			HttpServletRequest request, HttpServletResponse response) {
+		Database dbQueryCondition = dbFilter.getObject();
+		Database executeResult = dbInfoService.getDBInfosByCondition(dbQueryCondition);
+		ResObject<Database> reqObject = new ResObject<Database>(dbFilter,executeResult,request);
 		return reqObject;
 	}
+	
+	/**
+	 * 根据条件获取数据库属性信息;
+	 * @param dbFilter
+	 * @return
+	 */
+	@ApiOperation("查询数据库基础信息")
+	@RequestMapping(value="/get-testErrorCode",method = RequestMethod.POST)
+	@ResponseBody
+	public ResObject<Database> testErrorCode(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			throwException();
+			return new ResObject<Database>(request);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return new ResObject<Database>(e,request);
+		}
+	}
+	
+	public static void throwException() {
+		if(2>1) {
+			throw new FsException(ErrMsgConstant.FILE_NOT_EXISTS_ERROR);
+		}
+	}
+	
 }

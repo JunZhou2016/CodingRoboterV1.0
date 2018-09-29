@@ -21,9 +21,9 @@ public class Table {
 	private String id;// 数据表中列的id;
 	private String tableName;// 数据表的名称;
 	private String tableComment;// 数据表的注释;
-	private String tableString;//数据表的字符串形式;
+	private String tabColString;// 数据表列信息的字符串形式;
 	private List<Column> columnSet;// 数据表的列集合;
-	
+
 	public String getId() {
 		return id;
 	}
@@ -47,15 +47,7 @@ public class Table {
 	public void setColumnSet(List<Column> columnSet) {
 		this.columnSet = columnSet;
 		String tableStringTemp = DBUtils.tableToString(this);
-		this.setTableString(tableStringTemp);
-	}
-
-	public String getTableString() {
-		return tableString;
-	}
-
-	public void setTableString(String tableString) {
-		this.tableString = tableString;
+		this.setTabColString(tableStringTemp);
 	}
 
 	public String getTableComment() {
@@ -66,7 +58,11 @@ public class Table {
 		this.tableComment = tableComment;
 	}
 
+	public String getTabColString() {
+		return tabColString;
+	}
 
-	
-
+	public void setTabColString(String tabColString) {
+		this.tabColString = tabColString;
+	}
 }
