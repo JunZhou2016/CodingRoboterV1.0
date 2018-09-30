@@ -4,13 +4,29 @@ import java.io.Serializable;
 
 import com.fangshuo.lib4fangshuo.annotation.FieldNote;
 import com.fangshuo.lib4fangshuo.annotation.PojoNote;
-@PojoNote(desc="请求数据")
+/**
+ * 
+* Copyright: Copyright (c) 2018 Jun_Zhou
+* 
+* @ClassName: ReqQuery.java
+* @Description: 带分页信息的请求数据对象;
+* 
+* @version: v1.0.0
+* @author: JunZhou
+* @Email: 1769676159@qq.com
+* @Site: CERNO
+* @date: 2018年9月30日 上午9:01:47
+ */
+@PojoNote(desc="带分页信息的请求数据")
 public class ReqQuery<T> implements Serializable
 {
-	private static final long serialVersionUID = 201703190101009002L;
+	/**
+	 * serialVersionUID
+	 */
+	private static final long serialVersionUID = 3635159271697204175L;
+
 	public static final long totalCount = 10000;
 	
-	// 分页信息，pageRow>0时分页取数据
 	@FieldNote(desc="页大小")
 	private int pageRow = 0;
 	

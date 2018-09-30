@@ -4,11 +4,18 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
 /**
- * 字段注释
- * @author skywoo
- *
+ * 
+* Copyright: Copyright (c) 2018 Jun_Zhou
+* 
+* @ClassName: FieldNote.java
+* @Description: 字段注释;
+* 
+* @version: v1.0.0
+* @author: JunZhou
+* @Email: 1769676159@qq.com
+* @Site: CERNO
+* @date: 2018年9月30日 上午9:07:28
  */
 @Retention(RetentionPolicy.CLASS)
 @Target(ElementType.FIELD)
