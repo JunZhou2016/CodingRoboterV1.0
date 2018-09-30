@@ -2,6 +2,8 @@ package com.fangshuo.dbinfo.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fangshuo.dbinfo.Service.TabInfoService;
 import com.fangshuo.dbinfo.model.database.Table;
+import com.fangshuo.lib4fangshuo.model.ReqQuery;
+import com.fangshuo.lib4fangshuo.model.ResList;
+import com.fangshuo.lib4fangshuo.model.ResObject;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,18 +42,23 @@ public class TabInfoController {
 
 	/**
 	 * 根据条件查询数据数据库基础信息的集合; [一次查询多个数据库表的信息]
+	 * 
 	 * @param tabNameList：数据表名称的集合;
 	 * @return:数据库基础信息的集合;
 	 */
 	@ApiOperation("根据数据表名称查询数据表的基础信息")
 	@RequestMapping(value = "/get_TabInfoByTabName", method = RequestMethod.POST)
 	@ResponseBody
-	public List<Table> getTabInfoByTableName(@RequestBody List<String> tabNameList) {
-		/*List<String> tabNames = new ArrayList<String>();
-		tabNames.add("role");
-		tabNames.add("stu");*/
+	public ResObject<ResList<Table>> getTabInfoByTableName(@RequestBody ReqQuery<List<String>> qryFilter,
+			HttpServletRequest request) {
 		// 获取数据库表中的属性信息;
-		List<Table> tabInfoSetList = tabInfoService.getTabInfoByTableName(tabNameList);
-		return tabInfoSetList;
+		try {
+			ResList<Table> queryRes = tabInfoService.getTabInfoByTableName(qryFilter);
+			ResObject<ResList<Table>> resObj = new ResObject<ResList<Table>>(qryFilter, queryRes, request);
+			return resObj;
+		} catch (Exception e) {
+			// TODO: handle exception
+			return new ResObject<ResList<Table>>(qryFilter, e, request);
+		}
 	}
 }

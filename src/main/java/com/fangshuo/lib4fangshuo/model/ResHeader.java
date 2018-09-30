@@ -64,7 +64,7 @@ public class ResHeader {
 		reqParam = req;
 		this.cliFlowNo = (req == null) ? "1" : req.getReqHeader().getFlowNo();
 	}
-
+	
 	@SuppressWarnings("deprecation")
 	public ResHeader(ReqObject<?> req, Exception e, HttpServletRequest request) {
 		super();

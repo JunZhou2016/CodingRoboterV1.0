@@ -35,16 +35,33 @@ public class ResObject<T> implements Serializable {
 		this.request = request;
 	}
 	
+	/**
+	 * 
+	 * @param obj:返回的数据对象;
+	 * @param request:http请求对象;
+	 */
 	public ResObject( T obj,HttpServletRequest request) {
 		resHeader = new ResHeader(null,request);
 		object = obj;
 	}
 	
+	/**
+	 * 
+	 * @param req:请求参数;
+	 * @param obj:返回的数据;
+	 * @param request:http请求对象;
+	 */
 	public ResObject(ReqObject<?> req, T obj,HttpServletRequest request) {
 		resHeader = new ResHeader(req,request);
 		object = obj;
 	}
 	
+	/**
+	 * 
+	 * @param req:请求参数;
+	 * @param e:异常对象;
+	 * @param request:http请求对象;
+	 */
 	public ResObject(ReqObject<?>  req, Exception e,HttpServletRequest request) {
 		
 		object = null;
