@@ -2,9 +2,11 @@ package com.fangshuo.lib4fangshuo.plugin;
 
 import java.util.Properties;
 
+import javax.servlet.MultipartConfigElement;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 
@@ -24,7 +26,7 @@ import com.github.pagehelper.PageHelper;
  * @Site: CERNO
  * @date: 2018年9月30日 下午1:36:49
  */
-public class AppPluginCfg {
+public class AppPluginBean {
 	@Autowired
 	private Environment env;
 
@@ -64,5 +66,20 @@ public class AppPluginCfg {
 		properties.setProperty("dialect", "mysql");// 配置mysql数据库的方言
 		pageHelper.setProperties(properties);
 		return pageHelper;
+	}
+
+	/**
+	 * 文件上传配置
+	 * 
+	 * @return
+	 */
+	@Bean
+	public MultipartConfigElement multipartConfigElement() {
+		MultipartConfigFactory factory = new MultipartConfigFactory();
+		// 文件最大
+		factory.setMaxFileSize("10240KB"); // KB,MB
+		/// 设置总上传数据总大小
+		factory.setMaxRequestSize("102400KB");
+		return factory.createMultipartConfig();
 	}
 }

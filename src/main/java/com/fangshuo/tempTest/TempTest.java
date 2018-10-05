@@ -1,6 +1,8 @@
 package com.fangshuo.tempTest;
 
 import com.fangshuo.codefactory.utils.Logger;
+import com.fangshuo.lib4fangshuo.sdk.qiniusdk.ImgInfo4QN;
+import com.google.gson.Gson;
 
 public class TempTest {
 	public static void main(String[] args) {
@@ -38,8 +40,15 @@ public class TempTest {
 	String result = DBUtils.underScoreCase2CamelCase(lowerCaseFirstOne);
 	Logger.info(result);*/
 	
-	Long msg = System.currentTimeMillis();
-	Logger.info(msg.toString());
+	/*Long msg = System.currentTimeMillis();
+	Logger.info(msg.toString());*/
+		
+		Gson gson = new Gson();
+		//User user = new User();
+		ImgInfo4QN returnBody = new ImgInfo4QN();
+		String json = gson.toJson(returnBody);
+		Logger.info(json);
+		Logger.info("{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"bucket\":\"$(bucket)\",\"fsize\":$(fsize)}");
 	
 	}
 	
