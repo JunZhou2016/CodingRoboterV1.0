@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Lazy(false)
-public class SpringUtils implements ApplicationContextAware {
+public class SpringUtils extends SpringUtil implements ApplicationContextAware {
 	private static ApplicationContext applicationContext;
 
 	@Override
