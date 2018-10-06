@@ -23,7 +23,6 @@ public enum QiNiuConstant {
 	RETURN_BODY_FNAME("fname", "$(fname)"), // 上传的原始文件名。
 	RETURN_BODY_MIMETYPE("mimeType", "$(mimeType)"), // 资源类型，例如JPG图片的资源类型为image/jpg。
 	RETURN_BODY_ENDUSER("endUser", "$(endUser)"), // 上传时指定的endUser字段，通常用于区分不同终端用户的请求。
-	RETURN_BODY_IMAGEINFO("imageInfo", "$(imageInfo)"), // 获取所上传图片的基本信息。该变量包含子字段，例如对$(imageInfo.width)取值将得到该图片的宽度。
 
 	RETURN_BODY_EXT("ext", "$(ext)"), // 上传资源的后缀名，通过自动检测的mimeType 或者原文件的后缀来获取。
 	RETURN_BODY_UUID("uuid", "$(uuid)");// uuid

@@ -8,6 +8,8 @@ public class ImgInfo4QN {
 	public String hash = QiNiuConstant.RETURN_BODY_HASH.getValue();// 文件上传成功后的 HTTPETag。若上传时未指定资源ID，Etag将作为资源ID使用。
 	
 	public String bucket = QiNiuConstant.RETURN_BODY_BUCKET.getValue();// 获得上传的目标空间名。
+	public String imgURLPrefix = QiNiuConfig.DEFAULT_DOMAIN;//图片的访问前缀;
+	public String imgURL =imgURLPrefix +"/"+ key;
 	public String fsize = QiNiuConstant.RETURN_BODY_FSIZE.getValue();// 资源尺寸，单位为字节。
 	public String fname = QiNiuConstant.RETURN_BODY_FNAME.getValue();// 上传的原始文件名。
 	public String mimeType = QiNiuConstant.RETURN_BODY_MIMETYPE.getValue();// 资源类型，例如JPG图片的资源类型为image/jpg。
@@ -15,6 +17,7 @@ public class ImgInfo4QN {
 	public String ext = QiNiuConstant.RETURN_BODY_EXT.getValue();// 上传资源的后缀名，通过自动检测的mimeType 或者原文件的后缀来获取。
 	
 	public String uuid = QiNiuConstant.RETURN_BODY_UUID.getValue();// uuid
+	
 	
    
 	

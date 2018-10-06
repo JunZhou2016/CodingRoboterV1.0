@@ -69,7 +69,7 @@ public class AppPluginBean {
 	}
 
 	/**
-	 * 文件上传配置
+	 * 七牛云存储的文件上传配置
 	 * 
 	 * @return
 	 */

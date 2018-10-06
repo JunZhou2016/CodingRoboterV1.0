@@ -1,10 +1,8 @@
 package com.fangshuo.tempTest;
 
 import com.fangshuo.codefactory.utils.Logger;
-import com.fangshuo.lib4fangshuo.sdk.qiniusdk.ImgInfo4QN;
-import com.google.gson.Gson;
 
-public class TempTest {
+public class TempTest{
 	public static void main(String[] args) {
 		// 项目在硬盘上的基础路径
 	/* String PROJECT_PATH = System.getProperty("user.dir");
@@ -43,13 +41,16 @@ public class TempTest {
 	/*Long msg = System.currentTimeMillis();
 	Logger.info(msg.toString());*/
 		
-		Gson gson = new Gson();
+		/*Gson gson = new Gson();
 		//User user = new User();
 		ImgInfo4QN returnBody = new ImgInfo4QN();
 		String json = gson.toJson(returnBody);
 		Logger.info(json);
 		Logger.info("{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"bucket\":\"$(bucket)\",\"fsize\":$(fsize)}");
-	
+	*/
+		String imgAccessLink = "http://ouuy81imh.bkt.clouddn.com/00002.jpg";
+		String fileName = imgAccessLink.substring(imgAccessLink.lastIndexOf("/")+1);
+		Logger.info(fileName);
 	}
 	
 	/*public static String listToString(List<Column> columnList) {

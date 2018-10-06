@@ -1,10 +1,16 @@
 package com.fangshuo.lib4fangshuo.sdk.qiniusdk;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fangshuo.codefactory.utils.Logger;
 import com.google.gson.Gson;
@@ -57,45 +63,10 @@ public class QiniuUtil extends QiNiuConfig {
 		String bucket = QiNiuConfig.BUCKETNAME; // 存储空间名
 		Auth auth = getAuth();
 		StringMap putPolicy = new StringMap();
-		//putPolicy.put("returnBody", "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"bucket\":\"$(bucket)\",\"fsize\":$(fsize)}");
-		putPolicy.put("returnBody",new ImgInfo4QN().toJson());
-		//String upToken = auth.uploadToken(bucket);
-		long expireSeconds = 3600;//默认3600;
+		putPolicy.put("returnBody", new ImgInfo4QN().toJson());
+		long expireSeconds = 3600;// 默认3600;
 		String upToken = auth.uploadToken(bucket, null, expireSeconds, putPolicy);
-		
 		return upToken;
-	}
-
-	/**
-	 * 获取下载文件路径；
-	 * 
-	 * @return ：downloagURL;
-	 */
-	public static String getDownloadUrl(String targetUrl) {
-		Auth auth = getAuth();
-		String downloadUrl = auth.privateDownloadUrl(targetUrl);
-		return downloadUrl;
-	}
-
-	/**
-	 * 读取字节输入流内容
-	 * 
-	 * @param is：字节输入流;
-	 * @return
-	 */
-	private static byte[] readInputStream(InputStream is) {
-		ByteArrayOutputStream writer = new ByteArrayOutputStream();
-		byte[] buff = new byte[1024 * 2];
-		int len = 0;
-		try {
-			while ((len = is.read(buff)) != -1) {
-				writer.write(buff, 0, len);
-			}
-			is.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return writer.toByteArray();
 	}
 
 	/**
@@ -105,46 +76,78 @@ public class QiniuUtil extends QiNiuConfig {
 	 * @param savePath:文件在本地的默认存储路径;
 	 * @return
 	 */
-	public static void downFileFromQiNiu(String imgAccessLink, String savePath) {
+	public static void downFileFromQiNiu(String imgAccessLink,HttpServletRequest request,
+			HttpServletResponse response) {
+		BufferedInputStream bis = null;
+		BufferedOutputStream bos = null;
 		Auth auth = getAuth();
 		String downloadUrl = auth.privateDownloadUrl(imgAccessLink);
-
+		String fileName = imgAccessLink.substring(imgAccessLink.lastIndexOf("/") + 1);
 		OkHttpClient client = new OkHttpClient();
 		Request req = new Request.Builder().url(downloadUrl).build();
 		okhttp3.Response resp = null;
 		try {
 			resp = client.newCall(req).execute();
-			System.out.println(resp.isSuccessful());
-			if (resp.isSuccessful()) {
+			if (resp.isSuccessful()) {// 数据流请求成功;
+
+				// 避免文件名称中文乱码;
+				request.setCharacterEncoding("UTF-8");
+				String agent = request.getHeader("User-Agent").toUpperCase();
+				if ((agent.indexOf("MSIE") > 0) || ((agent.indexOf("RV") != -1) && (agent.indexOf("FIREFOX") == -1)))
+					fileName = URLEncoder.encode(fileName, "UTF-8");
+				else {
+					fileName = new String(fileName.getBytes("UTF-8"), "ISO8859-1");
+				}
 				ResponseBody body = resp.body();
 				InputStream is = body.byteStream();
-				byte[] data = readInputStream(is);
-				File imgFile = new File(savePath + "_ZJ.png"); // 下载到本地的图片命名
-				FileOutputStream fops = new FileOutputStream(imgFile);
-				fops.write(data);
-				fops.close();
+				// 设置响应格式;
+				response.setContentType("application/x-msdownload;");
+				response.setHeader("Content-disposition", "attachment; filename=" + fileName);
+				bis = new BufferedInputStream(is);
+				bos = new BufferedOutputStream(response.getOutputStream());
+				byte[] buff = new byte[2048];
+				int bytesRead;
+				while (-1 != (bytesRead = bis.read(buff, 0, buff.length)))
+					bos.write(buff, 0, bytesRead);
+				bos.flush();
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.out.println("Unexpected code " + resp);
+		} catch (Exception e) {
+			Logger.info("导出文件失败！");
+		} finally {
+			try {
+				if (bis != null) {
+					bis.close();
+				}
+				if (bos != null) {
+					bos.close();
+				}
+			} catch (Exception e) {
+				Logger.info("导出文件关闭流出错！");
+			}
 		}
 
 	}
 
 	/**
-	 * 上传本地图片到七牛服务器，测试使用的方法;
+	 * 
+	 * 通过文件流的形式上传图片到七牛服务器，测试使用的方法;
+	 *
+	 * @param file:MultipartFile类型的文件数据;
+	 * @throws IOException
 	 */
-	public static void uploadImgToQiNiu() {
+	public static ImgInfo4QN uploadImgToQiNiu(MultipartFile multipartFile) throws IOException {
+		ImgInfo4QN imgInfo = null;
+		String originalFilename = multipartFile.getOriginalFilename();
+		FileInputStream fileInputStream = (FileInputStream) multipartFile.getInputStream();
+
 		Configuration cfg = new Configuration(Zone.zone1()); // zong1() 代表华北地区
 		UploadManager uploadManager = new UploadManager(cfg);
 		String upToken = getUpToken();
-		String localFilePath = "D:\\temp\\picture\\pictureFileName.mp4"; // 上传图片路径
-		String key = "201810011614_zj_qn.mp4"; // 在七牛云中图片的命名
+		String key = originalFilename; // 在七牛云中图片的命名
 		try {
-			Response response = uploadManager.put(localFilePath, key, upToken);
+			Response response = uploadManager.put(fileInputStream, key, upToken, null, null);
 			// 解析上传成功的结果
-			ImgInfo4QN imgInfo = new Gson().fromJson(response.bodyString(), ImgInfo4QN.class);
-			//Logger.info(returnBody.key + "---" + returnBody.hash);
+			imgInfo = new Gson().fromJson(response.bodyString(), ImgInfo4QN.class);
 			Logger.info(imgInfo.toJson());
 		} catch (QiniuException ex) {
 			Response r = ex.response;
@@ -152,9 +155,9 @@ public class QiniuUtil extends QiNiuConfig {
 			try {
 				System.err.println(r.bodyString());
 			} catch (QiniuException ex2) {
-				// ignore
 			}
 		}
+		return imgInfo;
 
 	}
 }
