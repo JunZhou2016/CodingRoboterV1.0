@@ -20,9 +20,9 @@ import org.springframework.stereotype.Component;
 import com.fangshuo.codefactory.utils.StringUtils;
 import com.fangshuo.lib4fangshuo.Enum.AccessLogStatus;
 import com.fangshuo.lib4fangshuo.annotation.AccessLog;
-import com.fangshuo.lib4fangshuo.log.AsyncFactory;
 import com.fangshuo.lib4fangshuo.log.LogManager;
 import com.fangshuo.lib4fangshuo.model.OperationLog;
+import com.fangshuo.lib4fangshuo.task.LogInsertTask;
 import com.fangshuo.lib4fangshuo.utils.HttpUtils;
 import com.fangshuo.lib4fangshuo.utils.UUID;
 import com.google.gson.Gson;
@@ -103,10 +103,11 @@ public class LogAop {
 			operLog.setMethod(className + "." + methodName + "()");
 			// 处理设置注解上的参数
 			getControllerMethodDescription(controllerLog, operLog);
-			//设置uuid;
+			// 设置uuid;
 			operLog.setUuid(UUID.getUUID());
 			// 异步保存数据库，避免重要操作堵塞;
-			LogManager.getLoggerManager().executeLog(AsyncFactory.bussinessLog(operLog));
+			LogManager.getLoggerManager()
+					.taskExecutor(new LogInsertTask().setOPERATE_DELAY_TIME(20).setParameter(operLog));
 		} catch (Exception exp) {
 			// 记录本地异常日志
 			log.error("==前置通知异常==");

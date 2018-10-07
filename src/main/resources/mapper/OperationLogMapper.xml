@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fangshuo.lib4fangshuo.log.dao.OperationLogMapper">
+	<!-- 操作日志相关的映射文件 -->
+	<resultMap id="BaseResultMap" type="com.fangshuo.lib4fangshuo.model.OperationLog">
+		<id column="id" property="uuid" jdbcType="VARCHAR" />
+		<result column="logtype" property="logtype" jdbcType="VARCHAR" />
+		<result column="logname" property="logname" jdbcType="VARCHAR" />
+		<result column="userid" property="userid" jdbcType="VARCHAR" />
+		<result column="method" property="method" jdbcType="VARCHAR" />
+		<result column="createtime" property="createtime" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="message" property="message" jdbcType="VARCHAR" />
+		<result column="oper_params" property="operParams" jdbcType="VARCHAR" />
+		<result column="oper_url" property="operUrl" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		(id,logtype,logname,userid,method,createtime,status,message,oper_params,oper_url)
+	</sql>
+
+	<!-- 增加用户信息 -->
+	<insert id="insert"
+		parameterType="com.fangshuo.lib4fangshuo.model.OperationLog">
+		insert into sys_operation_log
+		(id,logtype,logname,userid,method,createtime,status,message,oper_params,oper_url)
+		values
+		(#{uuid,jdbcType=VARCHAR},#{logtype,jdbcType=VARCHAR},#{logname,jdbcType=VARCHAR},
+		#{userid,jdbcType=VARCHAR},#{method,jdbcType=VARCHAR},#{createtime,jdbcType=VARCHAR},
+		#{status,jdbcType=VARCHAR},#{message,jdbcType=VARCHAR},#{operParams,jdbcType=VARCHAR},
+		#{operUrl,jdbcType=VARCHAR})
+	</insert>
+	
+</mapper> 
