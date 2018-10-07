@@ -41,6 +41,9 @@ public class ResHeader {
 	@FieldNote(desc = "用户代理的Ip地址")
 	private String userAgentIP;
 	
+	@FieldNote(desc = "请求主机的物理地址")
+	private String hostMac;
+	
 	@FieldNote(desc = "请求发起的时间")
 	private String reqTime;
 	
@@ -58,7 +61,7 @@ public class ResHeader {
 		errCode = "000000";
 		errDesc = "";
 		userAgent = HttpUtils.getReqHeaderByName(request, "user-agent");
-		userAgentIP = HttpUtils.getIp(request);
+		this.setUserAgentIP(HttpUtils.getIp(request));
 		svcFlowNo = UUID.getUUID();
 		reqTime = DateUtil.getTimestamp().toLocaleString();
 		reqParam = req;
@@ -75,7 +78,7 @@ public class ResHeader {
 			this.userAgent = request.getHeader("user-agent");
 			this.reqTime = DateUtil.getTimestamp().toLocaleString();
 			this.userAgent = HttpUtils.getReqHeaderByName(request, "user-agent");
-			this.userAgentIP = HttpUtils.getIp(request);
+			this.setUserAgentIP(HttpUtils.getIp(request));
 		} else {
 			String name = e.getClass().getSimpleName();
 			if ("DuplicateKeyException".equals(name)) {
@@ -137,6 +140,7 @@ public class ResHeader {
 
 	public void setUserAgentIP(String userAgentIP) {
 		this.userAgentIP = userAgentIP;
+		this.hostMac = HttpUtils.getMacByIP(userAgentIP);
 	}
 
 	public String getReqTime() {
@@ -153,6 +157,14 @@ public class ResHeader {
 
 	public void setReqParam(Object reqParam) {
 		this.reqParam = reqParam;
+	}
+
+	public String getHostMac() {
+		return hostMac;
+	}
+
+	public void setHostMac(String hostMac) {
+		this.hostMac = hostMac;
 	}
 
 }

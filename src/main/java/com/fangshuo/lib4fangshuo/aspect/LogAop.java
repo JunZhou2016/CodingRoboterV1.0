@@ -4,6 +4,8 @@ import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -79,24 +81,25 @@ public class LogAop {
 			if (controllerLog == null) {
 				return;
 			}
+			// 从session中获取当前的用户
 
-			// 获取当前的用户
-			// User currentUser = ShiroUtils.getUser();
-
-			// *========数据库日志=========*//
+			// 当前操作状态设置;
 			OperationLog operLog = new OperationLog();
 			operLog.setStatus(AccessLogStatus.SUCCESS.getStatusCode());
 			operLog.setMessage("操作成功");
-
-			operLog.setCreatetime(new Date());
-			// 请求的地址
-
-			operLog.setOperUrl(HttpUtils.getRequest().getRequestURI());
-
-			if (e != null) {
+			if (e != null) {// 操作失败;
 				operLog.setStatus(AccessLogStatus.FALL.getStatusCode());
 				operLog.setMessage(StringUtils.substring(e.getMessage(), 0, 2000));
 			}
+			// 操作时间;
+			operLog.setCreatetime(new Date());
+			HttpServletRequest request = HttpUtils.getRequest();
+			// 请求的地址
+			operLog.setOperUrl(request.getRequestURI());
+			// 请求的网络地址;
+			operLog.setAccessIp(HttpUtils.getIp(request));
+			operLog.setAccessMac(HttpUtils.getMacByIP(operLog.getAccessIp()));
+
 			// 设置方法名称
 			String className = joinPoint.getTarget().getClass().getName();
 			String methodName = joinPoint.getSignature().getName();
@@ -110,7 +113,6 @@ public class LogAop {
 					.taskExecutor(new LogInsertTask().setOPERATE_DELAY_TIME(20).setParameter(operLog));
 		} catch (Exception exp) {
 			// 记录本地异常日志
-			log.error("==前置通知异常==");
 			log.error("异常信息:{}", exp.getMessage());
 			exp.printStackTrace();
 		}
@@ -139,7 +141,6 @@ public class LogAop {
 	 */
 	private void setRequestValue(OperationLog operLog) {
 		Map<String, String[]> map = HttpUtils.getRequest().getParameterMap();
-		// String params = JSONObject.toJSONString(map);
 		Gson gson = new Gson();
 		String params = gson.toJson(map);
 		operLog.setOperParams(params);

@@ -38,6 +38,14 @@ public class OperationLog implements Serializable {
 	 */
 	private Integer userid;
 	/**
+	 * 访问者的Ip;
+	 */
+	private String accessIp;
+	/**
+	 * 访问者的Mac地址;
+	 */
+	private String accessMac;
+	/**
 	 * 方法名称
 	 */
 	private String method;
@@ -144,11 +152,28 @@ public class OperationLog implements Serializable {
 		this.uuid = uuid;
 	}
 
+	public String getAccessIp() {
+		return accessIp;
+	}
+
+	public void setAccessIp(String accessIp) {
+		this.accessIp = accessIp;
+	}
+
+	public String getAccessMac() {
+		return accessMac;
+	}
+
+	public void setAccessMac(String accessMac) {
+		this.accessMac = accessMac;
+	}
+
 	@Override
 	public String toString() {
 		return "OperationLog [uuid=" + uuid + ", logtype=" + logtype + ", logname=" + logname + ", userid=" + userid
-				+ ", method=" + method + ", createtime=" + createtime + ", status=" + status + ", message=" + message
-				+ ", operParams=" + operParams + ", operUrl=" + operUrl + "]";
+				+ ", method=" + method + ", createtime=" + createtime + ", status=" + status + ", accessIp=" + accessIp
+				+ ", accessMac=" + accessMac + ", message=" + message + ", operParams=" + operParams + ", operUrl="
+				+ operUrl + "]";
 	}
 
 }

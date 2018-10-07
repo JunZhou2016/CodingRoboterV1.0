@@ -7,6 +7,8 @@
 		<result column="logtype" property="logtype" jdbcType="VARCHAR" />
 		<result column="logname" property="logname" jdbcType="VARCHAR" />
 		<result column="userid" property="userid" jdbcType="VARCHAR" />
+		<result column="access_ip" property="accessIp" jdbcType="VARCHAR" />
+		<result column="access_mac" property="accessMac" jdbcType="VARCHAR" />
 		<result column="method" property="method" jdbcType="VARCHAR" />
 		<result column="createtime" property="createtime" jdbcType="VARCHAR" />
 		<result column="status" property="status" jdbcType="VARCHAR" />
@@ -16,17 +18,18 @@
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		(id,logtype,logname,userid,method,createtime,status,message,oper_params,oper_url)
+		id,logtype,logname,userid,access_ip,access_mac,method,createtime,status,message,oper_params,oper_url
 	</sql>
 
 	<!-- 增加用户信息 -->
 	<insert id="insert"
 		parameterType="com.fangshuo.lib4fangshuo.model.OperationLog">
 		insert into sys_operation_log
-		(id,logtype,logname,userid,method,createtime,status,message,oper_params,oper_url)
+		(id,logtype,logname,userid,access_ip,access_mac,method,createtime,status,message,oper_params,oper_url)
 		values
 		(#{uuid,jdbcType=VARCHAR},#{logtype,jdbcType=VARCHAR},#{logname,jdbcType=VARCHAR},
-		#{userid,jdbcType=VARCHAR},#{method,jdbcType=VARCHAR},#{createtime,jdbcType=VARCHAR},
+		#{userid,jdbcType=VARCHAR},#{accessIp,jdbcType=VARCHAR},#{accessMac,jdbcType=VARCHAR},
+		#{method,jdbcType=VARCHAR},#{createtime,jdbcType=VARCHAR},
 		#{status,jdbcType=VARCHAR},#{message,jdbcType=VARCHAR},#{operParams,jdbcType=VARCHAR},
 		#{operUrl,jdbcType=VARCHAR})
 	</insert>

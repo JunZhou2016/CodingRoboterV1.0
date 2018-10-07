@@ -38,6 +38,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  * @date: 2018年9月29日 下午3:44:58
  */
 public class HttpUtils {
+	private static final String LOCAL_HOST_IP = "127.0.0.1";// 本地IP;
+	private static final String DEFULT_MAC = "00-00-00-00-00-00";// 默认MAC地址;
+	private static final String OTH_MAC = "unknown MAC";// 未知的MAC地址;
 
 	/**
 	 * 根据名称获取请求头的信息;
@@ -109,23 +112,37 @@ public class HttpUtils {
 	 * @throws SocketException
 	 * @throws UnknownHostException
 	 */
-	public static String getMacByIP(String ip) throws SocketException, UnknownHostException {
-		NetworkInterface ne = NetworkInterface.getByInetAddress(InetAddress.getByName("192.168.199.160"));
-		byte[] mac = ne.getHardwareAddress();
+	public static String getMacByIP(String ip) {
+		NetworkInterface ne;
 		StringBuffer sb = new StringBuffer("");
-		for (int i = 0; i < mac.length; i++) {
-			if (i != 0) {
-				sb.append("-");
-			}
-			// 字节转换为整数
-			int temp = mac[i] & 0xff;
-			String str = Integer.toHexString(temp);
-			// System.out.println("每8位:"+str);
-			if (str.length() == 1) {
-				sb.append("0" + str);
+		try {
+			ne = NetworkInterface.getByInetAddress(InetAddress.getByName(ip));
+			if (LOCAL_HOST_IP.equals(ip)) {
+				sb.append(DEFULT_MAC);
 			} else {
-				sb.append(str);
+				byte[] mac = ne.getHardwareAddress();
+				if (null != mac) {
+					for (int i = 0; i < mac.length; i++) {
+						if (i != 0) {
+							sb.append("-");
+						}
+						// 字节转换为整数
+						int temp = mac[i] & 0xff;
+						String str = Integer.toHexString(temp);
+						// System.out.println("每8位:"+str);
+						if (str.length() == 1) {
+							sb.append("0" + str);
+						} else {
+							sb.append(str);
+						}
+					}
+				} else {
+					sb.append(OTH_MAC);
+				}
 			}
+		} catch (SocketException | UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return sb.toString().toUpperCase();
 	}
