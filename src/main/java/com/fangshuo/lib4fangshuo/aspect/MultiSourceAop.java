@@ -15,7 +15,7 @@ import org.springframework.core.Ordered;
 
 import com.fangshuo.lib4fangshuo.annotation.TargetDataSource;
 import com.fangshuo.lib4fangshuo.datasource.DataSourceContextHolder;
-import com.fangshuo.lib4fangshuo.datasource.properties.MuliDataSourceProperties;
+import com.fangshuo.lib4fangshuo.datasource.properties.MultiDataSourceProperties;
 
 /**
  * 
@@ -39,7 +39,7 @@ public class MultiSourceAop implements Ordered {
 	 * 多数据源的属性;
 	 */
 	@Autowired
-	private MuliDataSourceProperties muliDataSourceProperties;
+	private MultiDataSourceProperties multiDataSourceProperties;
 
 	@Pointcut(value = "@annotation(com.fangshuo.lib4fangshuo.annotation.TargetDataSource)")
 	private void cut() {
@@ -66,8 +66,8 @@ public class MultiSourceAop implements Ordered {
 			DataSourceContextHolder.setDataSourceType(datasource.name());
 			log.info("设置数据源为：" + datasource.name());
 		} else {
-			DataSourceContextHolder.setDataSourceType(muliDataSourceProperties.getDataSourceNames().get(0));
-			log.info("设置数据源为：" + muliDataSourceProperties.getDataSourceNames().get(0));
+			DataSourceContextHolder.setDataSourceType(multiDataSourceProperties.getDataSourceNames().get(0));
+			log.info("设置数据源为：" + multiDataSourceProperties.getDataSourceNames().get(0));
 		}
 
 		try {

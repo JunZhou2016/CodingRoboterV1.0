@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * 
  * Copyright: Copyright (c) 2018 Jun_Zhou
  * 
- * @ClassName: MuliDataSourceProperties.java
+ * @ClassName: MultiDataSourceProperties.java
  * @Description: 多数据源属性实体类;
  * 
  * @version: v1.0.0
@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @ConfigurationProperties(prefix = "spring.datasource")
-public class MuliDataSourceProperties {
+public class MultiDataSourceProperties {
 	/**
 	 * 数据源名称的集合;
 	 */

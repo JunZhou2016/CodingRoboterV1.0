@@ -17,7 +17,7 @@ import com.fangshuo.lib4fangshuo.aspect.MultiSourceAop;
 import com.fangshuo.lib4fangshuo.datasource.DynamicDataSource;
 import com.fangshuo.lib4fangshuo.datasource.ds.DefaultDataSource;
 import com.fangshuo.lib4fangshuo.datasource.ds.FirstDataSource;
-import com.fangshuo.lib4fangshuo.datasource.properties.MuliDataSourceProperties;
+import com.fangshuo.lib4fangshuo.datasource.properties.MultiDataSourceProperties;
 
 /**
  * 
@@ -47,8 +47,8 @@ public class MultiDataSourceConfig {
 	 * 多数据源的属性;
 	 */
 	@Autowired
-	@Qualifier("muliDataSourceProperties")
-	private MuliDataSourceProperties muliDataSourceProperties;
+	@Qualifier("multiDataSourceProperties")
+	private MultiDataSourceProperties multiDataSourceProperties;
 	
 	/**
 	 * 多数据源连接池配置
@@ -70,11 +70,11 @@ public class MultiDataSourceConfig {
 		DynamicDataSource dynamicDataSource = new DynamicDataSource();
 		HashMap<Object, Object> hashMap = new HashMap<>();
 		// 将两个数据源加入map
-		hashMap.put(muliDataSourceProperties.getDataSourceNames().get(0), defaultDs);
-		hashMap.put(muliDataSourceProperties.getDataSourceNames().get(1), firstDs);
+		hashMap.put(multiDataSourceProperties.getDataSourceNames().get(0), defaultDs);
+		hashMap.put(multiDataSourceProperties.getDataSourceNames().get(1), firstDs);
 
-		logger.info("两个数据源名字分别为{},{}", muliDataSourceProperties.getDataSourceNames().get(0),
-				muliDataSourceProperties.getDataSourceNames().get(1));
+		logger.info("两个数据源名字分别为{},{}", multiDataSourceProperties.getDataSourceNames().get(0),
+				multiDataSourceProperties.getDataSourceNames().get(1));
 		// 设置目标数据源;
 		dynamicDataSource.setTargetDataSources(hashMap);
 		// 设置默认数据源;
