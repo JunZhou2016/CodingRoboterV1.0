@@ -2,7 +2,7 @@ package com.fangshuo.lib4fangshuo.log;
 
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
-import com.fangshuo.lib4fangshuo.task.TaskBase;
+import com.fangshuo.lib4fangshuo.timertask.jdktask.TaskBase;
 
 /**
  * 

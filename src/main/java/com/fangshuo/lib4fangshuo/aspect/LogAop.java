@@ -24,7 +24,7 @@ import com.fangshuo.lib4fangshuo.Enum.AccessLogStatus;
 import com.fangshuo.lib4fangshuo.annotation.AccessLog;
 import com.fangshuo.lib4fangshuo.log.LogManager;
 import com.fangshuo.lib4fangshuo.model.OperationLog;
-import com.fangshuo.lib4fangshuo.task.LogInsertTask;
+import com.fangshuo.lib4fangshuo.timertask.jdktask.LogInsertTask;
 import com.fangshuo.lib4fangshuo.utils.HttpUtils;
 import com.fangshuo.lib4fangshuo.utils.UUID;
 import com.google.gson.Gson;
@@ -53,8 +53,10 @@ public class LogAop {
 	}
 
 	/**
-	 * 前置通知 用于拦截操作
-	 *
+	 * 后置置通知 用于拦截操作 
+	 * 后置通知：在目标方法执行后（无论是否发生异常），执行的通知；
+	 *  后置通知中：程序可通过rvt形参来访问目标方法的返回值。
+	 * 
 	 * @param joinPoint 切点
 	 */
 	@AfterReturning(pointcut = "logPointCut()")

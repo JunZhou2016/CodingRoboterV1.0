@@ -5,7 +5,7 @@ import java.util.Date;
 import com.fangshuo.lib4fangshuo.Enum.AccessLogStatus;
 import com.fangshuo.lib4fangshuo.log.LogManager;
 import com.fangshuo.lib4fangshuo.model.OperationLog;
-import com.fangshuo.lib4fangshuo.task.LogInsertTask;
+import com.fangshuo.lib4fangshuo.timertask.jdktask.LogInsertTask;
 
 public class LogTest {
 	public static void main(String[] args) {

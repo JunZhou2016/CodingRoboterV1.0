@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fangshuo.dbinfo.Service.DbInfoService;
 import com.fangshuo.dbinfo.model.database.Database;
+import com.fangshuo.lib4fangshuo.annotation.TargetDataSource;
 import com.fangshuo.lib4fangshuo.exception.FsException;
 import com.fangshuo.lib4fangshuo.exception.constant.ErrMsgConstant;
 import com.fangshuo.lib4fangshuo.model.ReqObject;
@@ -45,10 +46,28 @@ public class DBInfoController {
 	 * @param dbFilter
 	 * @return
 	 */
+	@TargetDataSource(name = "defaultDS")
 	@ApiOperation("查询数据库基础信息")
 	@RequestMapping(value="/get-dbInfosByCondition",method = RequestMethod.POST)
 	@ResponseBody
 	public ResObject<Database> getDBInfosByCondition(@RequestBody ReqObject<Database> dbFilter,
+			HttpServletRequest request, HttpServletResponse response) {
+		Database dbQueryCondition = dbFilter.getObject();
+		Database executeResult = dbInfoService.getDBInfosByCondition(dbQueryCondition);
+		ResObject<Database> reqObject = new ResObject<Database>(dbFilter,executeResult,request);
+		return reqObject;
+	}
+	
+	/**
+	 * 根据条件获取数据库属性信息;
+	 * @param dbFilter
+	 * @return
+	 */
+	@TargetDataSource(name = "firstDS")
+	@ApiOperation("查询数据库基础信息")
+	@RequestMapping(value="/get-dbInfosByCondition02",method = RequestMethod.POST)
+	@ResponseBody
+	public ResObject<Database> getDBInfosByCondition02(@RequestBody ReqObject<Database> dbFilter,
 			HttpServletRequest request, HttpServletResponse response) {
 		Database dbQueryCondition = dbFilter.getObject();
 		Database executeResult = dbInfoService.getDBInfosByCondition(dbQueryCondition);
