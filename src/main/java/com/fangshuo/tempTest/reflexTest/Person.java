@@ -1,5 +1,7 @@
 package com.fangshuo.tempTest.reflexTest;
 
+import com.fangshuo.lib4fangshuo.annotation.JobNote;
+
 /**
  * 
  * Copyright: Copyright (c) 2018 Jun_Zhou
@@ -13,6 +15,7 @@ package com.fangshuo.tempTest.reflexTest;
  * @Site: CERNO
  * @date: 2018年10月9日 下午3:33:05
  */
+@JobNote(name = "Person", bean = "com.fangshuo.tempTest.reflexTest.Person")
 public class Person {
 
 	private String sex = "Man";

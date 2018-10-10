@@ -1,6 +1,6 @@
 package com.fangshuo.lib4fangshuo.utils;
 
-import com.fangshuo.lib4fangshuo.Enum.EmptyFilterSingleton;
+import com.fangshuo.lib4fangshuo.enums.EmptyFilterSingleton;
 
 /**
  * 

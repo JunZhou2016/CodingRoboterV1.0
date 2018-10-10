@@ -23,6 +23,11 @@ public class ErrorCode extends BaseErrorCode
 		super(errCode, errDesc);
 		// TODO Auto-generated constructor stub
 	}
+	
+	/*@Override
+	public String toString() {
+		return "BaseErrorCode [errCode=" + errCode + ", errDesc=" + errDesc + "]";
+	}*/
 
 }
 

@@ -19,4 +19,5 @@ public class ErrMsgConstant {
 	public static final ErrorCode TXN_INPUT_ERROR = new ErrorCode("SYS_REQ000", "参数格式错误,请求体ReqBody为空！");
 	public static final ErrorCode FILE_NOT_EXISTS_ERROR = new ErrorCode("SYS_REQ001", "文件不存在！");
 	public static final ErrorCode PAGEINFO_ISREQUEIRED_IN_REQQUERY = new ErrorCode("SYS_REQ002", "分页查询中分页信息为必填数据！");
+	public static final ErrorCode JOB_NAME_VER_FAILED = new ErrorCode("SYS_REQ003", "定时任务注解的名称校验失败,注解中名称不能为空和NULL！");
 }

@@ -1,5 +1,7 @@
 package com.fangshuo.lib4fangshuo.timertask.quartz;
 
+import java.util.List;
+
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
@@ -9,6 +11,9 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
+
+import com.fangshuo.lib4fangshuo.annotation.JobNote;
+import com.fangshuo.lib4fangshuo.utils.AnnotationUtils;
 
 /**
  * 
@@ -25,16 +30,30 @@ import org.springframework.context.event.ContextRefreshedEvent;
  */
 @Configuration
 public class ApplicationStartQuartzJobListener implements ApplicationListener<ContextRefreshedEvent> {
+	
+	public static List<JobNote> JOB_NOT_ELIST;//系统中所有定时任务的详细信息列表,将在Spring容器初始化完毕后初始化;
+	
 	@Autowired
 	private QuartzScheduler quartzScheduler;
-
+	
+	@Autowired
+	private AnnotationUtils annotationUtils;
+	
+	//private AnnotationUtils<BaseJob> annotationUtils = new AnnotationUtils<BaseJob>();
 	/**
 	 * 初始启动quartz
 	 */
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
+		// 启动所有的定时任务;
+		/*// 添加定时任务的信息到数据库;
 		quartzScheduler.startJob();
-		System.out.println("任务已经启动...");
+		System.out.println("任务已经启动...");*/
+		
+		//扫描指定包下的job实现类,多个包下的job可以分多次扫描然后list.addAll拼接;
+		String packageName = "com.fangshuo.lib4fangshuo.timertask.quartz.job";
+		JOB_NOT_ELIST = annotationUtils.getAnnotationValueByPackPath(packageName);
+		quartzScheduler.startAllJob(JOB_NOT_ELIST);
 	}
 
 	/**

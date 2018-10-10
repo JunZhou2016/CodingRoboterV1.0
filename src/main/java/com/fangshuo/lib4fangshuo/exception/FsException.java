@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fangshuo.lib4fangshuo.exception.code.ErrorCode;
-import com.fangshuo.lib4fangshuo.model.ResObject;
 
 /**
  * 
@@ -26,9 +25,9 @@ public class FsException extends RuntimeException{
 	 */
 	private static final long serialVersionUID = -4202715784002019309L;
 	
-	protected static final Logger log = LoggerFactory.getLogger(ResObject.class.getName());
+	protected static final Logger log = LoggerFactory.getLogger(FsException.class.getName());
 	
-	private ErrorCode errorCode;
+	public ErrorCode errorCode;
 	
 	public FsException(ErrorCode errorCode) {
 		super();
@@ -41,5 +40,10 @@ public class FsException extends RuntimeException{
 
 	public void setErrorCode(ErrorCode errorCode) {
 		this.errorCode = errorCode;
+	}
+	
+	public  FsException log() {
+		log.info(errorCode.getErrDesc());
+		return this;
 	}
 }

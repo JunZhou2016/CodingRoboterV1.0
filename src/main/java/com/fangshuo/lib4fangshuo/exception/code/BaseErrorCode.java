@@ -37,4 +37,9 @@ public abstract class BaseErrorCode{
 		return errDesc;
 	}
 
+	@Override
+	public String toString() {
+		return "BaseErrorCode [errCode=" + errCode + ", errDesc=" + errDesc + "]";
+	}
+
 }

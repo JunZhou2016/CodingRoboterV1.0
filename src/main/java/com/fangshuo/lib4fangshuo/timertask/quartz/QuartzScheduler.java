@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
-import org.quartz.Job;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.JobKey;
@@ -19,8 +18,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
-import com.fangshuo.lib4fangshuo.timertask.quartz.job.SchedulerQuartzJob1;
-import com.fangshuo.lib4fangshuo.timertask.quartz.job.SchedulerQuartzJob2;
+import com.fangshuo.lib4fangshuo.annotation.JobNote;
+import com.fangshuo.lib4fangshuo.timertask.quartz.job.BaseJob;
 
 /**
  * 
@@ -29,7 +28,7 @@ import com.fangshuo.lib4fangshuo.timertask.quartz.job.SchedulerQuartzJob2;
  * @ClassName: QuartzScheduler.java
  * @Description: 任务调度管理器，封装了对定时任务进行操作的方法集合;
  * 
-  * 定时任务的添加时毫无意义的，因为通过可视化界面添加的定时任务无法明确复杂的业务逻辑;
+ *               定时任务的添加时毫无意义的，因为通过可视化界面添加的定时任务无法明确复杂的业务逻辑;
  * 
  * @version: v1.0.0
  * @author: JunZhou
@@ -46,14 +45,19 @@ public class QuartzScheduler {
 	private Scheduler scheduler;
 
 	/**
-	 * 开始执行所有任务
+	 * 开始执行所有任务 采用循环实现;
 	 * 
+	 * @param jobNoteList启动信息的列表;
 	 * @throws SchedulerException
 	 */
-	public void startJob() {// 启动定时任务之前需要先判断任务状态;
+	public void startAllJob(List<JobNote> jobNoteList) {
 		try {
-			startJob1(scheduler);
-			startJob2(scheduler);
+			for (JobNote jobNote : jobNoteList) {
+				if (null != jobNote) {
+					jobExecutor(jobNote);
+				}
+			}
+			// 启动所有初始化后的任务;
 			scheduler.start();
 		} catch (ObjectAlreadyExistsException e) {
 			// TODO Auto-generated catch block
@@ -65,33 +69,25 @@ public class QuartzScheduler {
 	}
 
 	/**
-	 * 开始执行所有任务 采用循环实现;
-	 * 
-	 * @param jobIdentityList:job启动信息的列表;
-	 * @throws SchedulerException
-	 */
-	public void startAllJob(List<JobIdentity> jobIdentityList) throws SchedulerException {
-		for (JobIdentity jobIdentity : jobIdentityList) {
-			if (null != jobIdentity) {
-				jobExecutor(jobIdentity);
-			}
-		}
-		// 启动所有初始化后的任务;
-		scheduler.start();
-	}
-
-	/**
 	 * 启动某个定时任务;
 	 * 
-	 * @param jobIdentityList:job启动信息的列表;
+	 * @param jobNote启动信息;
 	 * @throws SchedulerException
 	 */
-	public void startTargetJob(JobIdentity jobIdentity) throws SchedulerException {
-		if (null != jobIdentity) {
-			jobExecutor(jobIdentity);
+	public void startTargetJob(JobNote jobNote) throws SchedulerException {
+		try {
+			if (null != jobNote) {
+				jobExecutor(jobNote);
+			}
+			// 启动所有初始化后的任务;
+			scheduler.start();
+		} catch (ObjectAlreadyExistsException e) {
+			// TODO Auto-generated catch block
+			log.debug("当前定时任务已经启动", e);
+		} catch (SchedulerException e) {
+			// TODO: handle exception
+			log.debug("定时任务启动失败", e);
 		}
-		// 启动所有初始化后的任务;
-		scheduler.start();
 	}
 
 	/**
@@ -202,12 +198,12 @@ public class QuartzScheduler {
 	 * @param targetJobClazz: 目标定时任务的Class对象;
 	 * @throws SchedulerException
 	 */
-	private void jobExecutor(JobIdentity jobIdentity) throws SchedulerException {
-		TriggerKey triggerKey = jobIdentity.getTriggerKey();
-		String cronExpression = jobIdentity.getCronExpression();// corn表达式;
-		String group = triggerKey.getGroup();// job所属分组;
-		String name = triggerKey.getName();// job名称;
-		Class<Job> jobClazz = jobIdentity.getJobClazz();//目标定时任务的Class对象;
+	private void jobExecutor(JobNote jobNote) throws SchedulerException {
+		String cronExpression = jobNote.cron();// corn表达式;
+		String group = jobNote.group();// job所属分组;
+		String name = jobNote.name();// job名称;
+		@SuppressWarnings({ "static-access", "unchecked" })
+		Class<BaseJob> jobClazz = (Class<BaseJob>) jobNote.clazzSet.get(name);// 目标定时任务的Class对象;
 		// 通过JobBuilder构建JobDetail实例，JobDetail规定只能是实现Job接口的实例
 		// JobDetail 是具体Job实例
 		JobDetail jobDetail = JobBuilder.newJob(jobClazz).withIdentity(name, group).build();
@@ -215,27 +211,6 @@ public class QuartzScheduler {
 		CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(cronExpression);
 		CronTrigger cronTrigger = TriggerBuilder.newTrigger().withIdentity(name, group)// TriggerBuilder 用于构建触发器实例
 				.withSchedule(cronScheduleBuilder).build();// CronTrigger表达式触发器 继承于Trigger
-		scheduler.scheduleJob(jobDetail, cronTrigger);
-	}
-
-	private void startJob1(Scheduler scheduler) throws SchedulerException {
-		// 通过JobBuilder构建JobDetail实例，JobDetail规定只能是实现Job接口的实例
-		// JobDetail 是具体Job实例
-		JobDetail jobDetail = JobBuilder.newJob(SchedulerQuartzJob1.class).withIdentity("job1", "group1").build();
-		// 基于表达式构建触发器
-		CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule("0/5 * * * * ?");
-		// CronTrigger表达式触发器 继承于Trigger
-		// TriggerBuilder 用于构建触发器实例
-		CronTrigger cronTrigger = TriggerBuilder.newTrigger().withIdentity("job1", "group1")
-				.withSchedule(cronScheduleBuilder).build();
-		scheduler.scheduleJob(jobDetail, cronTrigger);
-	}
-
-	private void startJob2(Scheduler scheduler) throws SchedulerException {
-		JobDetail jobDetail = JobBuilder.newJob(SchedulerQuartzJob2.class).withIdentity("job2", "group2").build();
-		CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule("0/5 * * * * ?");
-		CronTrigger cronTrigger = TriggerBuilder.newTrigger().withIdentity("job2", "group2")
-				.withSchedule(cronScheduleBuilder).build();
 		scheduler.scheduleJob(jobDetail, cronTrigger);
 	}
 }

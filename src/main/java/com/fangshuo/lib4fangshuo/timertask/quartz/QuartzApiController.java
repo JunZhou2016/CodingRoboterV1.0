@@ -1,9 +1,13 @@
 package com.fangshuo.lib4fangshuo.timertask.quartz;
 
+import java.util.List;
+
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fangshuo.lib4fangshuo.annotation.JobNote;
 
 /**
  * 
@@ -24,9 +28,10 @@ public class QuartzApiController {
 	@Autowired
 	private QuartzScheduler quartzScheduler;
 
-	@RequestMapping("/start")
+	@RequestMapping("/startAllJob")
 	public void startQuartzJob() {
-		quartzScheduler.startJob();
+		List<JobNote> jOB_NOT_ELIST = ApplicationStartQuartzJobListener.JOB_NOT_ELIST;
+		quartzScheduler.startAllJob(jOB_NOT_ELIST);
 	}
 
 	@RequestMapping("/info")

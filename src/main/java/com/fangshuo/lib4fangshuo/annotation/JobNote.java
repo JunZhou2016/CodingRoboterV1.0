@@ -5,6 +5,8 @@ import static java.lang.annotation.ElementType.TYPE;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 
@@ -21,7 +23,7 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(TYPE)
-public @interface JobNote {
+public @interface JobNote{
 
 	// Job描述
 	String bean() default "";// 类的全路径;
@@ -33,4 +35,7 @@ public @interface JobNote {
 	String name() default "";// job的名称;
 
 	String group() default "";// job所属分组的名称;
+
+	Map<String, Class<?>> clazzSet = new HashMap<String, Class<?>>();
+	// JobClazz jobClazz = new JobClazz();//Job的Class对象;
 }

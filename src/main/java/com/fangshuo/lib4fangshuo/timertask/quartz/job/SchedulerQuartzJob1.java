@@ -5,7 +5,7 @@ import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.fangshuo.lib4fangshuo.timertask.quartz.JobIdentity;
+import com.fangshuo.lib4fangshuo.annotation.JobNote;
 
 /**
  * 
@@ -20,8 +20,10 @@ import com.fangshuo.lib4fangshuo.timertask.quartz.JobIdentity;
  * @Site: CERNO
  * @date: 2018年10月9日 上午11:09:25
  */
-public class SchedulerQuartzJob1 extends JobIdentity implements BaseJob {
+@JobNote(bean = "com.fangshuo.lib4fangshuo.timertask.quartz.job.SchedulerQuartzJob1", des = "定时任务一", cron = "0/5 * * * * ?", name = "job1", group = "group1")
+public class SchedulerQuartzJob1 implements BaseJob {
 	private Logger log = LoggerFactory.getLogger(SchedulerQuartzJob1.class);
+	private String name = "SchedulerQuartzJob1";
 
 	@Override
 	public void before() {
@@ -41,6 +43,11 @@ public class SchedulerQuartzJob1 extends JobIdentity implements BaseJob {
 	public void after() {
 		// TODO Auto-generated method stub
 		log.info("SchedulerQuartzJob1---->end......" + System.currentTimeMillis());
+	}
+
+	@Override
+	public String toString() {
+		return "SchedulerQuartzJob1 [name=" + name + "]";
 	}
 
 }

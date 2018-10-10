@@ -1,4 +1,4 @@
-package com.fangshuo.lib4fangshuo.Enum;
+package com.fangshuo.lib4fangshuo.enums;
 
 /**
  * 

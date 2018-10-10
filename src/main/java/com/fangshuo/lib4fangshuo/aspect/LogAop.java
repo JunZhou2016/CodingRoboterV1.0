@@ -20,8 +20,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
 
 import com.fangshuo.codefactory.utils.StringUtils;
-import com.fangshuo.lib4fangshuo.Enum.AccessLogStatus;
 import com.fangshuo.lib4fangshuo.annotation.AccessLog;
+import com.fangshuo.lib4fangshuo.enums.AccessLogStatus;
 import com.fangshuo.lib4fangshuo.log.LogManager;
 import com.fangshuo.lib4fangshuo.model.OperationLog;
 import com.fangshuo.lib4fangshuo.timertask.jdktask.LogInsertTask;

@@ -9,7 +9,7 @@ import org.quartz.JobExecutionException;
  * Copyright: Copyright (c) 2018 Jun_Zhou
  * 
  * @ClassName: BaseJob.java
- * @Description: 基本任务实体类;
+ * @Description: 基本任务实体类，所有的定时任务务必实现这个基类;
  * 
  * @version: v1.0.0
  * @author: JunZhou
@@ -17,7 +17,7 @@ import org.quartz.JobExecutionException;
  * @Site: CERNO
  * @date: 2018年10月9日 上午10:51:56
  */
-public interface BaseJob extends Job{
+public interface BaseJob extends Job {
 
 	/**
 	 * 定时任务的前置业务逻辑，非必要的；

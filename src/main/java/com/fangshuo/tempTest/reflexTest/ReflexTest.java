@@ -2,6 +2,8 @@ package com.fangshuo.tempTest.reflexTest;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.fangshuo.lib4fangshuo.annotation.JobNote;
 import com.fangshuo.lib4fangshuo.utils.AnnotationUtils;
 
@@ -18,14 +20,19 @@ import com.fangshuo.lib4fangshuo.utils.AnnotationUtils;
  * @Site: CERNO
  * @date: 2018年10月9日 下午3:26:30
  */
-@JobNote(name = "")
 public class ReflexTest {
+	@Autowired
+	private static AnnotationUtils annotationUtils;
+	
+	@SuppressWarnings("static-access")
 	public static void main(String[] args)
 			throws ClassNotFoundException, InstantiationException, IllegalAccessException {
-		String packageName = "com.fangshuo.tempTest.reflexTest";
-		List<String> requestMappingValue = AnnotationUtils.getRequestMappingValue(packageName);
-		for (String string : requestMappingValue) {
-			System.out.println("-------Ele------" + string);
+		String packageName = "com.fangshuo.lib4fangshuo.timertask.quartz.job";
+		List<JobNote> jobNoteList = annotationUtils.getAnnotationValueByPackPath(packageName);
+		for (JobNote jobNote : jobNoteList) {
+			String jobName = jobNote.name();
+			String string = jobNote.clazzSet.get(jobName).newInstance().toString();
+			System.out.println("------------" + string);
 		}
 	}
 }
