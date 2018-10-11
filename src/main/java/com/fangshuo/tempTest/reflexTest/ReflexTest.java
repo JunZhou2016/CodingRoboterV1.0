@@ -2,8 +2,6 @@ package com.fangshuo.tempTest.reflexTest;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.fangshuo.lib4fangshuo.annotation.JobNote;
 import com.fangshuo.lib4fangshuo.utils.AnnotationUtils;
 
@@ -21,8 +19,7 @@ import com.fangshuo.lib4fangshuo.utils.AnnotationUtils;
  * @date: 2018年10月9日 下午3:26:30
  */
 public class ReflexTest {
-	@Autowired
-	private static AnnotationUtils annotationUtils;
+	private static AnnotationUtils annotationUtils = new AnnotationUtils();
 	
 	@SuppressWarnings("static-access")
 	public static void main(String[] args)

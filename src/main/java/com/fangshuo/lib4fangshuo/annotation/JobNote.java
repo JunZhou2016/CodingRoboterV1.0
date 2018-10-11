@@ -26,8 +26,6 @@ import java.util.Map;
 public @interface JobNote{
 
 	// Job描述
-	String bean() default "";// 类的全路径;
-
 	String des() default "";// job描述;
 
 	String cron() default "";// cron定时表达式;
@@ -36,6 +34,5 @@ public @interface JobNote{
 
 	String group() default "";// job所属分组的名称;
 
-	Map<String, Class<?>> clazzSet = new HashMap<String, Class<?>>();
-	// JobClazz jobClazz = new JobClazz();//Job的Class对象;
+	Map<String, Class<?>> clazzSet = new HashMap<String, Class<?>>();//Job对象的Class对象集合,该集合是静态的;
 }

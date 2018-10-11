@@ -30,30 +30,27 @@ import com.fangshuo.lib4fangshuo.utils.AnnotationUtils;
  */
 @Configuration
 public class ApplicationStartQuartzJobListener implements ApplicationListener<ContextRefreshedEvent> {
-	
-	public static List<JobNote> JOB_NOT_ELIST;//系统中所有定时任务的详细信息列表,将在Spring容器初始化完毕后初始化;
-	
+
+	public static List<JobNote> JOB_NOT_ELIST;// 系统中所有定时任务的详细信息列表,将在Spring容器初始化完毕后初始化;
+
 	@Autowired
 	private QuartzScheduler quartzScheduler;
-	
+
 	@Autowired
 	private AnnotationUtils annotationUtils;
-	
-	//private AnnotationUtils<BaseJob> annotationUtils = new AnnotationUtils<BaseJob>();
+
 	/**
 	 * 初始启动quartz
 	 */
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
-		// 启动所有的定时任务;
-		/*// 添加定时任务的信息到数据库;
-		quartzScheduler.startJob();
-		System.out.println("任务已经启动...");*/
-		
-		//扫描指定包下的job实现类,多个包下的job可以分多次扫描然后list.addAll拼接;
+		// 扫描指定包下的job实现类,多个包下的job可以分多次扫描然后list.addAll拼接;
 		String packageName = "com.fangshuo.lib4fangshuo.timertask.quartz.job";
 		JOB_NOT_ELIST = annotationUtils.getAnnotationValueByPackPath(packageName);
 		quartzScheduler.startAllJob(JOB_NOT_ELIST);
+
+		// 启动所有的定时任务;
+		// 添加定时任务的信息到数据库,任务的执行状态默认启动成功为NORMAL;
 	}
 
 	/**

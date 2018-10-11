@@ -26,10 +26,17 @@ public class DefaultDataSource extends DruidDataSource {
 
 	public DefaultDataSource() {
 		Environment env = SpringUtils.getBean(Environment.class);
+		/**
+		 * 必要属性;
+		 */
 		this.setUrl(env.getProperty("spring.default.datasource.url"));
 		this.setUsername(env.getProperty("spring.default.datasource.username"));// 用户名
 		this.setPassword(env.getProperty("spring.default.datasource.password"));// 密码
 		this.setDriverClassName(env.getProperty("spring.default.datasource.driver-class-name"));
+		
+		/**
+		 * 优化属性;
+		 */
 		this.setInitialSize(Integer.parseInt(env.getProperty("spring.default.datasource.initial-size")));// 初始化时建立物理连接的个数
 		this.setMaxActive(Integer.parseInt(env.getProperty("spring.default.datasource.max-active")));// 最大连接池数量
 		this.setMinIdle(Integer.parseInt(env.getProperty("spring.default.datasource.min-idle")));// 最小连接池数量

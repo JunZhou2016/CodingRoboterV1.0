@@ -15,7 +15,7 @@ import com.fangshuo.lib4fangshuo.annotation.JobNote;
  * @Site: CERNO
  * @date: 2018年10月9日 下午3:25:16
  */
-@JobNote(name = "User", bean = "com.fangshuo.tempTest.reflexTest.Person")
+@JobNote(name = "User")
 public class User extends Person {
 	private String name = "JunZhou";
 	private int age = 23;

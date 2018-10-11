@@ -20,7 +20,7 @@ import com.fangshuo.lib4fangshuo.annotation.JobNote;
  * @Site: CERNO
  * @date: 2018年10月9日 上午11:10:19
  */
-@JobNote(bean = "com.fangshuo.lib4fangshuo.timertask.quartz.job.SchedulerQuartzJob2", des = "定时任务一", cron = "0/5 * * * * ?", name = "job2", group = "group2")
+@JobNote(des = "定时任务一", cron = "0/5 * * * * ?", name = "job2", group = "group2")
 public class SchedulerQuartzJob2 implements BaseJob {
 	private Logger log = LoggerFactory.getLogger(SchedulerQuartzJob2.class);
 	private String name = "SchedulerQuartzJob2";
