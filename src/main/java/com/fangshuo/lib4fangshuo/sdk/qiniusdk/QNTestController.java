@@ -1,4 +1,4 @@
-package com.fangshuo.dbinfo.controller;
+package com.fangshuo.lib4fangshuo.sdk.qiniusdk;
 
 import java.io.IOException;
 
@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.fangshuo.lib4fangshuo.sdk.qiniusdk.ImgInfo4QN;
-import com.fangshuo.lib4fangshuo.sdk.qiniusdk.QiniuUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

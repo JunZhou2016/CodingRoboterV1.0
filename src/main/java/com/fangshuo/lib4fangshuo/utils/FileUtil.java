@@ -1,23 +1,31 @@
 package com.fangshuo.lib4fangshuo.utils;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.fangshuo.codefactory.utils.Logger;
 
 /**
  * 
-* Copyright: Copyright (c) 2018 Jun_Zhou
-* 
-* @ClassName: FileUtil.java
-* @Description: 文件操作的工具类集合;
-* 
-* @version: v1.0.0
-* @author: JunZhou
-* @Email: 1769676159@qq.com
-* @Site: CERNO
-* @date: 2018年10月9日 上午10:15:36
+ * Copyright: Copyright (c) 2018 Jun_Zhou
+ * 
+ * @ClassName: FileUtil.java
+ * @Description: 文件操作的工具类集合;
+ * 
+ * @version: v1.0.0
+ * @author: JunZhou
+ * @Email: 1769676159@qq.com
+ * @Site: CERNO
+ * @date: 2018年10月9日 上午10:15:36
  */
 public class FileUtil {
 	// 验证字符串是否为正确路径名的正则表达式
@@ -54,7 +62,7 @@ public class FileUtil {
 				}
 			}
 		} else {
-			//System.out.println("要传入正确路径！");
+			// System.out.println("要传入正确路径！");
 			return false;
 		}
 	}
@@ -84,7 +92,7 @@ public class FileUtil {
 		for (int i = 0; i < files.length; i++) {// 循环遍历删除文件夹下的所有文件(包括子目录)
 			if (files[i].isFile()) {// 删除子文件
 				flag = deleteFile(files[i].getAbsolutePath());
-				//System.out.println(files[i].getAbsolutePath() + " 删除成功");
+				// System.out.println(files[i].getAbsolutePath() + " 删除成功");
 				if (!flag)
 					break;// 如果删除失败，则跳出
 			} else {// 运用递归，删除子目录
@@ -106,32 +114,32 @@ public class FileUtil {
 	public static boolean createFile(String filePath) {
 		File file = new File(filePath);
 		if (file.exists()) {// 判断文件是否存在
-			//System.out.println("目标文件已存在" + filePath);
+			// System.out.println("目标文件已存在" + filePath);
 			return false;
 		}
 		if (filePath.endsWith(File.separator)) {// 判断文件是否为目录
-			//System.out.println("目标文件不能为目录！");
+			// System.out.println("目标文件不能为目录！");
 			return false;
 		}
 		if (!file.getParentFile().exists()) {// 判断目标文件所在的目录是否存在
 			// 如果目标文件所在的文件夹不存在，则创建父文件夹
-			//System.out.println("目标文件所在目录不存在，准备创建它！");
+			// System.out.println("目标文件所在目录不存在，准备创建它！");
 			if (!file.getParentFile().mkdirs()) {// 判断创建目录是否成功
-				//System.out.println("创建目标文件所在的目录失败！");
+				// System.out.println("创建目标文件所在的目录失败！");
 				return false;
 			}
 		}
 		try {
 			if (file.createNewFile()) {// 创建目标文件
-				//System.out.println("创建文件成功:" + filePath);
+				// System.out.println("创建文件成功:" + filePath);
 				return true;
 			} else {
-				//System.out.println("创建文件失败！");
+				// System.out.println("创建文件失败！");
 				return false;
 			}
 		} catch (IOException e) {// 捕获异常
 			e.printStackTrace();
-			//System.out.println("创建文件失败！" + e.getMessage());
+			// System.out.println("创建文件失败！" + e.getMessage());
 			return false;
 		}
 	}
@@ -172,10 +180,8 @@ public class FileUtil {
 	/**
 	 * 在指定的位置创建指定的文件
 	 *
-	 * @param filePath
-	 *            完整的文件路径
-	 * @param mkdir
-	 *            是否创建相关的文件夹
+	 * @param filePath 完整的文件路径
+	 * @param mkdir    是否创建相关的文件夹
 	 * @throws Exception
 	 */
 	public static void mkFile(String filePath, boolean mkdir) throws Exception {
@@ -188,8 +194,7 @@ public class FileUtil {
 	/**
 	 * 在指定的位置创建文件夹
 	 *
-	 * @param dirPath
-	 *            文件夹路径
+	 * @param dirPath 文件夹路径
 	 * @return 若创建成功，则返回True；反之，则返回False
 	 */
 	public static boolean mkDir(String dirPath) {
@@ -213,8 +218,7 @@ public class FileUtil {
 	/**
 	 * 删除指定的文件
 	 *
-	 * @param filePath
-	 *            文件路径
+	 * @param filePath 文件路径
 	 *
 	 * @return 若删除成功，则返回True；反之，则返回False
 	 *
@@ -226,10 +230,8 @@ public class FileUtil {
 	/**
 	 * 删除指定的文件夹
 	 *
-	 * @param dirPath
-	 *            文件夹路径
-	 * @param delFile
-	 *            文件夹中是否包含文件
+	 * @param dirPath 文件夹路径
+	 * @param delFile 文件夹中是否包含文件
 	 * @return 若删除成功，则返回True；反之，则返回False
 	 *
 	 */
@@ -263,12 +265,9 @@ public class FileUtil {
 	/**
 	 * 复制文件/文件夹 若要进行文件夹复制，请勿将目标文件夹置于源文件夹中
 	 * 
-	 * @param source
-	 *            源文件（夹）
-	 * @param target
-	 *            目标文件（夹）
-	 * @param isFolder
-	 *            若进行文件夹复制，则为True；反之为False
+	 * @param source   源文件（夹）
+	 * @param target   目标文件（夹）
+	 * @param isFolder 若进行文件夹复制，则为True；反之为False
 	 * @throws Exception
 	 */
 	public static void copy(String source, String target, boolean isFolder) throws Exception {
@@ -321,12 +320,9 @@ public class FileUtil {
 	/**
 	 * 移动指定的文件（夹）到目标文件（夹）
 	 * 
-	 * @param source
-	 *            源文件（夹）
-	 * @param target
-	 *            目标文件（夹）
-	 * @param isFolder
-	 *            若为文件夹，则为True；反之为False
+	 * @param source   源文件（夹）
+	 * @param target   目标文件（夹）
+	 * @param isFolder 若为文件夹，则为True；反之为False
 	 * @return
 	 * @throws Exception
 	 */
@@ -351,4 +347,52 @@ public class FileUtil {
 					+ FileUtil.createTempFile(prefix, surfix, dirName));
 		}
 	}
+
+	/**
+	 * 
+	 * @param fileName:生成文件的名称;
+	 * @param is:文件输入流;
+	 * @param request
+	 * @param response
+	 */
+	public static void downFileFromStream(String fileName, InputStream is, HttpServletRequest request,
+			HttpServletResponse response) {
+		BufferedInputStream bis = null;
+		BufferedOutputStream bos = null;
+		try {
+			// 避免文件名称中文乱码;
+			request.setCharacterEncoding("UTF-8");
+			String agent = request.getHeader("User-Agent").toUpperCase();
+			if ((agent.indexOf("MSIE") > 0) || ((agent.indexOf("RV") != -1) && (agent.indexOf("FIREFOX") == -1)))
+				fileName = URLEncoder.encode(fileName, "UTF-8");
+			else {
+				fileName = new String(fileName.getBytes("UTF-8"), "ISO8859-1");
+			}
+			InputStream inputStream = is;
+			// 设置响应格式;
+			response.setContentType("application/x-msdownload;");
+			response.setHeader("Content-disposition", "attachment; filename=" + fileName);
+			bis = new BufferedInputStream(inputStream);
+			bos = new BufferedOutputStream(response.getOutputStream());
+			byte[] buff = new byte[2048];
+			int bytesRead;
+			while (-1 != (bytesRead = bis.read(buff, 0, buff.length)))
+				bos.write(buff, 0, bytesRead);
+			bos.flush();
+		} catch (Exception e) {
+			Logger.info("文件下载失败！");
+		} finally {
+			try {
+				if (bis != null) {
+					bis.close();
+				}
+				if (bos != null) {
+					bos.close();
+				}
+			} catch (Exception e) {
+				Logger.info("文件关闭流出错！");
+			}
+		}
+	}
+
 }

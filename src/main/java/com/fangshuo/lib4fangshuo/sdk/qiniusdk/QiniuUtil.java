@@ -1,11 +1,8 @@
 package com.fangshuo.lib4fangshuo.sdk.qiniusdk;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fangshuo.codefactory.utils.Logger;
+import com.fangshuo.lib4fangshuo.utils.FileUtil;
 import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
@@ -76,10 +74,8 @@ public class QiniuUtil extends QiNiuConfig {
 	 * @param savePath:文件在本地的默认存储路径;
 	 * @return
 	 */
-	public static void downFileFromQiNiu(String imgAccessLink,HttpServletRequest request,
+	public static void downFileFromQiNiu(String imgAccessLink, HttpServletRequest request,
 			HttpServletResponse response) {
-		BufferedInputStream bis = null;
-		BufferedOutputStream bos = null;
 		Auth auth = getAuth();
 		String downloadUrl = auth.privateDownloadUrl(imgAccessLink);
 		String fileName = imgAccessLink.substring(imgAccessLink.lastIndexOf("/") + 1);
@@ -89,43 +85,14 @@ public class QiniuUtil extends QiNiuConfig {
 		try {
 			resp = client.newCall(req).execute();
 			if (resp.isSuccessful()) {// 数据流请求成功;
-
-				// 避免文件名称中文乱码;
-				request.setCharacterEncoding("UTF-8");
-				String agent = request.getHeader("User-Agent").toUpperCase();
-				if ((agent.indexOf("MSIE") > 0) || ((agent.indexOf("RV") != -1) && (agent.indexOf("FIREFOX") == -1)))
-					fileName = URLEncoder.encode(fileName, "UTF-8");
-				else {
-					fileName = new String(fileName.getBytes("UTF-8"), "ISO8859-1");
-				}
 				ResponseBody body = resp.body();
 				InputStream is = body.byteStream();
-				// 设置响应格式;
-				response.setContentType("application/x-msdownload;");
-				response.setHeader("Content-disposition", "attachment; filename=" + fileName);
-				bis = new BufferedInputStream(is);
-				bos = new BufferedOutputStream(response.getOutputStream());
-				byte[] buff = new byte[2048];
-				int bytesRead;
-				while (-1 != (bytesRead = bis.read(buff, 0, buff.length)))
-					bos.write(buff, 0, bytesRead);
-				bos.flush();
+				FileUtil.downFileFromStream(fileName, is, request, response);
 			}
-		} catch (Exception e) {
-			Logger.info("导出文件失败！");
-		} finally {
-			try {
-				if (bis != null) {
-					bis.close();
-				}
-				if (bos != null) {
-					bos.close();
-				}
-			} catch (Exception e) {
-				Logger.info("导出文件关闭流出错！");
-			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
 	}
 
 	/**
