@@ -3,13 +3,14 @@ package com.fangshuo.tempTest.graphicverification;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageOutputStream;
+
 import cn.hutool.core.lang.Console;
-import cn.hutool.core.lang.WeightRandom;
-import cn.hutool.core.lang.WeightRandom.WeightObj;
 import cn.hutool.core.util.ImageUtil;
-import cn.hutool.core.util.RandomUtil;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.sax.handler.RowHandler;
 
@@ -27,52 +28,25 @@ import cn.hutool.poi.excel.sax.handler.RowHandler;
  * @date: 2018年10月10日 下午5:00:39
  */
 public class ImgUtils {
-	@SuppressWarnings("unchecked")
-	public static void main(String[] args) {
-	    //源文件;
-		File srcImgFile = new File("d:/qrcode.jpg");
-		///BufferedImage srcImage = ImageUtil.read(srcImgFile);
-		
-		//水印文件;
+	public static void main(String[] args) throws IOException {
 		File tarImgFile = new File("d:/ice.png");
-		//BufferedImage pressImg = ImageUtil.read(tarImgFile);
-		Font font = new Font("宋体",Font.BOLD,20);
-		ImageUtil.pressText(srcImgFile, tarImgFile, "无锡隆正", Color.RED,font,-20,150, 0.8f);
-		
-		@SuppressWarnings("rawtypes")
-		WeightObj[] wightObjs = new WeightObj[5];
-		/**
-		 * 取样范围;
-		 */
-		wightObjs[0] = new WeightObj<Integer>(new Integer(1),2.0f);
-		wightObjs[1] = new WeightObj<Integer>(new Integer(2),2.0f);
-		wightObjs[2] = new WeightObj<Integer>(new Integer(3),2.0f);
-		wightObjs[3] = new WeightObj<Integer>(new Integer(4),2.0f);
-		wightObjs[4] = new WeightObj<Integer>(new Integer(5),2.0f);
-		WeightRandom<Integer>  res = RandomUtil.weightRandom(wightObjs);
-		res.toString();
-		
-		try {
-			//ImageIO.write(imgAfterPress, "png", srcImgFile);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		Font font = new Font("宋体", Font.BOLD, 20);
+		String str = ImgConstant.imgTexe;
+		ImageOutputStream out = ImageIO.createImageOutputStream(tarImgFile);
+		ImageUtil.createImage(str, font, Color.WHITE, Color.BLACK, out);
 	}
-	
+
 	public void poiTest() {
 		ExcelUtil.readBySax("aaa.xlsx", 0, createRowHandler());
 	}
-	
+
 	private RowHandler createRowHandler() {
-	    return new RowHandler() {
-	        @Override
-	        public void handle(int sheetIndex, int rowIndex, List<Object> rowlist) {
-	            Console.log("[{}] [{}] {}", sheetIndex, rowIndex, rowlist);
-	        }
-	    };
+		return new RowHandler() {
+			@Override
+			public void handle(int sheetIndex, int rowIndex, List<Object> rowlist) {
+				Console.log("[{}] [{}] {}", sheetIndex, rowIndex, rowlist);
+			}
+		};
 	}
 
-	
 }
