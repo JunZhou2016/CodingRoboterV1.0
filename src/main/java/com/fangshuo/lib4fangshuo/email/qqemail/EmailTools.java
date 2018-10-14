@@ -1,8 +1,5 @@
 package com.fangshuo.lib4fangshuo.email.qqemail;
 
-import java.util.ArrayList;
-
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.extra.mail.MailUtil;
 
 /**
@@ -25,9 +22,15 @@ public class EmailTools {
 		//带附件的文件发送;
 		//MailUtil.send("3040237357@qq.com", "测试", "<h1>邮件来自JunZhou测试</h1>", true, FileUtil.file("D:\\doc\\邓明浩开题报告_201712151003.doc"));
 		//邮件群发;
-		ArrayList<String> tos = CollUtil.newArrayList(
-			    "3040237357@qq.com", 
-			    "1769676159@qq.com");
-			MailUtil.send(tos, "测试", "邮件来自JunZhou群发测试", false);
+
+		/*ArrayList<String> tos = CollUtil.newArrayList(
+			    "3040237357@qq.com"//ZJ
+			    );
+			MailUtil.send(tos, "测试123", "邮件来自JunZhou群发测试", false);*/
+		
+		for(int i = 0;i<=50;i++) {
+			MailUtil.send("3040237357@qq.com", "测试", "邮件来自JunZhou测试", false);
+		}
+	
 	}
 }
