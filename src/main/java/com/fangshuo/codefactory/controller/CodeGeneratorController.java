@@ -10,24 +10,25 @@ import com.fangshuo.codefactory.service.CodeGeneratorService;
 
 /**
  * 
-* Copyright: Copyright (c) 2018 Jun_Zhou
-* 
-* @ClassName: CodeGeneratorController.java
-* @Description: 代码生成的控制器;
-* 
-* @version: v1.0.0
-* @author: JunZhou
-* @Email: 1769676159@qq.com
-* @Site: CERNO
-* @date: 2018年9月25日 下午2:53:06
-*/
+ * Copyright: Copyright (c) 2018 Jun_Zhou
+ * 
+ * @ClassName: CodeGeneratorController.java
+ * @Description: 代码生成的控制器;
+ * 
+ * @version: v1.0.0
+ * @author: JunZhou
+ * @Email: 1769676159@qq.com
+ * @Site: CERNO
+ * @date: 2018年9月25日 下午2:53:06
+ */
 public class CodeGeneratorController {
-	
+
 	@Autowired
 	private CodeGeneratorService codeGeneratorService;
-	
+
 	/**
 	 * 获取数据库属性信息;
+	 * 
 	 * @return:String;
 	 */
 	@RequestMapping("/get-dbInfos")

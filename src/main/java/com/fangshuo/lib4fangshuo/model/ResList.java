@@ -45,7 +45,7 @@ public class ResList<T> implements Serializable {
 		super();
 		this.pageInfo = pageInfo;
 		this.list = list;
-		
+
 		if (pageInfo != null && (!StringUtils.isEmpty(pageInfo.getStartPage()))
 				&& (!StringUtils.isEmpty(pageInfo.getPageSize()))) {
 			pageInfo.totalRow = (list == null) ? 0 : list.size();

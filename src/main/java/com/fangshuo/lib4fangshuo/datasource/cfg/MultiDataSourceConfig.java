@@ -42,14 +42,14 @@ public class MultiDataSourceConfig {
 	public MultiSourceAop multiSourceExAop() {
 		return new MultiSourceAop();
 	}
-	
+
 	/**
 	 * 多数据源的属性;
 	 */
 	@Autowired
 	@Qualifier("multiDataSourceProperties")
 	private MultiDataSourceProperties multiDataSourceProperties;
-	
+
 	/**
 	 * 多数据源连接池配置
 	 */
@@ -58,9 +58,9 @@ public class MultiDataSourceConfig {
 
 		// 数据源实例初始化;
 		DefaultDataSource defaultDs = new DefaultDataSource();// 默认数据源;
-		FirstDataSource firstDs = new FirstDataSource();//自定义的数据源First;
+		FirstDataSource firstDs = new FirstDataSource();// 自定义的数据源First;
 		try {
-			//数据源初始化;
+			// 数据源初始化;
 			defaultDs.init();
 			firstDs.init();
 		} catch (SQLException sql) {

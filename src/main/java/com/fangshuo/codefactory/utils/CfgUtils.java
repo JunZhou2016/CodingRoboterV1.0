@@ -25,16 +25,17 @@ import freemarker.template.TemplateExceptionHandler;
  * @Site: CERNO
  * @date: 2018年9月25日 下午4:36:29
  */
-public class CfgUtils extends CodeGeneratorConfig{
+public class CfgUtils extends CodeGeneratorConfig {
 	private static Configuration configuration = null;
-	
+
 	static {
 		// 初始化配置信息
 		init();
 	}
-	
+
 	/**
 	 * 获取 Freemarker 模板环境配置
+	 * 
 	 * @return
 	 */
 	public static Configuration getFreemarkerConfiguration() {
@@ -43,9 +44,10 @@ public class CfgUtils extends CodeGeneratorConfig{
 		}
 		return configuration;
 	}
-	
+
 	/**
 	 * Freemarker 模板环境配置
+	 * 
 	 * @return
 	 * @throws IOException
 	 */
@@ -61,71 +63,75 @@ public class CfgUtils extends CodeGeneratorConfig{
 		}
 		return cfg;
 	}
-	
+
 	/**
-	 * 包转成路径
-	 * eg: com.bigsea.sns ==> com/bigsea/sns
+	 * 包转成路径 eg: com.bigsea.sns ==> com/bigsea/sns
+	 * 
 	 * @param packageName
 	 * @return
 	 */
 	public static String packageConvertPath(String packageName) {
 		return String.format("/%s/", packageName.contains(".") ? packageName.replaceAll("\\.", "/") : packageName);
 	}
-	
+
 	/**
 	 * 初始化配置信息
 	 */
 	@SuppressWarnings("unused")
 	public static void init() {
 		Properties prop = loadProperties();
-		
+
 		JDBC_URL = prop.getProperty("jdbc.url");
 		JDBC_USERNAME = prop.getProperty("jdbc.username");
 		JDBC_PASSWORD = prop.getProperty("jdbc.password");
 		JDBC_DRIVER_CLASS_NAME = prop.getProperty("jdbc.driver.class.name");
 		JDBC_DB_NAME = prop.getProperty("jdbc.dbname");
-		
+
 		JAVA_PATH = prop.getProperty("java.path");
 		RESOURCES_PATH = prop.getProperty("resources.path");
 		TEMPLATE_FILE_PATH = PROJECT_PATH + prop.getProperty("template.file.path");
-		
+
 		BASE_PACKAGE = prop.getProperty("base.package");
 		MODEL_PACKAGE = prop.getProperty("model.package");
 		MAPPER_PACKAGE = prop.getProperty("mapper.package");
 		SERVICE_PACKAGE = prop.getProperty("service.package");
 		SERVICE_IMPL_PACKAGE = prop.getProperty("service.impl.package");
 		CONTROLLER_PACKAGE = prop.getProperty("controller.package");
-		
+
 		MAPPER_INTERFACE_REFERENCE = prop.getProperty("mapper.interface.reference");
 		SERVICE_INTERFACE_REFERENCE = prop.getProperty("service.interface.reference");
 		ABSTRACT_SERVICE_CLASS_REFERENCE = prop.getProperty("abstract.service.class.reference");
-		
+
 		String servicePackage = prop.getProperty("package.path.service");
 		String serviceImplPackage = prop.getProperty("package.path.service.impl");
 		String controllerPackage = prop.getProperty("package.path.controller");
-		
+
 		PACKAGE_PATH_SERVICE = "".equals(servicePackage) ? packageConvertPath(SERVICE_PACKAGE) : servicePackage;
-		PACKAGE_PATH_SERVICE_IMPL = "".equals(serviceImplPackage) ? packageConvertPath(SERVICE_IMPL_PACKAGE) : serviceImplPackage;
-		PACKAGE_PATH_CONTROLLER = "".equals(controllerPackage) ? packageConvertPath(CONTROLLER_PACKAGE) : controllerPackage;
-		
+		PACKAGE_PATH_SERVICE_IMPL = "".equals(serviceImplPackage) ? packageConvertPath(SERVICE_IMPL_PACKAGE)
+				: serviceImplPackage;
+		PACKAGE_PATH_CONTROLLER = "".equals(controllerPackage) ? packageConvertPath(CONTROLLER_PACKAGE)
+				: controllerPackage;
+
 		COMMON_CODE_PATH = packageConvertPath(BASE_PACKAGE);
-		
+
 		AUTHOR = prop.getProperty("author");
 		String dateFormat = "".equals(prop.getProperty("date-format")) ? "yyyy/MM/dd" : prop.getProperty("date-format");
 		DATE = new SimpleDateFormat(dateFormat).format(new Date());
-		
-		/*MODEL = CodeType.MODEL_TYPE.getTypeName();// model类型;
-		CONTROLLER = CodeType.CONTROLLER_TYPE.getTypeName();// controller类型;
-		SERVICE = CodeType.SERVICE_TYPE.getTypeName();// service类型;
-		SERVICE_IMPL = CodeType.SERVICE_IMPL_TYPE.getTypeName();// serviceImpl类型;
-		MAPPER = CodeType.MAPPER_TYPE.getTypeName();// mapper类型;
-		PARAMETER = CodeType.PARAMETER_TYPE.getTypeName();// parameter类型;
-		X_MAPPER = CodeType.X_MAPPER_TYPE.getTypeName();// xml-mapper类型;
-		*/
+
+		/*
+		 * MODEL = CodeType.MODEL_TYPE.getTypeName();// model类型; CONTROLLER =
+		 * CodeType.CONTROLLER_TYPE.getTypeName();// controller类型; SERVICE =
+		 * CodeType.SERVICE_TYPE.getTypeName();// service类型; SERVICE_IMPL =
+		 * CodeType.SERVICE_IMPL_TYPE.getTypeName();// serviceImpl类型; MAPPER =
+		 * CodeType.MAPPER_TYPE.getTypeName();// mapper类型; PARAMETER =
+		 * CodeType.PARAMETER_TYPE.getTypeName();// parameter类型; X_MAPPER =
+		 * CodeType.X_MAPPER_TYPE.getTypeName();// xml-mapper类型;
+		 */
 	}
-	
+
 	/**
 	 * 加载配置文件
+	 * 
 	 * @return
 	 */
 	public static Properties loadProperties() {

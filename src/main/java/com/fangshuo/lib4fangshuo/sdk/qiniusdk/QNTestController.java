@@ -42,18 +42,19 @@ public class QNTestController {
 	@RequestMapping(value = "/get_ImgByURL", method = RequestMethod.GET)
 	@ResponseBody
 	public void getTabInfoByTableName(HttpServletRequest request, HttpServletResponse response) {
-		QiniuUtil.downFileFromQiNiu("http://ouuy81imh.bkt.clouddn.com/2018100111231614_zj_qn.png",request, response);
+		QiniuUtil.downFileFromQiNiu("http://ouuy81imh.bkt.clouddn.com/2018100111231614_zj_qn.png", request, response);
 	}
-	
-	 /**
-     * 上传文件到七牛云存储
-     * @param multipartFile
-     * @return
-     * @throws IOException
-     */
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    @ResponseBody
-    public ImgInfo4QN uploadImgQiniu(@RequestParam("file") MultipartFile multipartFile) throws IOException {
-        return QiniuUtil.uploadImgToQiNiu(multipartFile);
-    }
+
+	/**
+	 * 上传文件到七牛云存储
+	 * 
+	 * @param multipartFile
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	@ResponseBody
+	public ImgInfo4QN uploadImgQiniu(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+		return QiniuUtil.uploadImgToQiNiu(multipartFile);
+	}
 }

@@ -20,7 +20,7 @@ import com.fangshuo.lib4fangshuo.utils.AnnotationUtils;
  */
 public class ReflexTest {
 	private static AnnotationUtils annotationUtils = new AnnotationUtils();
-	
+
 	@SuppressWarnings("static-access")
 	public static void main(String[] args)
 			throws ClassNotFoundException, InstantiationException, IllegalAccessException {

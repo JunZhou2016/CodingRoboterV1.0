@@ -23,65 +23,68 @@ import io.swagger.annotations.ApiOperation;
 
 /**
  * 
-* Copyright: Copyright (c) 2018 Jun_Zhou
-* 
-* @ClassName: DBInfoController.java
-* @Description: 查询数据库基本信息的控制类;
-* 
-* @version: v1.0.0
-* @author: JunZhou
-* @Email: 1769676159@qq.com
-* @Site: CERNO
-* @date: 2018年9月21日 下午4:11:28
+ * Copyright: Copyright (c) 2018 Jun_Zhou
+ * 
+ * @ClassName: DBInfoController.java
+ * @Description: 查询数据库基本信息的控制类;
+ * 
+ * @version: v1.0.0
+ * @author: JunZhou
+ * @Email: 1769676159@qq.com
+ * @Site: CERNO
+ * @date: 2018年9月21日 下午4:11:28
  */
 @RequestMapping("/dbinfo")
-@Api(value="数据库信息控制器",tags = {"数据库信息管理API"})
+@Api(value = "数据库信息控制器", tags = { "数据库信息管理API" })
 @RestController
 public class DBInfoController {
 	@Autowired
 	private DbInfoService dbInfoService;
-	
+
 	/**
 	 * 根据条件获取数据库属性信息;
+	 * 
 	 * @param dbFilter
 	 * @return
 	 */
 	@TargetDataSource(name = "defaultDS")
 	@ApiOperation("查询数据库基础信息")
-	@RequestMapping(value="/get-dbInfosByCondition",method = RequestMethod.POST)
+	@RequestMapping(value = "/get-dbInfosByCondition", method = RequestMethod.POST)
 	@ResponseBody
 	public ResObject<Database> getDBInfosByCondition(@RequestBody ReqObject<Database> dbFilter,
 			HttpServletRequest request, HttpServletResponse response) {
 		Database dbQueryCondition = dbFilter.getObject();
 		Database executeResult = dbInfoService.getDBInfosByCondition(dbQueryCondition);
-		ResObject<Database> reqObject = new ResObject<Database>(dbFilter,executeResult,request);
+		ResObject<Database> reqObject = new ResObject<Database>(dbFilter, executeResult, request);
 		return reqObject;
 	}
-	
+
 	/**
 	 * 根据条件获取数据库属性信息;
+	 * 
 	 * @param dbFilter
 	 * @return
 	 */
 	@TargetDataSource(name = "firstDS")
 	@ApiOperation("查询数据库基础信息")
-	@RequestMapping(value="/get-dbInfosByCondition02",method = RequestMethod.POST)
+	@RequestMapping(value = "/get-dbInfosByCondition02", method = RequestMethod.POST)
 	@ResponseBody
 	public ResObject<Database> getDBInfosByCondition02(@RequestBody ReqObject<Database> dbFilter,
 			HttpServletRequest request, HttpServletResponse response) {
 		Database dbQueryCondition = dbFilter.getObject();
 		Database executeResult = dbInfoService.getDBInfosByCondition(dbQueryCondition);
-		ResObject<Database> reqObject = new ResObject<Database>(dbFilter,executeResult,request);
+		ResObject<Database> reqObject = new ResObject<Database>(dbFilter, executeResult, request);
 		return reqObject;
 	}
-	
+
 	/**
 	 * 根据条件获取数据库属性信息;
+	 * 
 	 * @param dbFilter
 	 * @return
 	 */
 	@ApiOperation("查询数据库基础信息")
-	@RequestMapping(value="/get-testErrorCode",method = RequestMethod.POST)
+	@RequestMapping(value = "/get-testErrorCode", method = RequestMethod.POST)
 	@ResponseBody
 	public ResObject<Database> testErrorCode(HttpServletRequest request, HttpServletResponse response) {
 		try {
@@ -89,14 +92,14 @@ public class DBInfoController {
 			return new ResObject<Database>(request);
 		} catch (Exception e) {
 			// TODO: handle exception
-			return new ResObject<Database>(e,request);
+			return new ResObject<Database>(e, request);
 		}
 	}
-	
+
 	public static void throwException() {
-		if(2>1) {
+		if (2 > 1) {
 			throw new FsException(ErrMsgConstant.FILE_NOT_EXISTS_ERROR);
 		}
 	}
-	
+
 }

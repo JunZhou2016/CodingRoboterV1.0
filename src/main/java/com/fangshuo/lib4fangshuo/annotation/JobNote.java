@@ -23,7 +23,7 @@ import java.util.Map;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(TYPE)
-public @interface JobNote{
+public @interface JobNote {
 
 	// Job描述
 	String des() default "";// job描述;
@@ -34,5 +34,5 @@ public @interface JobNote{
 
 	String group() default "";// job所属分组的名称;
 
-	Map<String, Class<?>> clazzSet = new HashMap<String, Class<?>>();//Job对象的Class对象集合,该集合是静态的;
+	Map<String, Class<?>> clazzSet = new HashMap<String, Class<?>>();// Job对象的Class对象集合,该集合是静态的;
 }

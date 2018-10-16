@@ -33,7 +33,7 @@ public class DefaultDataSource extends DruidDataSource {
 		this.setUsername(env.getProperty("spring.default.datasource.username"));// 用户名
 		this.setPassword(env.getProperty("spring.default.datasource.password"));// 密码
 		this.setDriverClassName(env.getProperty("spring.default.datasource.driver-class-name"));
-		
+
 		/**
 		 * 优化属性;
 		 */

@@ -8,16 +8,16 @@ import org.springframework.stereotype.Component;
 
 /**
  * 
-* Copyright: Copyright (c) 2018 Jun_Zhou
-* 
-* @ClassName: SpringUtil.java
-* @Description:  spring工具类 方便在非spring管理环境中获取bean
-* 
-* @version: v1.0.0
-* @author: JunZhou
-* @Email: 1769676159@qq.com
-* @Site: CERNO
-* @date: 2018年10月6日 下午9:55:50
+ * Copyright: Copyright (c) 2018 Jun_Zhou
+ * 
+ * @ClassName: SpringUtil.java
+ * @Description: spring工具类 方便在非spring管理环境中获取bean
+ * 
+ * @version: v1.0.0
+ * @author: JunZhou
+ * @Email: 1769676159@qq.com
+ * @Site: CERNO
+ * @date: 2018年10月6日 下午9:55:50
  */
 @Component
 public class SpringUtil implements BeanFactoryPostProcessor {

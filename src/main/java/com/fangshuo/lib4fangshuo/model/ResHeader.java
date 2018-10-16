@@ -40,13 +40,13 @@ public class ResHeader {
 
 	@FieldNote(desc = "用户代理的Ip地址")
 	private String userAgentIP;
-	
+
 	@FieldNote(desc = "请求主机的物理地址")
 	private String hostMac;
-	
+
 	@FieldNote(desc = "请求发起的时间")
 	private String reqTime;
-	
+
 	@FieldNote(desc = "请求参数")
 	private Object reqParam;
 
@@ -67,7 +67,7 @@ public class ResHeader {
 		reqParam = req;
 		this.cliFlowNo = (req == null) ? "1" : req.getReqHeader().getFlowNo();
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	public ResHeader(ReqObject<?> req, Exception e, HttpServletRequest request) {
 		super();

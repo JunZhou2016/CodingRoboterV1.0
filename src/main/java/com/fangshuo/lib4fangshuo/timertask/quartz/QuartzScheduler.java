@@ -101,14 +101,16 @@ public class QuartzScheduler {
 	public String getJobInfo(String name, String group) throws SchedulerException {
 		TriggerKey triggerKey = new TriggerKey(name, group);
 		CronTrigger cronTrigger = (CronTrigger) scheduler.getTrigger(triggerKey);
-		
-		/*JobKey jobKey = new JobKey(name, group);
-		JobDetail jobDetail = scheduler.getJobDetail(jobKey);
-		TriggerState triggerState = scheduler.getTriggerState(triggerKey);*/
-		
+
+		/*
+		 * JobKey jobKey = new JobKey(name, group); JobDetail jobDetail =
+		 * scheduler.getJobDetail(jobKey); TriggerState triggerState =
+		 * scheduler.getTriggerState(triggerKey);
+		 */
+
 		return String.format("time:%s,state:%s", cronTrigger.getCronExpression(),
 				scheduler.getTriggerState(triggerKey).name());
-		
+
 	}
 
 	/**

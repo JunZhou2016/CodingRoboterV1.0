@@ -20,7 +20,7 @@ import com.fangshuo.codefactory.cfg.CodeGeneratorConfig;
 public class Project {
 	private String proJectName = CodeGeneratorConfig.JDBC_DB_NAME;// 项目名称名称;
 	private List<Entity> entitySet;// 项目中的实体的集合;
-	
+
 	public String getProJectName() {
 		return proJectName;
 	}

@@ -33,8 +33,7 @@ public class SwaggerCfg {
 	}
 
 	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder().title("CodingRoboter Create by JunZhou!")
-				.description("一款实用的代码自动生成工具")
+		return new ApiInfoBuilder().title("CodingRoboter Create by JunZhou!").description("一款实用的代码自动生成工具")
 				.termsOfServiceUrl("https://junzhou2016.github.io/").version("1.0").build();
 	}
 

@@ -27,7 +27,7 @@ public class MultiDataSourceProperties {
 	 * 数据源名称的集合;
 	 */
 	private List<String> dataSourceNames = new ArrayList<String>(Arrays.asList("defaultDS", "firstDS"));
-	
+
 	public List<String> getDataSourceNames() {
 		return dataSourceNames;
 	}

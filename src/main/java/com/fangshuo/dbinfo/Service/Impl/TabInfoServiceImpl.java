@@ -30,16 +30,17 @@ public class TabInfoServiceImpl implements TabInfoService {
 		// TODO Auto-generated method stub
 		return tabInfoMapper.getTabInfoByTableName(tabNames);
 	}
-	
+
 	/**
 	 * 根据条件查询数据库基础表的信息;
+	 * 
 	 * @param qryFilter:查询条件;
 	 */
 	@Override
 	public ResList<Table> getTabInfoByTableName(ReqQuery<List<String>> qryFilter) {
 		// TODO Auto-generated method stub
 		PageInfo pageInfo = qryFilter.getPageInfo();// 分页信息;
-		
+
 		List<String> filter = qryFilter.getObject();
 		PageHelper.startPage(pageInfo.getStartPage(), pageInfo.getPageSize());
 		List<Table> result = tabInfoMapper.getTabInfoByTableName(filter);

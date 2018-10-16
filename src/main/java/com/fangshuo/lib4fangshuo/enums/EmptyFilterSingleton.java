@@ -17,7 +17,7 @@ import com.fangshuo.lib4fangshuo.model.EmptyFilter;
  */
 public enum EmptyFilterSingleton {
 	INSANCE;
-	
+
 	private EmptyFilter emptyFilter;
 
 	public EmptyFilter getEmptyFilter() {

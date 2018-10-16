@@ -11,18 +11,17 @@ import com.fangshuo.dbinfo.dao.DBInfoMapper;
 import com.fangshuo.dbinfo.model.database.Database;
 
 @Service
-public class DbInfoServiceImpl implements DbInfoService{
-	
+public class DbInfoServiceImpl implements DbInfoService {
+
 	@Autowired
 	private DBInfoMapper dbInfoMapper;
-	
+
 	@Override
 	public Database getDBInfosByCondition(Database dbFilter) {
 		// TODO Auto-generated method stub
-		Map<String,Object> dbFilterMap = new HashMap<String,Object>();
+		Map<String, Object> dbFilterMap = new HashMap<String, Object>();
 		dbFilterMap.put("tableSet", dbFilter.getTableSet());
 		return dbInfoMapper.getDBInfosByCondition(dbFilter);
 	}
-
 
 }

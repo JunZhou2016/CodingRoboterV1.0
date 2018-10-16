@@ -350,8 +350,8 @@ public class FileUtil {
 
 	/**
 	 * 
-	 * @param fileName:生成文件的名称;
-	 * @param is:文件输入流;
+	 * @param          fileName:生成文件的名称;
+	 * @param          is:文件输入流;
 	 * @param request
 	 * @param response
 	 */

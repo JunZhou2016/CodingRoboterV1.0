@@ -35,15 +35,15 @@ public class DBUtils extends StringUtils {
 	 */
 	public static void copySimpleDBToProject(Database source, Project target) {
 		try {
-			
+
 			String dataBaseName = source.getDbName();
-			String	proJectName = DBUtils.underScoreCase2CamelCase(dataBaseName);
-			target.setProJectName(proJectName);//项目名称;
+			String proJectName = DBUtils.underScoreCase2CamelCase(dataBaseName);
+			target.setProJectName(proJectName);// 项目名称;
 		} catch (Exception e) {
 			throw new RuntimeException("########数据库概要信息迁移失败!########", e);
 		}
 	}
-	
+
 	/**
 	 * 复制数据库信息到项目实体中；
 	 * 
@@ -52,26 +52,27 @@ public class DBUtils extends StringUtils {
 	 */
 	public static void copyDBToProject(Database source, Project target) {
 		try {
-			
+
 			String dataBaseName = source.getDbName();
-			String	proJectName = DBUtils.underScoreCase2CamelCase(dataBaseName);
-			target.setProJectName(proJectName);//项目名称;
-			
-			List<Table>  sourceTableList = source.getTableSet();//数据库中数据表的集合;
-			List<Entity> targetEntityList = new ArrayList<Entity>();//项目中实体的集合;
-			
-			//复制表格信息道实体中;
-			copyTabsToEntitys(sourceTableList,targetEntityList);
-			
-			//挂载数据到集合;
+			String proJectName = DBUtils.underScoreCase2CamelCase(dataBaseName);
+			target.setProJectName(proJectName);// 项目名称;
+
+			List<Table> sourceTableList = source.getTableSet();// 数据库中数据表的集合;
+			List<Entity> targetEntityList = new ArrayList<Entity>();// 项目中实体的集合;
+
+			// 复制表格信息道实体中;
+			copyTabsToEntitys(sourceTableList, targetEntityList);
+
+			// 挂载数据到集合;
 			target.setEntitySet(targetEntityList);
 		} catch (Exception e) {
 			throw new RuntimeException("########数据库迁移失败!########", e);
 		}
 	}
-	
+
 	/**
 	 * 复制表格信息到实体中;
+	 * 
 	 * @param sourceTable:源表格集合;
 	 * @param targetEntity:目标实体对象的集合;
 	 */
@@ -79,42 +80,43 @@ public class DBUtils extends StringUtils {
 		try {
 			for (Table source : sourceTableList) {
 				Entity target = new Entity();
-				//属性复制;
-				copyTabToEntity(source,target);
-				//挂载数据到集合中;
+				// 属性复制;
+				copyTabToEntity(source, target);
+				// 挂载数据到集合中;
 				targetEntityList.add(target);
 			}
 		} catch (Exception e) {
 			throw new RuntimeException("########多表数据迁移失败!########", e);
 		}
 	}
-	
+
 	/**
 	 * 复制表格信息到实体中;
+	 * 
 	 * @param source:源表格;
 	 * @param target:目标实体对象的;
 	 */
 	public static void copyTabToEntity(Table source, Entity target) {
 		try {
-				//Entity target = new Entity();
-				
-				String tableName = source.getTableName();// 数据库表名称;
-				String entityName = getEntityNameByTabName(tableName);// 实体名称,首字母大写;
-				target.setEntityName(entityName);
-				
-				String tableComment = source.getTableComment();//数据库中表的注释;
-				String entityDes = tableComment;//实体描述;
-				target.setEntityDes(entityDes);
+			// Entity target = new Entity();
 
-				List<Column> columnSet = new ArrayList<Column>();// 数据表的列集合;
-				columnSet.addAll(source.getColumnSet());
-				List<Property> propertySet = castColumnSet2PropertySet(columnSet);// 实体的属性集合;
-				target.setPropertySet(propertySet);
+			String tableName = source.getTableName();// 数据库表名称;
+			String entityName = getEntityNameByTabName(tableName);// 实体名称,首字母大写;
+			target.setEntityName(entityName);
 
-				//获取实体的toString()字符串;
-				String entityStrirng = DBUtils.entityToString(target);
-				target.setEntityStrirng(entityStrirng);
-				
+			String tableComment = source.getTableComment();// 数据库中表的注释;
+			String entityDes = tableComment;// 实体描述;
+			target.setEntityDes(entityDes);
+
+			List<Column> columnSet = new ArrayList<Column>();// 数据表的列集合;
+			columnSet.addAll(source.getColumnSet());
+			List<Property> propertySet = castColumnSet2PropertySet(columnSet);// 实体的属性集合;
+			target.setPropertySet(propertySet);
+
+			// 获取实体的toString()字符串;
+			String entityStrirng = DBUtils.entityToString(target);
+			target.setEntityStrirng(entityStrirng);
+
 		} catch (Exception e) {
 			throw new RuntimeException("########表数据迁移失败!########", e);
 		}
@@ -184,9 +186,10 @@ public class DBUtils extends StringUtils {
 		}
 		return entityString;
 	}
-	
+
 	/**
 	 * 获取数据表列的格式化字符串，提供Model模板中的toString数据;
+	 * 
 	 * @param columnList:数据表的列集合;
 	 * @return:数据表列集合格式化字符串;
 	 */
@@ -195,16 +198,16 @@ public class DBUtils extends StringUtils {
 		Iterator<Column> it = columnList.iterator();
 		String tableString = null;
 		if (columnList.isEmpty()) {
-		     return "";
-		   }else {
-			   StringBuilder buffer = new StringBuilder(16);
-			   while(it.hasNext()) {
-				   Column columnEle = it.next();
-				   buffer.append(columnEle.getColumnName()+"," );
-			   }
-			   int lastIndexOfComma = buffer.lastIndexOf(",");
-			   tableString = buffer.substring(0, lastIndexOfComma);
-		   }
+			return "";
+		} else {
+			StringBuilder buffer = new StringBuilder(16);
+			while (it.hasNext()) {
+				Column columnEle = it.next();
+				buffer.append(columnEle.getColumnName() + ",");
+			}
+			int lastIndexOfComma = buffer.lastIndexOf(",");
+			tableString = buffer.substring(0, lastIndexOfComma);
+		}
 		return tableString;
 	}
 }

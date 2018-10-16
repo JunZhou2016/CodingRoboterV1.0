@@ -20,60 +20,64 @@ public class ResObject<T> implements Serializable {
 
 	protected static final Logger log = LoggerFactory.getLogger(ResObject.class.getName());
 
-	
 	@FieldNote(desc = "Http请求对象;")
 	private HttpServletRequest request;
-	
+
 	@FieldNote(desc = "响应头信息")
 	private ResHeader resHeader;
-	
+
 	@FieldNote(desc = "返回信息")
 	private T object;
-	
+
 	public ResObject(HttpServletRequest request) {
 		super();
 		this.request = request;
 	}
-	
+
 	/**
 	 * 
 	 * @param obj:返回的数据对象;
 	 * @param request:http请求对象;
 	 */
-	public ResObject( T obj,HttpServletRequest request) {
-		resHeader = new ResHeader(null,request);
+	public ResObject(T obj, HttpServletRequest request) {
+		resHeader = new ResHeader(null, request);
 		object = obj;
 	}
-	
+
 	/**
 	 * 
 	 * @param req:请求参数;
 	 * @param obj:返回的数据;
 	 * @param request:http请求对象;
 	 */
-	public ResObject(ReqObject<?> req, T obj,HttpServletRequest request) {
-		resHeader = new ResHeader(req,request);
+	public ResObject(ReqObject<?> req, T obj, HttpServletRequest request) {
+		resHeader = new ResHeader(req, request);
 		object = obj;
 	}
-	
+
 	/**
 	 * 
 	 * @param req:请求参数;
 	 * @param e:异常对象;
 	 * @param request:http请求对象;
 	 */
-	public ResObject(ReqObject<?>  req, Exception e,HttpServletRequest request) {
-		
+	public ResObject(ReqObject<?> req, Exception e, HttpServletRequest request) {
+
 		object = null;
-		resHeader = new ResHeader(req,e,request);
+		resHeader = new ResHeader(req, e, request);
 		String errDesc = resHeader.getErrDesc();
 		log.info(errDesc, e);
 	}
-	
-	public ResObject(Exception e,HttpServletRequest request) {
-		
+
+	/**
+	 * 
+	 * @param e:异常对象;
+	 * @param request:http请求对象;
+	 */
+	public ResObject(Exception e, HttpServletRequest request) {
+
 		object = null;
-		resHeader = new ResHeader(null,e,request);
+		resHeader = new ResHeader(null, e, request);
 		String errDesc = resHeader.getErrDesc();
 		log.info(errDesc, e);
 	}

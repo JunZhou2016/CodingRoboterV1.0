@@ -20,11 +20,11 @@ import com.fangshuo.codefactory.cfg.CodeGeneratorConfig;
 public class Database {
 	private String id;// 数据表的id;
 	private String dbName = CodeGeneratorConfig.JDBC_DB_NAME;// 数据库名称;
-	//private String tableName;// 数据表的名称;//
-	//private String tableComment;// 数据表的注释;//
-	private String tableNameSet;//数据库中数据表名称的集合;
+	// private String tableName;// 数据表的名称;//
+	// private String tableComment;// 数据表的注释;//
+	private String tableNameSet;// 数据库中数据表名称的集合;
 	private List<Table> tableSet;// 数据库中的数据表的集合;
-	
+
 	public String getId() {
 		return id;
 	}
@@ -33,23 +33,16 @@ public class Database {
 		this.id = id;
 	}
 
-	/*public String getTableName() {
-		return tableName;
-	}
-
-	public void setTableName(String tableName) {
-		this.tableName = tableName;
-	}
-
-	public String getTableComment() {
-		return tableComment;
-	}
-
-	public void setTableComment(String tableComment) {
-		this.tableComment = tableComment;
-	}
-*/
-	
+	/*
+	 * public String getTableName() { return tableName; }
+	 * 
+	 * public void setTableName(String tableName) { this.tableName = tableName; }
+	 * 
+	 * public String getTableComment() { return tableComment; }
+	 * 
+	 * public void setTableComment(String tableComment) { this.tableComment =
+	 * tableComment; }
+	 */
 
 	public List<Table> getTableSet() {
 		return tableSet;
@@ -66,7 +59,7 @@ public class Database {
 	public void setDbName(String dbName) {
 		this.dbName = dbName;
 	}
-	
+
 	public String getTableNameSet() {
 		return tableNameSet;
 	}
@@ -74,7 +67,7 @@ public class Database {
 	public void setTableNameSet(String tableNameSet) {
 		this.tableNameSet = tableNameSet;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "DBInfo [id=" + id + "]";

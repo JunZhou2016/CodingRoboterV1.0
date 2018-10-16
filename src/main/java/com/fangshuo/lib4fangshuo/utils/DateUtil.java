@@ -12,18 +12,19 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
 import com.fangshuo.codefactory.utils.StringUtils;
+
 /**
  * 
-* Copyright: Copyright (c) 2018 Jun_Zhou
-* 
-* @ClassName: DateUtil.java
-* @Description: 日期相关的工具类；
-* 
-* @version: v1.0.0
-* @author: JunZhou
-* @Email: 1769676159@qq.com
-* @Site: CERNO
-* @date: 2018年10月6日 下午9:52:05
+ * Copyright: Copyright (c) 2018 Jun_Zhou
+ * 
+ * @ClassName: DateUtil.java
+ * @Description: 日期相关的工具类；
+ * 
+ * @version: v1.0.0
+ * @author: JunZhou
+ * @Email: 1769676159@qq.com
+ * @Site: CERNO
+ * @date: 2018年10月6日 下午9:52:05
  */
 public class DateUtil {
 	/**

@@ -34,7 +34,7 @@ public class FirstDataSource extends DruidDataSource {
 		this.setUsername(env.getProperty("spring.first.datasource.username"));// 用户名
 		this.setPassword(env.getProperty("spring.first.datasource.password"));// 密码
 		this.setDriverClassName(env.getProperty("spring.first.datasource.driver-class-name"));
-		
+
 		/**
 		 * 优化属性;
 		 */

@@ -32,35 +32,36 @@ import io.swagger.annotations.ApiOperation;
  * @date: 2018年9月25日 下午5:31:56
  */
 @RequestMapping("/codePrinter")
-@Api(value="代码生成控制器",tags = {"代码生成控制器的API"})
+@Api(value = "代码生成控制器", tags = { "代码生成控制器的API" })
 @RestController
 public class RoboterBooter {
-	
+
 	@Autowired
 	private DbInfoService dbInfoService;
+
 	/**
-	 * 根据条件查询数据数据库基础信息的集合;
-	 * [一次查询多个数据库表的信息]
+	 * 根据条件查询数据数据库基础信息的集合; [一次查询多个数据库表的信息]
+	 * 
 	 * @return:数据库基础信息的集合;
 	 */
-	@RequestMapping(value="/printCodeByTables",method=RequestMethod.POST)
+	@RequestMapping(value = "/printCodeByTables", method = RequestMethod.POST)
 	@ApiOperation("根据数据表名称生成代码")
 	@ResponseBody
-	public Database printCodeByTables(@RequestBody Database dbFilter,HttpServletRequest request, HttpServletResponse response) {
+	public Database printCodeByTables(@RequestBody Database dbFilter, HttpServletRequest request,
+			HttpServletResponse response) {
 		CodeGeneratorUtils codeGeneratorUtils = new CodeGeneratorUtils();
-		//获取数据库表的实例;
-		//List<String> tabNames = new ArrayList<String>();
-		//tabNames.add("role");
-		//获取项目的基本信息;
-		//List<Table> tableList = tabInfoService.getTabInfoByTableName(tabNames);
+		// 获取数据库表的实例;
+		// List<String> tabNames = new ArrayList<String>();
+		// tabNames.add("role");
+		// 获取项目的基本信息;
+		// List<Table> tableList = tabInfoService.getTabInfoByTableName(tabNames);
 		Database dbInfo = dbInfoService.getDBInfosByCondition(dbFilter);
-		//代码生成;
+		// 代码生成;
 		codeGeneratorUtils.generateCodeAndInitPageByDB(dbInfo);
 		String requestHeader = request.getHeader("user-agent");
 		Logger.info(requestHeader);
-		
+
 		return dbInfo;
 	}
-	
-	
+
 }

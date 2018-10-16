@@ -26,25 +26,25 @@ import cn.hutool.core.util.ImageUtil;
  */
 public class GraphicVer {
 	public static void main(String[] args) {
-		//定义图形验证码的长和宽
+		// 定义图形验证码的长和宽
 		LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(200, 100);
 
-		//图形验证码写出，可以写出到文件，也可以写出到流
+		// 图形验证码写出，可以写出到文件，也可以写出到流
 		lineCaptcha.write("d:/line.png");
-		//输出code
+		// 输出code
 		Console.log(lineCaptcha.getCode());
-		//验证图形验证码的有效性，返回boolean值
+		// 验证图形验证码的有效性，返回boolean值
 		lineCaptcha.verify("1234");
 
-		//重新生成验证码
+		// 重新生成验证码
 		lineCaptcha.createCode();
 		lineCaptcha.write("d:/line.png");
-		//新的验证码
+		// 新的验证码
 		Console.log(lineCaptcha.getCode());
-		//验证图形验证码的有效性，返回boolean值
+		// 验证图形验证码的有效性，返回boolean值
 		lineCaptcha.verify("1234");
-		
-		//图片缩放;
+
+		// 图片缩放;
 		File imageFile = new File("d:/line.png");
 		BufferedImage srcImg = ImageUtil.read(imageFile);
 		BufferedImage imgAfterScale = (BufferedImage) ImageUtil.scale(srcImg, 10000, 10000);
@@ -54,6 +54,6 @@ public class GraphicVer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 }

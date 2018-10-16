@@ -13,11 +13,11 @@ package com.fangshuo.lib4fangshuo.exception.code;
  * @Site: CERNO
  * @date: 2018年9月29日 下午2:25:02
  */
-public abstract class BaseErrorCode{
-	
+public abstract class BaseErrorCode {
+
 	protected String errCode;
 	protected String errDesc;
-	
+
 	public BaseErrorCode(String errCode, String errDesc) {
 		super();
 		this.errCode = errCode;

@@ -30,7 +30,7 @@ import com.fangshuo.lib4fangshuo.timertask.quartz.job.BaseJob;
  * @date: 2018年10月9日 下午3:39:48
  */
 @Component
-public class AnnotationUtils{
+public class AnnotationUtils {
 
 	private static final String EMPTY_JOB_NOTE = "(name=, cron=, des=, bean=, group=)";// 所有属性全为null的JobNote；
 
