@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.fangshuo.lib4fangshuo.plugin.AppPluginBean;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
-
 @SpringBootApplication
 @EnableSwagger2
 public class Application extends AppPluginBean {
