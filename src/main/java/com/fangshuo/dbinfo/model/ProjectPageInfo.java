@@ -21,8 +21,8 @@ public class ProjectPageInfo {
 	// private Table table;// 数据表;
 	private Database database;// 数据库实体;
 	private Project project;// 项目实体;
-	private String projectStruct = "com.fangshuo.output";// 项目结构【项目的路径,用于匹配实际项目的结构】<==>basePackage;
-
+	//private String projectStruct = "com.fangshuo.output";// 项目结构【项目的路径,用于匹配实际项目的结构】<==>basePackage;
+	private String projectStruct = "com.fangshuo";// 项目结构【项目的路径,用于匹配实际项目的结构】<==>basePackage;
 	public Database getDatabase() {
 		return database;
 	}

@@ -17,6 +17,10 @@ import java.io.File;
  */
 public class CodeGeneratorConfig {
 	protected static String SYS_SEPARATOR = File.separator;
+
+	// 默认的项目名称;
+	protected static String DEFAULT_PROJECT_NAME = "codingroboter";
+
 	// JDBC 相关配置信息
 	protected static String JDBC_URL;
 	protected static String JDBC_USERNAME;
@@ -25,6 +29,7 @@ public class CodeGeneratorConfig {
 	public static String JDBC_DB_NAME;
 
 	// 文件相关的信息;
+	protected static String XML_TEMPLATE_NAME = "xmapper";// XML类型的模板的名称;
 	protected static String XML_FILE_SUFFIX = ".xml";// xml文件的后缀;
 	protected static String JAVA_FILE_SUFFIX = ".java";// java文件的后缀；
 	protected static String FTL_FILE_SUFFIX = ".ftl";// ftl文件的后缀;
@@ -40,6 +45,14 @@ public class CodeGeneratorConfig {
 	// 模板存放位置
 	protected static String TEMPLATE_FILE_PATH;
 
+	// 生成代码在磁盘上的临时存储位置;
+	protected static String TEMP_GENERATOR_FILE_PATH = "D:\\DevelopmentBox_2017\\CodesBox\\EclipseWP4Photo\\wp_20180725\\CodingRoboterV1.0\\src\\main\\java\\com\\fangshuo";
+	// 生成的APP应用在磁盘上的临时存储位置;
+	protected static String TEMP_GENERATOR_APP_PATH = "D:\\DevelopmentBox_2017\\CodesBox\\EclipseWP4Photo\\wp_20180725\\SpringBoot_Core\\src\\main\\java\\com\\fangshuo";
+	//独立项目压缩打包的路径;
+	protected static String PROJECT_ZIP_PATH = "D:\\DevelopmentBox_2017\\CodesBox\\EclipseWP4Photo\\wp_20180725\\SpringBoot_Core";
+	//独立项目压缩包文件的读取路径;
+	protected static String PROJECT_ZIP_READ_PATH = "D:\\DevelopmentBox_2017\\CodesBox\\EclipseWP4Photo\\wp_20180725\\CRRepository\\SpringBoot\\Core";
 	// 项目基础包
 	protected static String BASE_PACKAGE;
 	// 项目 Model 所在包

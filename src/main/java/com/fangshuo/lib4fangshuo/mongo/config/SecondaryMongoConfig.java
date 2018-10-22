@@ -17,7 +17,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 * @date: 2018年10月17日 下午9:06:08
  */
 @Configuration
-@EnableMongoRepositories(basePackages = "com.neo.model.repository.secondary",
+@EnableMongoRepositories(basePackages = "com.fangshuo.lib4fangshuo.mongo.model.repository.secondary",
 		mongoTemplateRef = SecondaryMongoConfig.MONGO_TEMPLATE)
 public class SecondaryMongoConfig {
 

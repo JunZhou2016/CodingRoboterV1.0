@@ -19,7 +19,7 @@ public enum CodeType {
 	SERVICE_IMPL_TYPE("4", "ServiceImpl"), // ServiceImpl类型;
 	MAPPER_TYPE("5", "Mapper"), // Mapper类型;
 	PARAMETER_TYPE("6", "Parameter"), // Parameter类型;
-	X_MAPPER_TYPE("7", "Xmapper");// Xml类型的Mapper文件;
+	X_MAPPER_TYPE("7", "Mapper");// Xml类型的Mapper文件;
 
 	private String typeCode;
 	private String typeName;

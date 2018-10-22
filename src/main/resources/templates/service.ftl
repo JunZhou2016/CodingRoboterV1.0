@@ -1,8 +1,10 @@
-package ${projectInfo.projectStruct}.${entityInfo.entityName}.Service;
+package ${projectInfo.projectStruct}.${projectInfo.project.proJectName}.${entityInfo.entityName}.Service;
+import com.fangshuo.base.mode.ReqObject;
+import com.fangshuo.base.mode.ReqQuery;
+import com.fangshuo.base.mode.ResList;
 
-import java.util.List;
-
-import com.fangshuo.output.${entityInfo.entityName}.Model.${entityInfo.entityName};
+import ${projectInfo.projectStruct}.${projectInfo.project.proJectName}.${entityInfo.entityName}.Model.${entityInfo.entityName};
+import ${projectInfo.projectStruct}.${projectInfo.project.proJectName}.${entityInfo.entityName}.Parameter.${entityInfo.entityName}Filter;
 /**
 * 
 * Copyright: Copyright (c) 2018 Jun_Zhou
@@ -18,14 +20,11 @@ import com.fangshuo.output.${entityInfo.entityName}.Model.${entityInfo.entityNam
 */
 public interface ${entityInfo.entityName}Service {
 
-	void save(${entityInfo.entityName} ${entityInfo.localVariableName});
+	${entityInfo.entityName} save(ReqObject<${entityInfo.entityName}> ${entityInfo.localVariableName});
+	
+	Integer deleteByCondition(ReqObject<${entityInfo.entityName}Filter> filter);
 
-	void deleteById(Integer id);
-
-	void update(${entityInfo.entityName} ${entityInfo.localVariableName});
-
-	${entityInfo.entityName} findById(Integer id);
-
-	List<${entityInfo.entityName}> findAll();
-
+	Integer updateByCondition(ReqObject<${entityInfo.entityName}> ${entityInfo.localVariableName});
+	
+	ResList<${entityInfo.entityName}> queryByCondition(ReqQuery<${entityInfo.entityName}Filter> queryCondition);
 }

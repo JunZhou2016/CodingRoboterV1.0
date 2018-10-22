@@ -22,10 +22,10 @@ import com.fangshuo.lib4fangshuo.mongo.service.MultiMongoDBService;
 @RequestMapping("mul-mongo")
 public class MultiMongoTestController {
 	@Autowired
-	MultiMongoDBService multiMongoDBTest;
+	MultiMongoDBService multiMongoDBService;
 	
 	@RequestMapping("mongoTest")
 	public void mongoTest() {
-		multiMongoDBTest.TestSave();
+		multiMongoDBService.TestSave();
 	}
 }

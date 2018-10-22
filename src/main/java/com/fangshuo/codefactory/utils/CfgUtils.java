@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.Properties;
 
 import com.fangshuo.codefactory.cfg.CodeGeneratorConfig;
+import com.fangshuo.dbinfo.utils.DBUtils;
 
 import freemarker.template.Configuration;
 import freemarker.template.TemplateExceptionHandler;
@@ -85,7 +86,8 @@ public class CfgUtils extends CodeGeneratorConfig {
 		JDBC_USERNAME = prop.getProperty("jdbc.username");
 		JDBC_PASSWORD = prop.getProperty("jdbc.password");
 		JDBC_DRIVER_CLASS_NAME = prop.getProperty("jdbc.driver.class.name");
-		JDBC_DB_NAME = prop.getProperty("jdbc.dbname");
+		// JDBC_DB_NAME = prop.getProperty("jdbc.dbname");
+		JDBC_DB_NAME = DBUtils.getProjectNameByDBName(prop.getProperty("jdbc.dbname"));
 
 		JAVA_PATH = prop.getProperty("java.path");
 		RESOURCES_PATH = prop.getProperty("resources.path");

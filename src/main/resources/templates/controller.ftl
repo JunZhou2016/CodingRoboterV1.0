@@ -1,16 +1,21 @@
-package ${projectInfo.projectStruct}.${entityInfo.entityName}.Controller;
-import ${projectInfo.projectStruct}.${entityInfo.entityName}.Model.${entityInfo.entityName};
-import ${projectInfo.projectStruct}.${entityInfo.entityName}.Service.${entityInfo.entityName}Service;
+package ${projectInfo.projectStruct}.${projectInfo.project.proJectName}.${entityInfo.entityName}.Controller;
+import ${projectInfo.projectStruct}.${projectInfo.project.proJectName}.${entityInfo.entityName}.Model.${entityInfo.entityName};
+import ${projectInfo.projectStruct}.${projectInfo.project.proJectName}.${entityInfo.entityName}.Service.${entityInfo.entityName}Service;
+import ${projectInfo.projectStruct}.${projectInfo.project.proJectName}.${entityInfo.entityName}.Parameter.${entityInfo.entityName}Filter;
 
-import java.util.List;
+import com.fangshuo.base.mode.ReqObject;
+import com.fangshuo.base.mode.ReqQuery;
+import com.fangshuo.base.mode.ResList;
+import com.fangshuo.base.mode.ResObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -42,81 +47,83 @@ public class ${entityInfo.entityName}Controller {
     @ApiImplicitParams({
         @ApiImplicitParam(
         name="${entityInfo.localVariableName}",
-        value = "信息实体${entityInfo.entityName}",
+        value = "信息实体信息实体${entityInfo.entityName}",
         required = true,
-        dataType = "${entityInfo.entityName}")
+        dataType = "ReqObject<${entityInfo.entityName}>")
     })
     @ResponseBody
-    public String add(${entityInfo.entityName} ${entityInfo.localVariableName}) {
-        ${entityInfo.localVariableName}Service.save(${entityInfo.localVariableName});
-        return "";
+    public ResObject<${entityInfo.entityName}> add(@RequestBody ReqObject<${entityInfo.entityName}> ${entityInfo.localVariableName},HttpServletRequest request, HttpServletResponse response) {
+        try {
+        	${entityInfo.entityName} executeResult = ${entityInfo.localVariableName}Service.save(${entityInfo.localVariableName});
+            return new ResObject<${entityInfo.entityName}>(${entityInfo.localVariableName}, executeResult, request);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return new ResObject<${entityInfo.entityName}>(e, request);
+		}
     }
-
-    @RequestMapping(value="delete",method = RequestMethod.POST)
-    @ApiOperation("根据Id删除${entityInfo.entityName}")
+    
+	
+	@RequestMapping(value="deleteByCondition",method = RequestMethod.POST)
+    @ApiOperation("根据条件删除${entityInfo.entityName}")
     @ApiImplicitParams({
         @ApiImplicitParam(
-        name="id",
-        value = "记录Id",
+        name="filter",
+        value = "删除条件filter",
         required = true,
-        dataType = "Integer")
+        dataType = "ReqObject<${entityInfo.entityName}Filter>")
     })
     @ResponseBody
-    public String delete(@RequestParam Integer id) {
-	    ${entityInfo.localVariableName}Service.deleteById(id);
-	    return "";
-    }
-
-    @RequestMapping(value="update",method = RequestMethod.POST)
-    @ApiOperation("更新${entityInfo.entityName}")
-    @ApiImplicitParams({
-        @ApiImplicitParam(
-        name="${entityInfo.localVariableName}",
-        value = "信息实体${entityInfo.entityName}",
-        required = true,
-        dataType = "${entityInfo.entityName}")
-    })
-    @ResponseBody
-    public String update(${entityInfo.entityName} ${entityInfo.localVariableName}) {
-	    ${entityInfo.localVariableName}Service.update(${entityInfo.localVariableName});
-	    return "";
+    public ResObject<Integer> deleteByCondition(@RequestBody ReqObject<${entityInfo.entityName}Filter> filter,HttpServletRequest request, HttpServletResponse response) {
+	    try {
+	    	Integer executeResult = ${entityInfo.localVariableName}Service.deleteByCondition(filter);
+            return new ResObject<Integer>(filter, executeResult, request);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return new ResObject<Integer>(e, request);
+		}
     }
 	
-    @RequestMapping(value="detail",method = RequestMethod.POST)
-    @ApiOperation("根据记录Id查询${entityInfo.entityName}")
+	
+	@RequestMapping(value="updateByCondition",method = RequestMethod.POST)
+    @ApiOperation("根据条件更新${entityInfo.entityName}")
     @ApiImplicitParams({
         @ApiImplicitParam(
-        name="id",
-        value = "记录Id",
+        name="data",
+        value = "信息实体${entityInfo.entityName}",
         required = true,
-        dataType = "Integer")
+        dataType = "ReqObject<${entityInfo.entityName}>")
     })
     @ResponseBody
-    public String detail(@RequestParam Integer id) {
-        ${entityInfo.entityName} ${entityInfo.localVariableName} = ${entityInfo.localVariableName}Service.findById(id);
-        return ${entityInfo.localVariableName}.toString();
+    public ResObject<Integer> updateByCondition(@RequestBody ReqObject<${entityInfo.entityName}> data,HttpServletRequest request, HttpServletResponse response) {
+	    try {
+	    	Integer executeResult = ${entityInfo.localVariableName}Service.updateByCondition(data);
+            return new ResObject<Integer>(data, executeResult, request);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return new ResObject<Integer>(e, request);
+		}
+    }
+	
+	
+	@RequestMapping(value="queryByCondition",method = RequestMethod.POST)
+    @ApiOperation("根据条件查询${entityInfo.entityName}")
+    @ApiImplicitParams({
+        @ApiImplicitParam(
+        name="queryCondition",
+        value = "查询条件",
+        required = true,
+        dataType = "ReqObject<${entityInfo.entityName}Filter>")
+    })
+    @ResponseBody
+    public ResObject<ResList<${entityInfo.entityName}>> queryByCondition(@RequestBody ReqQuery<${entityInfo.entityName}Filter> queryCondition,HttpServletRequest request, HttpServletResponse response) {
+		try {
+			ResList<${entityInfo.entityName}> queryResult = ${entityInfo.localVariableName}Service.queryByCondition(queryCondition);
+			ResObject<ResList<${entityInfo.entityName}>> resObj = new ResObject<ResList<${entityInfo.entityName}>>(queryCondition, queryResult, request);
+			return resObj;
+		} catch (Exception e) {
+			// TODO: handle exception
+			return new ResObject<ResList<${entityInfo.entityName}>>(queryCondition, e, request);
+		}
     }
 
-    @RequestMapping(value="list",method = RequestMethod.POST)
-    @ApiOperation("查询${entityInfo.entityName}列表")
-    @ApiImplicitParams({
-        @ApiImplicitParam(
-        name="page",
-        value = "当前页码",
-        required = true,
-        dataType = "Integer"),
-        @ApiImplicitParam(
-        name="size",
-        value = "每页显示的记录条数",
-        required = true,
-        dataType = "Integer")
-    })
-    @ResponseBody
-    public String list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
-        PageHelper.startPage(page, size);
-        List<${entityInfo.entityName}> list = ${entityInfo.localVariableName}Service.findAll();
-        PageInfo<${entityInfo.entityName}> pageInfo = new PageInfo<${entityInfo.entityName}>(list);
-        System.out.println("#########"+pageInfo+"########");//为了去除黄色警告;
-        return list.toString();
-    }
 }

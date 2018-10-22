@@ -7,6 +7,7 @@ import java.util.List;
 import com.fangshuo.codefactory.utils.StringUtils;
 import com.fangshuo.dbinfo.model.database.Column;
 import com.fangshuo.dbinfo.model.database.Database;
+import com.fangshuo.dbinfo.model.database.ERObject;
 import com.fangshuo.dbinfo.model.database.Table;
 import com.fangshuo.dbinfo.model.project.Entity;
 import com.fangshuo.dbinfo.model.project.Project;
@@ -26,6 +27,8 @@ import com.fangshuo.dbinfo.model.project.Property;
  * @date: 2018年9月27日 上午9:52:01
  */
 public class DBUtils extends StringUtils {
+	// 默认的项目名称;
+	protected static String DEFAULT_PROJECT_NAME = "codingroboter";
 
 	/**
 	 * 复制数据库概要信息到项目实体中；
@@ -35,13 +38,49 @@ public class DBUtils extends StringUtils {
 	 */
 	public static void copySimpleDBToProject(Database source, Project target) {
 		try {
-
-			String dataBaseName = source.getDbName();
-			String proJectName = DBUtils.underScoreCase2CamelCase(dataBaseName);
+			String proJectName = getProjectNameByDB(source);
 			target.setProJectName(proJectName);// 项目名称;
 		} catch (Exception e) {
 			throw new RuntimeException("########数据库概要信息迁移失败!########", e);
 		}
+	}
+
+	/**
+	 * 
+	 * 根据数据库信息获取项目名称;
+	 * 
+	 * @param dbInfo：数据库对象;
+	 * @return
+	 */
+	public static String getProjectNameByDB(Database dbInfo) {
+		// 代码整理和迁移;
+		String projectName = dbInfo.getDbName();
+		if (null != projectName) {
+			projectName = StringUtils.underScoreCase2CamelCase(projectName);
+			projectName = StringUtils.toLowerCaseFirstOne(projectName);
+		} else {
+			projectName = DEFAULT_PROJECT_NAME;
+		}
+		return projectName;
+	}
+
+	/**
+	 * 
+	 * 根据数据库名称获取项目名称;
+	 * 
+	 * @param dbName:数据库名称;
+	 * @return
+	 */
+	public static String getProjectNameByDBName(String tempProjectName) {
+		// 代码整理和迁移;
+		String projectName = tempProjectName;
+		if (null != projectName) {
+			projectName = StringUtils.underScoreCase2CamelCase(projectName);
+			projectName = StringUtils.toLowerCaseFirstOne(projectName);
+		} else {
+			projectName = DEFAULT_PROJECT_NAME;
+		}
+		return projectName;
 	}
 
 	/**
@@ -148,6 +187,21 @@ public class DBUtils extends StringUtils {
 		}
 		return propertySet;
 	}
+	
+	/**
+	 * 从数据表的列名获取列和属性的集合;
+	 * @param erMap:列和属性映射关系的List;
+	 * @param tabColString:数据列的字符串;
+	 */
+	public static void getErMapFromTableColumn(List<ERObject> erList,String tabColString) {
+		String[] tableColumnArray = tabColString.split(",");
+		for(String tableColumnEle : tableColumnArray) {
+			String columnName = tableColumnEle;// 列名称;
+			String propertyName = DBUtils.underScoreCase2CamelCase(columnName);// 实体的属性名称;
+			ERObject erObj = new ERObject(columnName,propertyName);
+			erList.add(erObj);
+		}
+	}
 
 	/**
 	 * 
@@ -196,6 +250,7 @@ public class DBUtils extends StringUtils {
 	public static String tableToString(Table table) {
 		List<Column> columnList = table.getColumnSet();
 		Iterator<Column> it = columnList.iterator();
+		Boolean hasPrimaryKey = false;//主键是否已经被设置;
 		String tableString = null;
 		if (columnList.isEmpty()) {
 			return "";
@@ -203,6 +258,11 @@ public class DBUtils extends StringUtils {
 			StringBuilder buffer = new StringBuilder(16);
 			while (it.hasNext()) {
 				Column columnEle = it.next();
+				if(!hasPrimaryKey) {//设置主键;
+					if("PRI".equals(columnEle.getColumnKey())) {
+						table.setPrimaryKey(columnEle.getColumnName());
+					}
+				}
 				buffer.append(columnEle.getColumnName() + ",");
 			}
 			int lastIndexOfComma = buffer.lastIndexOf(",");

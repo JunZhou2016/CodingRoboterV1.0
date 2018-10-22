@@ -1,4 +1,5 @@
-package ${projectInfo.projectStruct}.${entityInfo.entityName}.Parameter;
+package ${projectInfo.projectStruct}.${projectInfo.project.proJectName}.${entityInfo.entityName}.Parameter;
+import org.springframework.stereotype.Component;
 /**
 * 
 * Copyright: Copyright (c) 2018 Jun_Zhou
@@ -12,6 +13,7 @@ package ${projectInfo.projectStruct}.${entityInfo.entityName}.Parameter;
 * @Company: ${company}
 * @date: ${date}
 */
+@Component
 public class ${entityInfo.entityName}Filter {
 
 	<#list entityInfo.propertySet as property>

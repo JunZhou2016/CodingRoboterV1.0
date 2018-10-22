@@ -63,5 +63,5 @@ public class Entity {
 
 	public void setEntityDes(String entityDes) {
 		this.entityDes = entityDes;
-	};
+	}
 }

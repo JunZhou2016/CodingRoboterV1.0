@@ -64,6 +64,9 @@ public class StringUtils {
 	 * @return 驼峰命名格式
 	 */
 	public static String underScoreCase2CamelCase(String str) {
+		if (str.contains("-")) {
+			str = str.replace("-", "_");
+		}
 		if (!str.contains("_")) {
 			return str;
 		}
@@ -179,5 +182,30 @@ public class StringUtils {
 		}
 
 		return str.substring(start, end);
+	}
+
+	/**
+	 * 根据windows上的路径回去文件的路径;
+	 * 
+	 * @param windowPath：window上的文件的路径;
+	 * @return :Java中的文件路径字符串;
+	 */
+	public static String getFilePathByWindowsPath(String windowPath) {
+		String target = "\\";
+		String replacement = "/";
+		String replaceResult = windowPath.replace(target, replacement);
+		return replaceResult;
+	}
+
+	/**
+	 * 
+	 * @param projectPath:原始项目路径;
+	 * @param relativePath：相对路径，即追加的路径;
+	 * @return
+	 */
+	public static String getReallyOutputPath(String projectPath, String relativePath) {
+		int outPutPathEndIndex = projectPath.lastIndexOf("\\");
+		String reallyOutPutPath = projectPath.substring(0, outPutPathEndIndex) + "\\" + relativePath;
+		return reallyOutPutPath;
 	}
 }
