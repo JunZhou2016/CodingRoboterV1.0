@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +22,7 @@ import com.fangshuo.codefactory.utils.StringUtils;
 import com.fangshuo.dbinfo.Service.DbInfoService;
 import com.fangshuo.dbinfo.model.database.Database;
 import com.fangshuo.lib4fangshuo.utils.FileUtil;
+import com.google.gson.Gson;
 
 import cn.hutool.core.util.ZipUtil;
 import io.swagger.annotations.Api;
@@ -75,6 +77,38 @@ public class RoboterBooter extends CodeGeneratorConfig {
 	@ResponseBody
 	public void fetchSourceCode(@RequestBody Database dbFilter, HttpServletRequest request,
 			HttpServletResponse response) throws FileNotFoundException {
+		CodeGeneratorUtils codeGeneratorUtils = new CodeGeneratorUtils();
+		Database dbInfo = dbInfoService.getDBInfosByCondition(dbFilter);
+		// 代码生成;
+		codeGeneratorUtils.generateCodeAndInitPageByDB(dbInfo);
+		// 项目代码处理;
+		String finallyProjectName = dbInfo.getDbName();
+		String targetPath = PROJECT_ZIP_PATH;
+		String resultPath = PROJECT_ZIP_READ_PATH + "/" + finallyProjectName + ".zip";// 压缩文件的名称;
+		String reallyTargetPath = StringUtils.getFilePathByWindowsPath(targetPath);// 特殊字符转义;
+		String reallyResultPath = StringUtils.getFilePathByWindowsPath(resultPath);// 特殊字符转义;
+		// 压缩生成的项目;
+		ZipUtil.zip(reallyTargetPath, reallyResultPath, true);
+		// 浏览器下载;
+		String fileName = finallyProjectName+".zip";
+		File file = new File(resultPath);
+		InputStream is = new FileInputStream(file);
+		FileUtil.downFileFromStream(fileName, is, request, response);
+
+	}
+	
+	/**
+	 * 根据条件查询数据数据库基础信息的集合; [一次查询多个数据库表的信息]
+	 * 
+	 * @return:数据库基础信息的集合;
+	 * @throws FileNotFoundException
+	 */
+	@RequestMapping(value = "/fetchSourceCodeByForm", method = RequestMethod.POST)
+	@ApiOperation("根据数据表名称生成代码并打包")
+	@ResponseBody
+	public void fetchSourceCodeByForm(@RequestParam(value="params")String params, HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
+		Gson gson = new Gson();
+		Database dbFilter = gson.fromJson(params, Database.class);
 		CodeGeneratorUtils codeGeneratorUtils = new CodeGeneratorUtils();
 		Database dbInfo = dbInfoService.getDBInfosByCondition(dbFilter);
 		// 代码生成;

@@ -10,6 +10,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class Application extends AppPluginBean {
 	public static void main(String[] args) {
+		System.out.println("HeLLo Word!");
 		SpringApplication.run(Application.class, args);
 	}
 }
