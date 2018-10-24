@@ -34,7 +34,6 @@ public class JDBCHelper {
         while(rs.next()){
             System.out.println(rs.getString("name"));
         }
-        
         //关闭资源
         rs.close();
         st.close();
